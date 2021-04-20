@@ -1,11 +1,7 @@
-import 'dart:convert';
-
-import 'package:wowca_task/core/errors/exception.dart';
+import 'package:http/http.dart' as http;
 import 'package:wowca_task/core/helpers/json_checker.dart';
-import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/user_registration/data/model/registered_user_model.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
-import 'package:http/http.dart' as http;
 
 abstract class RegistrationRemoteDataSource {
   Future<RegisteredUserModel> registerUser({
