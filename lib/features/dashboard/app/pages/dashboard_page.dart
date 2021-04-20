@@ -24,13 +24,21 @@ class _DashboardPageState extends State<DashboardPage> {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(Quantity.inputBorderRadius),
-                      bottomRight: Radius.circular(Quantity.inputBorderRadius),
+                      bottomLeft: Radius.circular(Quantity.mediumBorderRadius),
+                      bottomRight: Radius.circular(Quantity.mediumBorderRadius),
                     )),
                 height: MediaQuery.of(context).size.height * 0.18,
                 width: MediaQuery.of(context).size.width,
                 child: Row(
                   children: [
+                    //Those two pink boxes up there
+                    //one is meant for profile image
+                    //and the other is meant for the user info, say name,
+                    //organisation
+                    //department, role in company etc.
+                    //projects and total number of modules,
+                    //modules contain detail of projects they're connected to
+                    //switch between module and project view
                     Expanded(
                       flex: 2,
                       child: Container(
@@ -55,6 +63,24 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
                   ],
                 )),
+            Expanded(
+              child: ListView.builder(
+                  shrinkWrap: false,
+                  itemCount: 7,
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: EdgeInsets.all(5.0),
+                      width: 200.0,
+                      height: 100.0,
+                      decoration: BoxDecoration(
+                          color: Colors.pinkAccent,
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(Quantity.smallBorderRadius))),
+                      child: Center(child: Text('Module: $index')),
+                    );
+                  }),
+            )
           ],
         ),
       ),

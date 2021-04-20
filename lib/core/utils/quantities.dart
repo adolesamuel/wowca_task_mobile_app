@@ -9,6 +9,7 @@ class Quantity {
   static final smallSpace = 10.0;
   static final buttonMinWidth = 100.0;
   static final buttonHeight = 45.0;
+  static final addButtonSquareSide = 30.0;
 
   //////////////////////////////////////////////////////////////////
   ///                        Medium Objects                     ////

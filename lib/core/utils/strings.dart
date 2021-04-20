@@ -6,4 +6,7 @@ class AppStrings {
   //Dashboard Strings
 
   static final String dashboardTitle = 'Dashboard';
+
+  //FormText
+  static final String projectHasNoName = 'Project needs a Name';
 }
