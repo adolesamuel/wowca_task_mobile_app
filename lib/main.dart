@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wowca_task/features/user_registration/app/page/registration_page.dart';
-
+import 'package:wowca_task/core/usecase/read_local_pref.dart';
+import 'package:wowca_task/features/dashboard/app/pages/dashboard_page.dart';
+import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
 import 'package:wowca_task/injection_container.dart' as di;
 import 'package:wowca_task/task_app.dart';
 
@@ -13,12 +14,16 @@ void main() async {
 
   ///Get the current users[accessToken] from application's
   ///local data source with shared preferences
-  /// not implementing onesignal yet 
+  /// not implementing onesignal yet
   /// importance, it should alert users to the state of tasks on the database.
-  /// on task complete, task created,                    
+  /// on task complete, task created,
+  /// convert cached registered user to cached authenticated user.
 
   String accessToken = await LocalPreference(di.sl())
-      .readPrefFromObject(CACHED_AUTHENTICATED_USER, 'access_token');
+      .readPrefFromObject(CACHED_REGISTERED_USER, 'access_token');
 
-  runApp(TaskApp(accessToken: accessToken));
+  runApp(
+    // TaskApp(accessToken: accessToken)
+    DashboardPage(),
+  );
 }

@@ -5,13 +5,13 @@ import 'package:wowca_task/core/usecase/usecase.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/registered_user.dart';
 import 'package:wowca_task/features/user_registration/domain/repository/RegistrationRepository.dart';
 
-class RegisterUser extends Usecase<RegisteredUser, RegistrationParams> {
+class RegisterUser extends Usecase<RegisteredUserEntity, RegistrationParams> {
   final RegistrationRepository registrationRepository;
 
   RegisterUser(this.registrationRepository);
 
   @override
-  Future<Either<Failure, RegisteredUser>> call(
+  Future<Either<Failure, RegisteredUserEntity>> call(
       RegistrationParams params) async {
     return await registrationRepository.register(
         username: params.username,
