@@ -3,7 +3,7 @@ import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/registered_user.dart';
 
 abstract class RegistrationRepository {
-  Future<Either<Failure, RegisteredUser>> register({
+  Future<Either<Failure, RegisteredUserEntity>> register({
     String username,
     String firstname,
     String lastname,

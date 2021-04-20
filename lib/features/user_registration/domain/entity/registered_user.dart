@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 
-class RegisteredUser extends Equatable {
+class RegisteredUserEntity extends Equatable {
   final String token;
 
-  RegisteredUser(this.token);
+  RegisteredUserEntity(this.token);
 
   @override
   List<Object> get props => [token];
