@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
+import 'package:wowca_task/features/user_registration/app/page/signIn_page.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -10,6 +11,20 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormBuilderState>();
   bool _obscurePassword = true;
+  FocusNode _confirmPasswordFocusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    _confirmPasswordFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _confirmPasswordFocusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -40,6 +55,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       FormBuilderTextField(
                         name: 'Name',
                         keyboardType: TextInputType.name,
+                        textInputAction: TextInputAction.next,
                         textCapitalization: TextCapitalization.words,
                         // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
 
@@ -63,6 +79,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       FormBuilderTextField(
                         name: 'Organization Name',
                         keyboardType: TextInputType.name,
+                        textInputAction: TextInputAction.next,
                         textCapitalization: TextCapitalization.words,
                         // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
 
@@ -86,6 +103,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       FormBuilderTextField(
                         name: 'Email',
                         keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+
                         textCapitalization: TextCapitalization.words,
                         // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
 
@@ -110,6 +129,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         name: 'Password',
                         keyboardType: TextInputType.name,
                         obscureText: _obscurePassword,
+                        textInputAction: TextInputAction.next,
+                        onEditingComplete: () => FocusScope.of(context)
+                            .requestFocus(_confirmPasswordFocusNode),
                         obscuringCharacter: '*',
                         // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
                         decoration: InputDecoration(
@@ -148,6 +170,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       FormBuilderTextField(
                         name: 'Confirm Password',
                         keyboardType: TextInputType.name,
+                        textInputAction: TextInputAction.next,
+                        focusNode: _confirmPasswordFocusNode,
                         obscureText: _obscurePassword,
                         obscuringCharacter: '*',
                         // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
@@ -181,16 +205,21 @@ class _SignUpPageState extends State<SignUpPage> {
                               width: 2.0,
                             ))),
                       ),
+                      SizedBox(
+                        height: Quantity.mediumSpace,
+                      ),
                     ],
                   )),
-              SizedBox(
-                height: Quantity.mediumSpace,
-              ),
+
+              // Button Row for Register or Sign Up
+
               Row(
                 children: [
                   ElevatedButton(
                     child: Text('Register'),
-                    onPressed: () {},
+                    onPressed: () {
+                      print('Register Button pressed');
+                    },
                   ),
                   SizedBox(
                     width: Quantity.mediumSpace,
@@ -199,7 +228,18 @@ class _SignUpPageState extends State<SignUpPage> {
                   SizedBox(
                     width: Quantity.mediumSpace,
                   ),
-                  TextButton(onPressed: () {}, child: Text('Sign In'))
+                  TextButton(
+                      onPressed: () {
+                        print('Sign In button pressed');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                settings: RouteSettings(name: '/SignInPage'),
+                                builder: (context) {
+                                  return SignInPage();
+                                }));
+                      },
+                      child: Text('Sign In'))
                 ],
               )
             ],
