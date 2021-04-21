@@ -12,16 +12,31 @@ class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormBuilderState>();
   bool _obscurePassword = true;
   FocusNode _confirmPasswordFocusNode;
+  TextEditingController _confirmPasswordController;
+  TextEditingController _nameController;
+  TextEditingController _organizationController;
+  TextEditingController _emailController;
+  TextEditingController _passwordController;
 
   @override
   void initState() {
     super.initState();
     _confirmPasswordFocusNode = FocusNode();
+    _confirmPasswordController = TextEditingController();
+    _nameController = TextEditingController();
+    _organizationController = TextEditingController();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
   }
 
   @override
   void dispose() {
     _confirmPasswordFocusNode.dispose();
+    _confirmPasswordController.dispose();
+    _nameController.dispose();
+    _organizationController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -49,7 +64,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               FormBuilder(
                   key: _formKey,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  autovalidateMode: AutovalidateMode.disabled,
                   child: Column(
                     children: [
                       FormBuilderTextField(
@@ -57,10 +72,30 @@ class _SignUpPageState extends State<SignUpPage> {
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
                         textCapitalization: TextCapitalization.words,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a Name';
+                          }
+                          return null;
+                        },
                         // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
 
                         decoration: InputDecoration(
                             labelText: 'Name',
+                            errorStyle: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                   style: BorderStyle.solid,
@@ -81,10 +116,30 @@ class _SignUpPageState extends State<SignUpPage> {
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
                         textCapitalization: TextCapitalization.words,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter an Organization name';
+                          }
+                          return null;
+                        },
                         // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
 
                         decoration: InputDecoration(
                             labelText: 'Organization Name',
+                            errorStyle: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                   style: BorderStyle.solid,
@@ -104,12 +159,35 @@ class _SignUpPageState extends State<SignUpPage> {
                         name: 'Email',
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
-
                         textCapitalization: TextCapitalization.words,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter an Email';
+                          }
+                          if (value.contains('@')) {
+                            return null;
+                          } else {
+                            return 'Enter a valid Email';
+                          }
+                        },
                         // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
 
                         decoration: InputDecoration(
                             labelText: 'Email',
+                            errorStyle: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                   style: BorderStyle.solid,
@@ -133,8 +211,32 @@ class _SignUpPageState extends State<SignUpPage> {
                         onEditingComplete: () => FocusScope.of(context)
                             .requestFocus(_confirmPasswordFocusNode),
                         obscuringCharacter: '*',
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter password';
+                          }
+                          if (value != _confirmPasswordController.text) {
+                            return 'Passwords are not the same';
+                          } else {
+                            return null;
+                          }
+                        },
                         // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
                         decoration: InputDecoration(
+                            errorStyle: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
                             suffixIcon: IconButton(
                               icon: Icon(
                                 _obscurePassword
@@ -169,6 +271,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       FormBuilderTextField(
                         name: 'Confirm Password',
+                        controller: _confirmPasswordController,
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
                         focusNode: _confirmPasswordFocusNode,
@@ -219,6 +322,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: Text('Register'),
                     onPressed: () {
                       print('Register Button pressed');
+                      _formKey.currentState.validate();
                     },
                   ),
                   SizedBox(
