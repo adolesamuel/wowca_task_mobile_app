@@ -9,4 +9,5 @@ class AppStrings {
 
   //FormText
   static final String projectHasNoName = 'Project needs a Name';
+  static final String addModule = 'Add Modules to Project';
 }

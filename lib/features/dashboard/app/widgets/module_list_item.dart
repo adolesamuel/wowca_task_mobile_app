@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/core/utils/strings.dart';
-import 'package:wowca_task/features/dashboard/app/widgets/project_item.dart';
 
-class ProjectListItem extends StatefulWidget {
-  final Project project;
-  final Function removeProject;
-  final Function addModule;
+import 'module_item.dart';
 
-  const ProjectListItem(
-      {Key key, this.project, this.removeProject, this.addModule})
-      : super(key: key);
+class ModuleListItem extends StatefulWidget {
+  final Module module;
+  final Function removeModule;
+  final Function addTask;
+  final Function showListOfTasks;
+
+  const ModuleListItem({
+    Key key,
+    this.module,
+    this.removeModule,
+    this.addTask,
+    this.showListOfTasks,
+  }) : super(key: key);
   @override
-  _ProjectListItemState createState() => _ProjectListItemState();
+  _ModuleListItemState createState() => _ModuleListItemState();
 }
 
-class _ProjectListItemState extends State<ProjectListItem> {
+class _ModuleListItemState extends State<ModuleListItem> {
   @override
   Widget build(BuildContext context) {
     //TODO: add a colour gradient to the container
@@ -36,7 +42,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
             child: Column(
               children: [
                 Text(
-                  widget.project.projectName,
+                  widget.module.moduleName,
                   style: TextStyle(color: Colors.white),
                 ),
                 SizedBox(
@@ -44,9 +50,9 @@ class _ProjectListItemState extends State<ProjectListItem> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    widget.addModule(widget.project);
+                    widget.addTask(widget.module);
                   },
-                  child: widget.project.listOfModules.isEmpty
+                  child: widget.module.listOfTasks.isEmpty
                       ? Text(
                           AppStrings.addModule,
                           style: TextStyle(color: Colors.white, fontSize: 10.0),
@@ -60,7 +66,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
           InkWell(
             onTap: () {
               //remove delete project
-              widget.removeProject(widget.project);
+              widget.removeModule(widget.module);
             },
             child: Container(
               color: Colors.red,

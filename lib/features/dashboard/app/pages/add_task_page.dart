@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:wowca_task/core/utils/quantities.dart';
-import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/module_item.dart';
+import 'package:wowca_task/features/dashboard/app/widgets/module_list_item.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/project_item.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/project_list_item.dart';
+import 'package:wowca_task/features/dashboard/app/widgets/text_field_widget.dart';
 
 class AddTaskPage extends StatefulWidget {
   @override
@@ -19,9 +19,11 @@ class AddTaskPageState extends State<AddTaskPage> {
 
   List<Project> projectList = [];
 
-  List<Module> moduleList = [];
+  bool _validateProjectName = false;
 
-  bool _validate = false;
+  bool _moduleTextFieldIsVisible = false;
+
+  bool _validateModuleName = false;
 
   @override
   void initState() {
@@ -39,10 +41,13 @@ class AddTaskPageState extends State<AddTaskPage> {
 
   void createProject() {
     if (_projectFieldController.text.isNotEmpty) {
-      projectList.add(Project(projectName: _projectFieldController.text));
+      projectList.add(Project(
+        projectName: _projectFieldController.text,
+        listOfModules: [],
+      ));
       _projectFieldController.clear();
     } else {
-      _validate = true;
+      _validateProjectName = true;
     }
   }
 
@@ -50,8 +55,13 @@ class AddTaskPageState extends State<AddTaskPage> {
     projectList.remove(project);
   }
 
-  void createModule() {
-    moduleList.add(Module(moduleName: _moduleTextFieldController.text));
+  void removeModule(int index, int mark) {
+    projectList[index].listOfModules.removeAt(mark);
+  }
+
+  void createModule(int index) {
+    projectList[index].listOfModules.add(
+        Module(moduleName: _moduleTextFieldController.text, listOfTasks: []));
   }
 
   @override
@@ -60,92 +70,118 @@ class AddTaskPageState extends State<AddTaskPage> {
       appBar: AppBar(
         title: Text('Create'),
       ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Create Project',
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 12,
-                  color: Theme.of(context).accentColor,
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Create Project Textfield widget
+                CustomTextFieldWidget(
+                  textFieldTitle: 'Create Project',
+                  textFieldController: _projectFieldController,
+                  hintText: 'Project Name',
+                  validate: _validateProjectName,
+                  onChanged: (value) {
+                    setState(() {
+                      _validateProjectName = false;
+                    });
+                  },
+                  onTapAddButton: () {
+                    setState(() {
+                      createProject();
+                    });
+                  },
                 ),
-              ),
-              Container(
-                width: 250.0,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _projectFieldController,
-                        decoration: InputDecoration(
-                          //labelText: 'Create a Project',
-                          hintText: 'Project Name',
-                          errorText:
-                              _validate ? AppStrings.projectHasNoName : null,
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _validate = false;
-                          });
-                        },
-                        validator: (value) {
-                          if (value.trim().isEmpty) {
-                            return 'Please Enter a project name';
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      width: 8.0,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        //create a project
-                        setState(() {
-                          createProject();
-                        });
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: Quantity.addButtonSquareSide,
-                        height: Quantity.addButtonSquareSide,
-                        color: Colors.greenAccent,
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        ),
-                      ),
-                    )
-                  ],
+                SizedBox(
+                  height: 10.0,
                 ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Container(
-                height: 100.0,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: projectList.length,
-                    itemBuilder: (context, index) {
-                      return ProjectListItem(
-                        project: projectList[index],
-                        removeProject: (value) {
-                          setState(() {
-                            removeProject(value);
-                          });
-                        },
-                      );
-                    }),
-              ),
-            ],
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: projectList.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            ProjectListItem(
+                              project: projectList[index],
+                              removeProject: (value) {
+                                setState(() {
+                                  removeProject(value);
+                                });
+                              },
+                              addModule: (Project value) {
+                                //create module text field for project on a listview
+                                print(value.projectName);
+                              },
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            CustomTextFieldWidget(
+                              //give this a visibility field so it opens only by choice
+                              textFieldTitle: 'Add a Module',
+                              validate: _validateModuleName,
+                              textFieldController: _moduleTextFieldController,
+                              hintText: 'Module Name',
+                              onChanged: (value) {
+                                setState(() {
+                                  _validateModuleName = false;
+                                });
+                              },
+                              onTapAddButton: () {
+                                setState(() {
+                                  createModule(index);
+                                });
+                              },
+                            ),
+                            //
+                            //Build horizontal list of created modules
+                            //
+                            SingleChildScrollView(
+                              child: Container(
+                                width: 300,
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    itemCount:
+                                        projectList[index].listOfModules.length,
+                                    itemBuilder: (context, mark) {
+                                      return Column(
+                                        children: [
+                                          ModuleListItem(
+                                            module: projectList[index]
+                                                .listOfModules[mark],
+                                            removeModule: (value) {
+                                              setState(() {
+                                                removeModule(index, mark);
+                                              });
+                                            },
+                                            addTask: (Module value) {
+                                              //on tap should create a new page
+                                              //where tasks can be added and returned
+                                              //to parent module.
+                                              //tasks are displayed horizontally on this page.
+                                              print(value.moduleName);
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    }),
+                              ),
+                            ),
+                          ],
+                        );
+                      }),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+              ],
+            ),
           ),
         ),
       ),
