@@ -1,3 +1,4 @@
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/module_item.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/module_list_item.dart';
@@ -17,11 +18,11 @@ class AddTaskPageState extends State<AddTaskPage> {
 
   TextEditingController _moduleTextFieldController;
 
-  List<Project> projectList = [];
+  Project _project;
 
   bool _validateProjectName = false;
 
-  bool _moduleTextFieldIsVisible = false;
+  bool _addModuleTextFieldIsVisible = false;
 
   bool _validateModuleName = false;
 
@@ -41,10 +42,10 @@ class AddTaskPageState extends State<AddTaskPage> {
 
   void createProject() {
     if (_projectFieldController.text.isNotEmpty) {
-      projectList.add(Project(
+      _project = Project(
         projectName: _projectFieldController.text,
         listOfModules: [],
-      ));
+      );
       _projectFieldController.clear();
     } else {
       _validateProjectName = true;
@@ -52,15 +53,15 @@ class AddTaskPageState extends State<AddTaskPage> {
   }
 
   void removeProject(Project project) {
-    projectList.remove(project);
+    _project = null;
   }
 
-  void removeModule(int index, int mark) {
-    projectList[index].listOfModules.removeAt(mark);
+  void removeModule(int mark) {
+    _project.listOfModules.removeAt(mark);
   }
 
-  void createModule(int index) {
-    projectList[index].listOfModules.add(
+  void createModule() {
+    _project.listOfModules.add(
         Module(moduleName: _moduleTextFieldController.text, listOfTasks: []));
   }
 
@@ -79,35 +80,31 @@ class AddTaskPageState extends State<AddTaskPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Create Project Textfield widget
-                CustomTextFieldWidget(
-                  textFieldTitle: 'Create Project',
-                  textFieldController: _projectFieldController,
-                  hintText: 'Project Name',
-                  validate: _validateProjectName,
-                  onChanged: (value) {
-                    setState(() {
-                      _validateProjectName = false;
-                    });
-                  },
-                  onTapAddButton: () {
-                    setState(() {
-                      createProject();
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: projectList.length,
-                      itemBuilder: (context, index) {
-                        return Column(
+                _project == null
+                    ? CustomTextFieldWidget(
+                        textFieldTitle: 'Create Project',
+                        textFieldController: _projectFieldController,
+                        hintText: 'Project Name',
+                        validate: _validateProjectName,
+                        onChanged: (value) {
+                          setState(() {
+                            _validateProjectName = false;
+                          });
+                        },
+                        onTapAddButton: () {
+                          setState(() {
+                            createProject();
+                          });
+                        },
+                      )
+                    : Text(''),
+                _project != null
+                    ? Container(
+                        height: 300.0,
+                        child: Column(
                           children: [
                             ProjectListItem(
-                              project: projectList[index],
+                              project: _project,
                               removeProject: (value) {
                                 setState(() {
                                   removeProject(value);
@@ -115,68 +112,79 @@ class AddTaskPageState extends State<AddTaskPage> {
                               },
                               addModule: (Project value) {
                                 //create module text field for project on a listview
-                                print(value.projectName);
+
+                                setState(() {
+                                  _addModuleTextFieldIsVisible = true;
+                                });
                               },
                             ),
                             SizedBox(
                               height: 10.0,
                             ),
-                            CustomTextFieldWidget(
-                              //give this a visibility field so it opens only by choice
-                              textFieldTitle: 'Add a Module',
-                              validate: _validateModuleName,
-                              textFieldController: _moduleTextFieldController,
-                              hintText: 'Module Name',
-                              onChanged: (value) {
-                                setState(() {
-                                  _validateModuleName = false;
-                                });
-                              },
-                              onTapAddButton: () {
-                                setState(() {
-                                  createModule(index);
-                                });
-                              },
-                            ),
+                            _addModuleTextFieldIsVisible
+                                ? Column(
+                                    children: [
+                                      CustomTextFieldWidget(
+                                        //give this a visibility field so it opens only by choice
+                                        textFieldTitle: 'Add a Module',
+                                        validate: _validateModuleName,
+                                        textFieldController:
+                                            _moduleTextFieldController,
+                                        hintText: 'Module Name',
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _validateModuleName = false;
+                                          });
+                                        },
+                                        onTapAddButton: () {
+                                          setState(() {
+                                            createModule();
+                                          });
+                                        },
+                                      ),
+                                      DropDownField(
+                                        hintText: 'Add a Module',
+                                      ),
+                                    ],
+                                  )
+                                : Text(''),
                             //
                             //Build horizontal list of created modules
                             //
-                            SingleChildScrollView(
-                              child: Container(
-                                width: 300,
-                                child: ListView.builder(
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount:
-                                        projectList[index].listOfModules.length,
-                                    itemBuilder: (context, mark) {
-                                      return Column(
-                                        children: [
-                                          ModuleListItem(
-                                            module: projectList[index]
-                                                .listOfModules[mark],
-                                            removeModule: (value) {
-                                              setState(() {
-                                                removeModule(index, mark);
-                                              });
-                                            },
-                                            addTask: (Module value) {
-                                              //on tap should create a new page
-                                              //where tasks can be added and returned
-                                              //to parent module.
-                                              //tasks are displayed horizontally on this page.
-                                              print(value.moduleName);
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    }),
-                              ),
-                            ),
+                            // SingleChildScrollView(
+                            //   child: Container(
+                            //     width: 300,
+                            //     child: ListView.builder(
+                            //         shrinkWrap: true,
+                            //         scrollDirection: Axis.vertical,
+                            //         itemCount: _project.listOfModules.length,
+                            //         itemBuilder: (context, mark) {
+                            //           return Column(
+                            //             children: [
+                            //               ModuleListItem(
+                            //                 module: _project.listOfModules[mark],
+                            //                 removeModule: (value) {
+                            //                   setState(() {
+                            //                     removeModule(mark);
+                            //                   });
+                            //                 },
+                            //                 addTask: (Module value) {
+                            //                   //on tap should create a new page
+                            //                   //where tasks can be added and returned
+                            //                   //to parent module.
+                            //                   //tasks are displayed horizontally on this page.
+                            //                   print(value.moduleName);
+                            //                 },
+                            //               ),
+                            //             ],
+                            //           );
+                            //         }),
+                            //   ),
+                            // ),
                           ],
-                        );
-                      }),
-                ),
+                        ),
+                      )
+                    : Text(''),
                 SizedBox(
                   height: 10.0,
                 ),

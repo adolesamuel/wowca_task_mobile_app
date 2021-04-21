@@ -66,7 +66,7 @@ class _DashboardPageState extends State<DashboardPage> {
             Expanded(
               child: ListView.builder(
                   shrinkWrap: false,
-                  itemCount: 7,
+                  itemCount: 6,
                   physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     return Container(
@@ -77,7 +77,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           color: Colors.pinkAccent,
                           borderRadius: BorderRadius.all(
                               Radius.circular(Quantity.smallBorderRadius))),
-                      child: Center(child: Text('Module: $index')),
+                      child: Center(child: Text('Project: ${index + 1}')),
                     );
                   }),
             )

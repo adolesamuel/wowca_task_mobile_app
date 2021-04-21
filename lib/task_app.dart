@@ -38,8 +38,8 @@ class _TaskAppState extends State<TaskApp> {
       darkTheme: FlexColorScheme.dark(scheme: FlexScheme.deepPurple).toTheme,
       themeMode: ThemeMode.system,
       home: widget.accessToken == null || widget.accessToken.isEmpty
-          ? DashboardPage()
-          : SignUpPage(),
+          ? SignUpPage()
+          : DashboardPage(),
     );
   }
 

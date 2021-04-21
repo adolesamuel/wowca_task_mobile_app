@@ -51,7 +51,10 @@ class _ProjectListItemState extends State<ProjectListItem> {
                           AppStrings.addModule,
                           style: TextStyle(color: Colors.white, fontSize: 10.0),
                         )
-                      : null,
+                      : Text(
+                          AppStrings.addModule,
+                          style: TextStyle(color: Colors.white, fontSize: 10.0),
+                        ),
                 ),
               ],
             ),

@@ -9,7 +9,6 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormBuilderState>();
-  bool _obscurePassword = true;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -109,26 +108,10 @@ class _SignUpPageState extends State<SignUpPage> {
                       FormBuilderTextField(
                         name: 'Password',
                         keyboardType: TextInputType.name,
-                        obscureText: _obscurePassword,
+                        obscureText: true,
                         obscuringCharacter: '*',
                         // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
                         decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _obscurePassword
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: Theme.of(context).accentColor,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  if (_obscurePassword)
-                                    _obscurePassword = false;
-                                  else
-                                    _obscurePassword = true;
-                                });
-                              },
-                            ),
                             labelText: 'Password',
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -148,26 +131,10 @@ class _SignUpPageState extends State<SignUpPage> {
                       FormBuilderTextField(
                         name: 'Confirm Password',
                         keyboardType: TextInputType.name,
-                        obscureText: _obscurePassword,
+                        obscureText: true,
                         obscuringCharacter: '*',
                         // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
                         decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _obscurePassword
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: Theme.of(context).accentColor,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  if (_obscurePassword)
-                                    _obscurePassword = false;
-                                  else
-                                    _obscurePassword = true;
-                                });
-                              },
-                            ),
                             labelText: 'Confirm Password',
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -183,9 +150,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ],
                   )),
-              SizedBox(
-                height: Quantity.mediumSpace,
-              ),
               Row(
                 children: [
                   ElevatedButton(
