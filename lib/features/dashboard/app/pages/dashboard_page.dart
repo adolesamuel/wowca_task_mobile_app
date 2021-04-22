@@ -17,7 +17,7 @@ class _DashboardPageState extends State<DashboardPage> {
         elevation: 5.0,
       ),
       body: Container(
-        color: Theme.of(context).accentColor,
+        color: Colors.white,
         child: Column(
           children: [
             Container(
@@ -64,22 +64,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   ],
                 )),
             Expanded(
-              child: ListView.builder(
-                  shrinkWrap: false,
-                  itemCount: 6,
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.all(5.0),
-                      width: 200.0,
-                      height: 100.0,
-                      decoration: BoxDecoration(
-                          color: Colors.pinkAccent,
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(Quantity.smallBorderRadius))),
-                      child: Center(child: Text('Project: ${index + 1}')),
-                    );
-                  }),
+              child: AddTaskPage(),
             )
           ],
         ),

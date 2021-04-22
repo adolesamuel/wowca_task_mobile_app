@@ -4,6 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/dashboard/app/pages/dashboard_page.dart';
+import 'package:wowca_task/features/dashboard/app/pages/module_page.dart';
+import 'package:wowca_task/features/dashboard/app/widgets/module_item.dart';
+import 'package:wowca_task/features/dashboard/app/widgets/project_item.dart';
+import 'package:wowca_task/features/dashboard/app/widgets/task_item.dart';
 import 'package:wowca_task/features/user_registration/app/page/signup_page.dart';
 
 class TaskApp extends StatefulWidget {
@@ -37,9 +41,28 @@ class _TaskAppState extends State<TaskApp> {
       theme: FlexColorScheme.light(scheme: FlexScheme.deepPurple).toTheme,
       darkTheme: FlexColorScheme.dark(scheme: FlexScheme.deepPurple).toTheme,
       themeMode: ThemeMode.system,
-      home: widget.accessToken == null || widget.accessToken.isEmpty
-          ? SignUpPage()
-          : DashboardPage(),
+      home:
+          // widget.accessToken == null || widget.accessToken.isEmpty
+          // ? SignUpPage():
+          // DashboardPage(),
+          ModulePage(
+        project: Project(
+            projectId: '1',
+            projectName: 'TaskMan',
+            department: 'St. Isidore\'s TechHub',
+            listOfModules: [
+              Module(
+                  moduleId: '1',
+                  moduleName: 'task manager module',
+                  percentCompletion: 0.0,
+                  projectName: 'TaskMan',
+                  listOfTasks: [
+                    TaskItem(),
+                  ]),
+              Module(),
+              Module(),
+            ]),
+      ),
     );
   }
 
