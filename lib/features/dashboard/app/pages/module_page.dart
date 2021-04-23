@@ -27,7 +27,8 @@ class _ModulePageState extends State<ModulePage> {
                     settings: RouteSettings(name: '/TaskList'),
                     builder: (context) {
                       //takes a task list
-                      return TaskListPage();
+                      return TaskListPage(
+                          module: widget.project.listOfModules[0]);
                     }));
           },
           child: PhysicalModel(

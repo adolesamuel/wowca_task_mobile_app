@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wowca_task/features/dashboard/app/widgets/datatable_for_module..dart';
 import 'package:wowca_task/features/dashboard/app/widgets/module_item.dart';
 
 class TaskListPage extends StatefulWidget {
@@ -15,8 +16,11 @@ class TaskListPage extends StatefulWidget {
 class _TaskListPageState extends State<TaskListPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.green,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('${widget.module.moduleName}\'s tasks'),
+      ),
+      body: DataTableForModule(module: widget.module),
     );
   }
 }
