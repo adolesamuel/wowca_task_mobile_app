@@ -7,6 +7,11 @@ import 'package:wowca_task/core/helpers/json_checker.dart';
 import 'package:wowca_task/core/network_info/network_info.dart';
 import 'package:http/http.dart' as http;
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
+import 'package:wowca_task/features/user_registration/data/repository/registration_repository.dart';
+import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
+import 'package:wowca_task/features/user_registration/data/sources/registration_remote_data_source.dart';
+import 'package:wowca_task/features/user_registration/domain/repository/RegistrationRepository.dart';
+import 'package:wowca_task/features/user_registration/domain/usecases/register_user.dart';
 
 final sl = GetIt.instance;
 
@@ -18,22 +23,36 @@ Future<void> init() async {
         registerUser: sl(),
       ));
 
+  ///////////////////////////////////////////////////////////////////////////////////
   /// Application [USECASES]
-  ///
+  ///////////////////////////////////////////////////////////////////////////////////
 
   //Registration Useccase
+  sl.registerLazySingleton(() => RegisterUser(sl()));
 
+  ///////////////////////////////////////////////////////////////////////////////////
   /// Application [REPOSITORIES]
-  ///
+  ///////////////////////////////////////////////////////////////////////////////////
 
   //Registration Repository
   //
+  sl.registerLazySingleton<RegistrationRepository>(
+    () => RegistrationRepositoryImpl(
+      sl(),
+      sl(),
+      sl(),
+    ),
+  );
 
+  /////////////////////////////////////////////////////////////////////////////////////
   ///Application [DATA_SOURCES]
-  ///
+  /////////////////////////////////////////////////////////////////////////////////////
 
   //Registration Data Sources
-  //
+  sl.registerLazySingleton<RegistrationRemoteDataSource>(
+      () => RegistrationRemoteDataSourceImpl(sl(), sl(), sl()));
+  sl.registerLazySingleton<RegistrationLocalDataSource>(
+      () => LocalDataSourceImpl(sl()));
 
   //! Core
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
