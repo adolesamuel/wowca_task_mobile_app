@@ -32,6 +32,7 @@ class AppStrings {
   //API EndPoints
   static final String base = 'https://woca-task.herokuapp.com/api';
   static final String registerUser = '/register';
+  static final String signInUser = '/login';
 }
 
 //Error Messages

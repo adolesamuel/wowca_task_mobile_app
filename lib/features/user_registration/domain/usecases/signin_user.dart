@@ -3,10 +3,10 @@ import 'package:equatable/equatable.dart';
 import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/core/usecase/usecase.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
-import 'package:wowca_task/features/user_registration/domain/repository/sign_in_repository.dart';
+import 'package:wowca_task/features/user_registration/domain/repository/registration_repository.dart';
 
 class SignInUser extends Usecase<SignedInUserEntity, SignInParams> {
-  final SignInRepository signInRepository;
+  final RegistrationRepository signInRepository;
 
   SignInUser(this.signInRepository);
 

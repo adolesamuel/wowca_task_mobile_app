@@ -5,6 +5,7 @@ import 'package:wowca_task/core/network_info/network_info.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/user_registration/data/model/register_user_data.dart';
 import 'package:wowca_task/features/user_registration/data/model/registered_user_model.dart';
+import 'package:wowca_task/features/user_registration/data/model/signed_in_user_model.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_remote_data_source.dart';
 import 'package:wowca_task/features/user_registration/domain/repository/registration_repository.dart';
@@ -45,6 +46,24 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
         SERVER_FAILURE_TITLE,
         SERVER_FAILURE_MESSAGE,
       ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, SignedInUserModel>> signIn({
+    String email,
+    String password,
+  }) async {
+    try {
+      if (await networkInfo.isConnected) {
+        return Right(await remoteDataSource.signInUser(
+            email: email, password: password));
+      } else {
+        return Left(InternetFailure(
+            NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));
+      }
+    } on ServerException {
+      return Left(ServerFailure(SERVER_FAILURE_TITLE, SERVER_FAILURE_MESSAGE));
     }
   }
 }

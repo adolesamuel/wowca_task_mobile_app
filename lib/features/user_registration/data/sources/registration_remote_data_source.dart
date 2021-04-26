@@ -6,12 +6,15 @@ import 'package:wowca_task/core/helpers/json_checker.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/user_registration/data/model/register_user_data.dart';
 import 'package:wowca_task/features/user_registration/data/model/registered_user_model.dart';
+import 'package:wowca_task/features/user_registration/data/model/signed_in_user_model.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
 
 abstract class RegistrationRemoteDataSource {
   Future<RegisteredUserModel> registerUser({
     RegisterUserModel registerUser,
   });
+
+  Future<SignedInUserModel> signInUser({String email, String password});
 }
 
 class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
@@ -63,8 +66,7 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
           // localDataSource.cacheRegisteredUserData(registeredUserModel);
 
           return registeredUserModel;
-        }
-        if (data['status'] == 'failed') {
+        } else if (data['status'] == 'failed') {
           final userEmailUsedData =
               RegisteredUserModel.fromJson(json.decode(response.body));
           return userEmailUsedData;
@@ -86,6 +88,47 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
       }
     } else {
       //throws Server Failure
+      throw ServerException();
+    }
+  }
+
+//SignIn user remote data source
+
+  @override
+  Future<SignedInUserModel> signInUser({String email, String password}) async {
+    String url = AppStrings.base + AppStrings.signInUser;
+
+    Map<String, dynamic> body = {
+      'email': email,
+      'password': password,
+    };
+
+    final response = await client.post(Uri.parse(url), body: body);
+
+    if (response.statusCode == 200) {
+      if (await jsonChecker.isJson(response.body)) {
+        final data = await json.decode(response.body);
+        print(data);
+
+        if (data['status'] == 201) {
+          final signedInUserModel = SignedInUserModel.fromJson(data["data"]);
+
+          localDataSource.cacheRegisteredUserData(signedInUserModel);
+          return signedInUserModel;
+        } else {
+          final title = data['title'], message = data['message'];
+
+          String errorMessage = json.encode({
+            'title': title,
+            'message': message,
+          });
+
+          throw errorMessage;
+        }
+      } else {
+        throw FormatException();
+      }
+    } else {
       throw ServerException();
     }
   }
