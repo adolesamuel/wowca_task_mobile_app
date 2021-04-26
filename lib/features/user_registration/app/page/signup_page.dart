@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/app/page/signIn_page.dart';
+import 'package:wowca_task/injection_container.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -18,6 +21,7 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController _organizationController;
   TextEditingController _emailController;
   TextEditingController _passwordController;
+  final registrationBloc = sl<SignUpBloc>();
 
   @override
   void initState() {
@@ -319,48 +323,64 @@ class _SignUpPageState extends State<SignUpPage> {
 
                 // Button Row for Register or Sign Up
 
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          child: Text(AppStrings.signUpPageRegisterText),
-                          onPressed: () {
-                            //create user object
-                            // push to database
-                            //add linearprogressindicator
-                            //push to page showing user registered and ask for account verification;
-                            //if organization has one admin, say organization has admin already;
-                            print('Register Button pressed');
-                            if (_formKey.currentState.validate()) {
-                              print('form validated successfully');
-                            }
-                          },
-                        ),
-                        SizedBox(
-                          width: Quantity.mediumSpace,
-                        ),
-                        Text(AppStrings.orText),
-                        SizedBox(
-                          width: Quantity.mediumSpace,
-                        ),
-                        OutlinedButton(
-                            onPressed: () {
-                              print('Sign In button pressed');
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      settings:
-                                          RouteSettings(name: '/SignInPage'),
-                                      builder: (context) {
-                                        return SignInPage();
-                                      }));
-                            },
-                            child: Text(AppStrings.signUpPageSignInText)),
-                      ],
-                    ),
-                    Text(AppStrings.existingOrgText),
-                  ],
+                BlocProvider(
+                  create: (context) => registrationBloc,
+                  child: BlocConsumer<SignUpBloc, SignUpState>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      return Column(
+                        children: [
+                          if (state is RegisterUserLoadingState)
+                            LinearProgressIndicator(),
+                          Row(
+                            children: [
+                              ElevatedButton(
+                                child: Text(AppStrings.signUpPageRegisterText),
+                                onPressed: () {
+                                  //create user object
+                                  // push to database
+                                  //add linearprogressindicator
+                                  //push to page showing user registered and ask for account verification;
+                                  //if organization has one admin, say organization has admin already;
+                                  print('Register Button pressed');
+                                  if (_formKey.currentState.validate()) {
+                                    print('form validated successfully');
+                                    registrationBloc.add(RegisterUserEvent(
+                                      name: _nameController.text,
+                                      orgName: _organizationController.text,
+                                      password: _passwordController.text,
+                                      email: _emailController.text,
+                                    ));
+                                  }
+                                },
+                              ),
+                              SizedBox(
+                                width: Quantity.mediumSpace,
+                              ),
+                              Text(AppStrings.orText),
+                              SizedBox(
+                                width: Quantity.mediumSpace,
+                              ),
+                              OutlinedButton(
+                                  onPressed: () {
+                                    print('Sign In button pressed');
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            settings: RouteSettings(
+                                                name: '/SignInPage'),
+                                            builder: (context) {
+                                              return SignInPage();
+                                            }));
+                                  },
+                                  child: Text(AppStrings.signUpPageSignInText)),
+                            ],
+                          ),
+                          Text(AppStrings.existingOrgText),
+                        ],
+                      );
+                    },
+                  ),
                 )
               ],
             ),
