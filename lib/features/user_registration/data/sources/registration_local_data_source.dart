@@ -25,6 +25,8 @@ class LocalDataSourceImpl implements RegistrationLocalDataSource {
 
   LocalDataSourceImpl(this.sharedPreferences);
 
+  //TODO: RegisteredUserModel does not contain token so use a different user object for the associated usecase
+
   @override
   Future<void> cacheRegisteredUserData(RegisteredUserModel userInfo) {
     return sharedPreferences.setString(
@@ -33,6 +35,7 @@ class LocalDataSourceImpl implements RegistrationLocalDataSource {
     );
   }
 
+//TODO: change the object type for required use case
   @override
   Future<RegisteredUserModel> getRegisteredUserData() {
     String cachedUser = sharedPreferences.getString(

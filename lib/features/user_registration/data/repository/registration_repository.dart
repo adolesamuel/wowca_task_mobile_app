@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:wowca_task/core/errors/exception.dart';
 import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/core/network_info/network_info.dart';
+import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/features/user_registration/data/model/register_user_data.dart';
 import 'package:wowca_task/features/user_registration/data/model/registered_user_model.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_remote_data_source.dart';
@@ -19,12 +21,16 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
       this.networkInfo, this.remoteDataSource, this.localDataSource);
 
   @override
-  Future<Either<Failure, RegisteredUserModel>> register(
-      {String email, String password, String name, String orgName}) async {
+  Future<Either<Failure, RegisteredUserModel>> register({
+    RegisterUserModel registerUser,
+  }) async {
     try {
       if (await networkInfo.isConnected) {
-        Right(await remoteDataSource.registerUser(
-            name: name, email: email, password: password, orgName: orgName));
+        return Right(
+            await remoteDataSource.registerUser(registerUser: registerUser));
+      } else {
+        return Left(InternetFailure(
+            NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));
       }
     } on ServerException {
       return Left(ServerFailure(
