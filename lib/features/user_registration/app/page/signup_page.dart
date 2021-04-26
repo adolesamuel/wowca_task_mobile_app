@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
+import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/user_registration/app/page/signIn_page.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -59,7 +60,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 Container(
                   padding: EdgeInsets.all(20.0),
                   child: Text(
-                    'Create Task Manager Admin Account',
+                    AppStrings.signUpTitle,
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
                   ),
@@ -70,7 +71,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: Column(
                       children: [
                         FormBuilderTextField(
-                          name: 'Name',
+                          name: AppStrings.signUpPageName,
                           keyboardType: TextInputType.name,
                           textInputAction: TextInputAction.next,
                           textCapitalization: TextCapitalization.words,
@@ -83,7 +84,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
 
                           decoration: InputDecoration(
-                              labelText: 'Name',
+                              labelText: AppStrings.signUpPageName,
                               errorStyle: TextStyle(
                                   color: Theme.of(context).primaryColor),
                               errorBorder: OutlineInputBorder(
@@ -114,7 +115,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           height: Quantity.mediumSpace,
                         ),
                         FormBuilderTextField(
-                          name: 'Organization Name',
+                          name: AppStrings.signUpPageOrgName,
                           keyboardType: TextInputType.name,
                           textInputAction: TextInputAction.next,
                           textCapitalization: TextCapitalization.words,
@@ -127,7 +128,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
 
                           decoration: InputDecoration(
-                              labelText: 'Organization Name',
+                              labelText: AppStrings.signUpPageOrgName,
                               errorStyle: TextStyle(
                                   color: Theme.of(context).primaryColor),
                               errorBorder: OutlineInputBorder(
@@ -158,7 +159,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           height: Quantity.mediumSpace,
                         ),
                         FormBuilderTextField(
-                          name: 'Email',
+                          name: AppStrings.signUpPageEmail,
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           textCapitalization: TextCapitalization.words,
@@ -175,7 +176,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
 
                           decoration: InputDecoration(
-                              labelText: 'Email',
+                              labelText: AppStrings.signUpPageEmail,
                               errorStyle: TextStyle(
                                   color: Theme.of(context).primaryColor),
                               errorBorder: OutlineInputBorder(
@@ -206,7 +207,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           height: Quantity.mediumSpace,
                         ),
                         FormBuilderTextField(
-                          name: 'Password',
+                          name: AppStrings.signUpPagePassword,
                           keyboardType: TextInputType.name,
                           obscureText: _obscurePassword,
                           textInputAction: TextInputAction.next,
@@ -255,7 +256,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   });
                                 },
                               ),
-                              labelText: 'Password',
+                              labelText: AppStrings.signUpPagePassword,
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                     style: BorderStyle.solid,
@@ -272,7 +273,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           height: Quantity.mediumSpace,
                         ),
                         FormBuilderTextField(
-                          name: 'Confirm Password',
+                          name: AppStrings.signUpPageConfirmPassword,
                           controller: _confirmPasswordController,
                           keyboardType: TextInputType.name,
                           textInputAction: TextInputAction.next,
@@ -297,7 +298,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   });
                                 },
                               ),
-                              labelText: 'Confirm Password',
+                              labelText: AppStrings.signUpPageConfirmPassword,
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                     style: BorderStyle.solid,
@@ -323,7 +324,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     Row(
                       children: [
                         ElevatedButton(
-                          child: Text('Register'),
+                          child: Text(AppStrings.signUpPageRegisterText),
                           onPressed: () {
                             //create user object
                             // push to database
@@ -339,7 +340,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         SizedBox(
                           width: Quantity.mediumSpace,
                         ),
-                        Text('OR'),
+                        Text(AppStrings.orText),
                         SizedBox(
                           width: Quantity.mediumSpace,
                         ),
@@ -355,10 +356,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                         return SignInPage();
                                       }));
                             },
-                            child: Text('Sign In')),
+                            child: Text(AppStrings.signUpPageSignInText)),
                       ],
                     ),
-                    Text('to an existing Organization'),
+                    Text(AppStrings.existingOrgText),
                   ],
                 )
               ],

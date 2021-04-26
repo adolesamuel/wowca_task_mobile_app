@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
+import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/user_registration/app/page/signIn_page.dart';
 import 'package:wowca_task/features/user_registration/app/page/signup_page.dart';
 
@@ -48,7 +49,7 @@ class _SignInPageState extends State<SignInPage> {
                 Container(
                   padding: EdgeInsets.all(20.0),
                   child: Text(
-                    'Sign In',
+                    AppStrings.signInPageSignInText,
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
                   ),
@@ -59,7 +60,7 @@ class _SignInPageState extends State<SignInPage> {
                     child: Column(
                       children: [
                         FormBuilderTextField(
-                          name: 'Email',
+                          name: AppStrings.signUpPageEmail,
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           textCapitalization: TextCapitalization.words,
@@ -76,7 +77,7 @@ class _SignInPageState extends State<SignInPage> {
                           // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
 
                           decoration: InputDecoration(
-                              labelText: 'Email',
+                              labelText: AppStrings.signUpPageEmail,
                               errorStyle: TextStyle(
                                   color: Theme.of(context).primaryColor),
                               errorBorder: OutlineInputBorder(
@@ -107,7 +108,7 @@ class _SignInPageState extends State<SignInPage> {
                           height: Quantity.mediumSpace,
                         ),
                         FormBuilderTextField(
-                          name: 'Password',
+                          name: AppStrings.signUpPagePassword,
                           keyboardType: TextInputType.name,
                           obscureText: _obscurePassword,
                           textInputAction: TextInputAction.next,
@@ -152,7 +153,7 @@ class _SignInPageState extends State<SignInPage> {
                                   });
                                 },
                               ),
-                              labelText: 'Password',
+                              labelText: AppStrings.signUpPagePassword,
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                     style: BorderStyle.solid,
@@ -181,7 +182,7 @@ class _SignInPageState extends State<SignInPage> {
                     Row(
                       children: [
                         ElevatedButton(
-                          child: Text('Sign In'),
+                          child: Text(AppStrings.signInPageSignInText),
                           onPressed: () {
                             //create user object
                             // push to database
@@ -197,7 +198,7 @@ class _SignInPageState extends State<SignInPage> {
                         SizedBox(
                           width: Quantity.mediumSpace,
                         ),
-                        Text('OR'),
+                        Text(AppStrings.orText),
                         SizedBox(
                           width: Quantity.mediumSpace,
                         ),
@@ -213,10 +214,10 @@ class _SignInPageState extends State<SignInPage> {
                                         return SignUpPage();
                                       }));
                             },
-                            child: Text('Register'))
+                            child: Text(AppStrings.signUpPageRegisterText))
                       ],
                     ),
-                    Text('a new organization'),
+                    Text(AppStrings.newOrgText),
                   ],
                 )
               ],

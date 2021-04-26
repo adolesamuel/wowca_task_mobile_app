@@ -46,9 +46,9 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
 
     final response = await client.post(Uri.parse(url), body: body);
 
-    ///Verify a successfull response from server
+    ///Verify if the response is successfull response from server
     if (response.statusCode == 200) {
-      //   ///Check to verify response data format is json
+      //Check to verify response data format is json
       if (await jsonChecker.isJson(response.body)) {
         final data = await json.decode(response.body);
         print(data);
@@ -63,6 +63,11 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
           // localDataSource.cacheRegisteredUserData(registeredUserModel);
 
           return registeredUserModel;
+        }
+        if (data['status'] == 'failed') {
+          final userEmailUsedData =
+              RegisteredUserModel.fromJson(json.decode(response.body));
+          return userEmailUsedData;
         } else {
           //Warning, Failure response from server
           final title = data['reason']['summary'],
