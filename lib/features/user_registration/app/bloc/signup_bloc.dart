@@ -29,12 +29,10 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
       final registerOrError = await registerUser(
         RegistrationParams(
-          registerUserEntity: RegisterUserModel(
-            name: event.name,
-            password: event.password,
-            email: event.email,
-            orgName: event.orgName,
-          ),
+          name: event.name,
+          password: event.password,
+          email: event.email,
+          orgName: event.orgName,
         ),
       );
 

@@ -10,7 +10,7 @@ import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart'
 import 'package:wowca_task/features/user_registration/data/repository/registration_repository.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_remote_data_source.dart';
-import 'package:wowca_task/features/user_registration/domain/repository/RegistrationRepository.dart';
+import 'package:wowca_task/features/user_registration/domain/repository/registration_repository.dart';
 import 'package:wowca_task/features/user_registration/domain/usecases/register_user.dart';
 
 final sl = GetIt.instance;
