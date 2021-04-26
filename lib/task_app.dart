@@ -41,55 +41,55 @@ class _TaskAppState extends State<TaskApp> {
       theme: FlexColorScheme.light(scheme: FlexScheme.deepPurple).toTheme,
       darkTheme: FlexColorScheme.dark(scheme: FlexScheme.deepPurple).toTheme,
       themeMode: ThemeMode.system,
-      home:
-          // widget.accessToken == null || widget.accessToken.isEmpty
-          // ? SignUpPage():
+      home: widget.accessToken == null || widget.accessToken.isEmpty
+          ? SignUpPage()
+          :
           // DashboardPage(),
           ModulePage(
-        project: Project(
-            projectId: '1',
-            projectName: 'TaskMan',
-            department: 'St. Isidore\'s TechHub',
-            listOfModules: [
-              Module(
-                  moduleId: '1',
-                  moduleName: 'task manager module',
-                  percentCompletion: 0.0,
+              project: Project(
+                  projectId: '1',
                   projectName: 'TaskMan',
-                  listOfTasks: [
-                    TaskItem(
-                      taskName: 'Text Task 1',
-                      started: true,
-                      completed: true,
-                      description: 'creating an egg',
-                      moduleName: 'task manager module',
-                    ),
-                    TaskItem(
-                      taskName: 'Text Task 2',
-                      started: false,
-                      completed: false,
-                      description: 'mixing soup',
-                      moduleName: 'task manager module',
-                    ),
-                    TaskItem(
-                      taskName: 'Text Task 3',
-                      started: true,
-                      completed: false,
-                      description: 'grind the beans',
-                      moduleName: 'task manager module',
-                    ),
-                    TaskItem(
-                      taskName: 'Text Task 4',
-                      started: false,
-                      completed: true,
-                      description: 'sit down and enjoy the moi moi',
-                      moduleName: 'task manager module',
-                    ),
+                  department: 'St. Isidore\'s TechHub',
+                  listOfModules: [
+                    Module(
+                        moduleId: '1',
+                        moduleName: 'task manager module',
+                        percentCompletion: 0.0,
+                        projectName: 'TaskMan',
+                        listOfTasks: [
+                          TaskItem(
+                            taskName: 'Text Task 1',
+                            started: true,
+                            completed: true,
+                            description: 'creating an egg',
+                            moduleName: 'task manager module',
+                          ),
+                          TaskItem(
+                            taskName: 'Text Task 2',
+                            started: false,
+                            completed: false,
+                            description: 'mixing soup',
+                            moduleName: 'task manager module',
+                          ),
+                          TaskItem(
+                            taskName: 'Text Task 3',
+                            started: true,
+                            completed: false,
+                            description: 'grind the beans',
+                            moduleName: 'task manager module',
+                          ),
+                          TaskItem(
+                            taskName: 'Text Task 4',
+                            started: false,
+                            completed: true,
+                            description: 'sit down and enjoy the moi moi',
+                            moduleName: 'task manager module',
+                          ),
+                        ]),
+                    Module(),
+                    Module(),
                   ]),
-              Module(),
-              Module(),
-            ]),
-      ),
+            ),
     );
   }
 

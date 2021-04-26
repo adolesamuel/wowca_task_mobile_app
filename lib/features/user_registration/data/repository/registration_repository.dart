@@ -19,25 +19,12 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
       this.networkInfo, this.remoteDataSource, this.localDataSource);
 
   @override
-  Future<Either<Failure, RegisteredUserModel>> register({
-    String username,
-    String firstname,
-    String lastname,
-    String email,
-    String phone,
-    String password,
-    String apiKey,
-  }) async {
+  Future<Either<Failure, RegisteredUserModel>> register(
+      {String email, String password, String name, String orgName}) async {
     try {
       if (await networkInfo.isConnected) {
         Right(await remoteDataSource.registerUser(
-            username: username,
-            email: email,
-            firstname: firstname,
-            lastname: lastname,
-            phone: phone,
-            password: password,
-            apiKey: apiKey));
+            name: name, email: email, password: password, orgName: orgName));
       }
     } on ServerException {
       return Left(ServerFailure(

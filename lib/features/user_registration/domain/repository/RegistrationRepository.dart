@@ -4,12 +4,9 @@ import 'package:wowca_task/features/user_registration/domain/entity/registered_u
 
 abstract class RegistrationRepository {
   Future<Either<Failure, RegisteredUserEntity>> register({
-    String username,
-    String firstname,
-    String lastname,
     String email,
-    String phone,
+    String name,
     String password,
-    String apiKey,
+    String orgName,
   });
 }

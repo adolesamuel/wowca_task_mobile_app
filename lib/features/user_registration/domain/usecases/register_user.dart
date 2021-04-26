@@ -14,43 +14,32 @@ class RegisterUser extends Usecase<RegisteredUserEntity, RegistrationParams> {
   Future<Either<Failure, RegisteredUserEntity>> call(
       RegistrationParams params) async {
     return await registrationRepository.register(
-        username: params.username,
-        firstname: params.firstname,
-        lastname: params.lastname,
-        email: params.email,
-        phone: params.phone,
-        password: params.password,
-        apiKey: params.apiKey);
+      orgName: params.orgName,
+      name: params.name,
+      email: params.email,
+      password: params.password,
+    );
   }
 }
 
 class RegistrationParams extends Equatable {
-  final String username;
-  final String firstname;
-  final String lastname;
+  final String name;
   final String email;
-  final String phone;
   final String password;
-  final String apiKey;
+  final String orgName;
 
-  RegistrationParams(
-    this.username,
-    this.firstname,
-    this.lastname,
+  RegistrationParams({
+    this.name,
     this.email,
-    this.phone,
     this.password,
-    this.apiKey,
-  );
+    this.orgName,
+  });
 
   @override
   List<Object> get props => [
-        username,
-        firstname,
-        lastname,
+        name,
         email,
-        phone,
         password,
-        apiKey,
+        orgName,
       ];
 }

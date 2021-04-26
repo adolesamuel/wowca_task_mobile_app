@@ -5,13 +5,10 @@ import 'package:wowca_task/features/user_registration/data/sources/registration_
 
 abstract class RegistrationRemoteDataSource {
   Future<RegisteredUserModel> registerUser({
-    String username,
+    String name,
     String email,
-    String firstname,
-    String lastname,
-    String phone,
     String password,
-    String apiKey,
+    String orgName,
   });
 }
 
@@ -28,13 +25,10 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
 
   @override
   Future<RegisteredUserModel> registerUser({
-    String username,
+    String name,
     String email,
-    String firstname,
-    String lastname,
-    String phone,
     String password,
-    String apiKey,
+    String orgName,
   }) async {
     //String url = AppStrings().Something;
     ///API request [URL_ENDPOINT] for user preliminary update
@@ -45,13 +39,10 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
 
     ///Body of the [POST] request
     Map<String, dynamic> body = {
-      'okey': apiKey,
-      'username': username,
+      'orgName': orgName,
+      'name': name,
       'email': email,
-      'phone': phone,
       'password': password,
-      'firstname': firstname,
-      'lastname': lastname
     };
 
     ///[final response = await client.post(url, body: body);]
