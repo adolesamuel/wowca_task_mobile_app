@@ -14,7 +14,9 @@ Future<void> init() async {
   //! Features
 
   //Registration Bloc
-  sl.registerFactory(() => SignupBloc());
+  sl.registerFactory(() => SignUpBloc(
+        registerUser: sl(),
+      ));
 
   /// Application [USECASES]
   ///
