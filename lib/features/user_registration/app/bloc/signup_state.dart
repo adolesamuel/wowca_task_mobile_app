@@ -11,3 +11,15 @@ abstract class SignUpState extends Equatable {
 class SignupInitial extends SignUpState {}
 
 class RegisterUserLoadingState extends SignUpState {}
+
+class UserRegisteredState extends SignUpState {
+  final RegisteredUserEntity registeredUserEntity;
+
+  UserRegisteredState(this.registeredUserEntity);
+}
+
+class RegistrationErrorState extends SignUpState {
+  final Failure failure;
+
+  RegistrationErrorState(this.failure);
+}
