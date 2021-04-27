@@ -1,22 +1,37 @@
 import 'package:wowca_task/features/user_registration/domain/entity/registered_user.dart';
 
 class RegisteredUserModel extends RegisteredUserEntity {
-  final String token;
+  final String title;
+  final String message;
+  final String status;
 
-  RegisteredUserModel(this.token) : super(token);
+  RegisteredUserModel({this.title, this.message, this.status})
+      : super(
+          title: title,
+          message: message,
+          status: status,
+        );
 
-  factory RegisteredUserModel.fromJson(Map<String, dynamic> json) {
-    final data = json['response'];
-
-    return RegisteredUserModel(data);
+  factory RegisteredUserModel.fromJson(Map<String, dynamic> data) {
+    return RegisteredUserModel(
+      title: data['title'],
+      message: data['message'],
+      status: data['status'],
+    );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'access_token': token,
+      title: title,
+      status: status,
+      message: message,
     };
   }
 
   @override
-  List<Object> get props => [token];
+  List<Object> get props => [
+        title,
+        message,
+        status,
+      ];
 }

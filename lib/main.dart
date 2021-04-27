@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/usecase/read_local_pref.dart';
-import 'package:wowca_task/features/dashboard/app/pages/dashboard_page.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
 import 'package:wowca_task/injection_container.dart' as di;
 import 'package:wowca_task/task_app.dart';
@@ -23,7 +22,6 @@ void main() async {
       .readPrefFromObject(CACHED_REGISTERED_USER, 'access_token');
 
   runApp(
-    // TaskApp(accessToken: accessToken)
-    DashboardPage(),
+    TaskApp(accessToken: accessToken),
   );
 }

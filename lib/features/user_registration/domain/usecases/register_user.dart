@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/core/usecase/usecase.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/registered_user.dart';
-import 'package:wowca_task/features/user_registration/domain/repository/RegistrationRepository.dart';
+import 'package:wowca_task/features/user_registration/domain/repository/registration_repository.dart';
 
 class RegisterUser extends Usecase<RegisteredUserEntity, RegistrationParams> {
   final RegistrationRepository registrationRepository;
@@ -14,43 +14,32 @@ class RegisterUser extends Usecase<RegisteredUserEntity, RegistrationParams> {
   Future<Either<Failure, RegisteredUserEntity>> call(
       RegistrationParams params) async {
     return await registrationRepository.register(
-        username: params.username,
-        firstname: params.firstname,
-        lastname: params.lastname,
-        email: params.email,
-        phone: params.phone,
-        password: params.password,
-        apiKey: params.apiKey);
+      name: params.name,
+      password: params.password,
+      email: params.email,
+      orgName: params.orgName,
+    );
   }
 }
 
 class RegistrationParams extends Equatable {
-  final String username;
-  final String firstname;
-  final String lastname;
-  final String email;
-  final String phone;
+  final String name;
   final String password;
-  final String apiKey;
+  final String email;
+  final String orgName;
 
-  RegistrationParams(
-    this.username,
-    this.firstname,
-    this.lastname,
-    this.email,
-    this.phone,
+  RegistrationParams({
+    this.name,
     this.password,
-    this.apiKey,
-  );
+    this.email,
+    this.orgName,
+  });
 
   @override
   List<Object> get props => [
-        username,
-        firstname,
-        lastname,
-        email,
-        phone,
+        name,
         password,
-        apiKey,
+        email,
+        orgName,
       ];
 }
