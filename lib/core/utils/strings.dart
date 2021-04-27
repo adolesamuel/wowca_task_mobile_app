@@ -20,6 +20,14 @@ class AppStrings {
   static final String orText = 'OR';
   ///////////////////////////////////////////////////////////////////////
 
+  //Verification page strings
+  static final String verificationPageText = 'Verify your account';
+  static final String verificationPageEnterCodeText = 'Enter 6 digit code';
+  static final String verificationButtonText = 'Verify';
+  static final String newRegOrgText =
+      'Register a new organization with a different email';
+  //////////////////////////////////////////////////////////////////////
+
   //SignInPage strings
   static final String signInPageSignInText = 'Sign In';
   static final String newOrgText = 'a new organization';
