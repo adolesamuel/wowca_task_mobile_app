@@ -37,3 +37,17 @@ class SignedInUserState extends SignUpState {
     this.signedInUserEntity,
   );
 }
+
+class VerificationLoadingState extends SignUpState {}
+
+class VerifiedUserState extends SignUpState {
+  final SignedInUserEntity verifiedUserEntity;
+
+  VerifiedUserState(this.verifiedUserEntity);
+}
+
+class VerificationErrorState extends SignUpState {
+  final Failure failure;
+
+  VerificationErrorState(this.failure);
+}

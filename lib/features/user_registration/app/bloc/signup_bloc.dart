@@ -8,6 +8,7 @@ import 'package:wowca_task/features/user_registration/domain/entity/registered_u
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 import 'package:wowca_task/features/user_registration/domain/usecases/register_user.dart';
 import 'package:wowca_task/features/user_registration/domain/usecases/signin_user.dart';
+import 'package:wowca_task/features/user_registration/domain/usecases/verification.dart';
 
 part 'signup_event.dart';
 part 'signup_state.dart';
@@ -15,10 +16,12 @@ part 'signup_state.dart';
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final RegisterUser registerUser;
   final SignInUser signInUser;
+  final VerifyUser verifyUser;
 
   SignUpBloc({
     this.registerUser,
     this.signInUser,
+    this.verifyUser,
   }) : super(SignupInitial());
 
   @override
@@ -49,6 +52,17 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           SignInParams(email: event.email, password: event.password));
       yield signInOrError.fold((failure) => SignInErrorState(failure),
           (signedInUserEntity) => SignedInUserState(signedInUserEntity));
+    }
+
+    if (event is VerifyUserEvent) {
+      yield VerificationLoadingState();
+
+      final verifyOrError = await verifyUser(
+        VerificationParams(code: event.code),
+      );
+
+      yield verifyOrError.fold((failure) => VerificationErrorState(failure),
+          (signedInUserEntity) => VerifiedUserState(signedInUserEntity));
     }
   }
 }

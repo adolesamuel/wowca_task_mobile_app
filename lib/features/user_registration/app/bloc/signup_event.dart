@@ -28,3 +28,9 @@ class SignInUserEvent extends SignUpEvent {
 
   SignInUserEvent(this.email, this.password);
 }
+
+class VerifyUserEvent extends SignUpEvent {
+  final String code;
+
+  VerifyUserEvent(this.code);
+}
