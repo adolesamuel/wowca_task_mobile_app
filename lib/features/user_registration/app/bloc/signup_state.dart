@@ -23,3 +23,17 @@ class RegistrationErrorState extends SignUpState {
 
   RegistrationErrorState(this.failure);
 }
+
+class SignInErrorState extends SignUpState {
+  final Failure failure;
+
+  SignInErrorState(this.failure);
+}
+
+class SignedInUserState extends SignUpState {
+  final SignedInUserEntity signedInUserEntity;
+
+  SignedInUserState(
+    this.signedInUserEntity,
+  );
+}

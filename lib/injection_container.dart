@@ -12,6 +12,7 @@ import 'package:wowca_task/features/user_registration/data/sources/registration_
 import 'package:wowca_task/features/user_registration/data/sources/registration_remote_data_source.dart';
 import 'package:wowca_task/features/user_registration/domain/repository/registration_repository.dart';
 import 'package:wowca_task/features/user_registration/domain/usecases/register_user.dart';
+import 'package:wowca_task/features/user_registration/domain/usecases/signin_user.dart';
 
 final sl = GetIt.instance;
 
@@ -21,6 +22,7 @@ Future<void> init() async {
   //Registration Bloc
   sl.registerFactory(() => SignUpBloc(
         registerUser: sl(),
+        signInUser: sl(),
       ));
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -29,6 +31,7 @@ Future<void> init() async {
 
   //Registration Useccase
   sl.registerLazySingleton(() => RegisterUser(sl()));
+  sl.registerLazySingleton(() => SignInUser(sl()));
 
   ///////////////////////////////////////////////////////////////////////////////////
   /// Application [REPOSITORIES]
