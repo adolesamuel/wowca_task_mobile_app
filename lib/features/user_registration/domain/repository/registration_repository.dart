@@ -15,4 +15,8 @@ abstract class RegistrationRepository {
     String email,
     String password,
   });
+
+  Future<Either<Failure, SignedInUserEntity>> verify({
+    String code,
+  });
 }

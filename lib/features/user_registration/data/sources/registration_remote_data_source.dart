@@ -15,6 +15,7 @@ abstract class RegistrationRemoteDataSource {
   });
 
   Future<SignedInUserModel> signInUser({String email, String password});
+  Future<SignedInUserModel> verifyUser({String code});
 }
 
 class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
@@ -101,6 +102,44 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
     Map<String, dynamic> body = {
       'email': email,
       'password': password,
+    };
+
+    final response = await client.post(Uri.parse(url), body: body);
+
+    if (response.statusCode == 200) {
+      if (await jsonChecker.isJson(response.body)) {
+        final data = await json.decode(response.body);
+        print(data);
+
+        if (data['status'] == 201) {
+          final signedInUserModel = SignedInUserModel.fromJson(data["data"]);
+
+          localDataSource.cacheRegisteredUserData(signedInUserModel);
+          return signedInUserModel;
+        } else {
+          final title = data['title'], message = data['message'];
+
+          String errorMessage = json.encode({
+            'title': title,
+            'message': message,
+          });
+
+          throw errorMessage;
+        }
+      } else {
+        throw FormatException();
+      }
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<SignedInUserModel> verifyUser({String code}) async {
+    String url = AppStrings.base + AppStrings.verifyUser;
+
+    Map<String, dynamic> body = {
+      'code': code,
     };
 
     final response = await client.post(Uri.parse(url), body: body);

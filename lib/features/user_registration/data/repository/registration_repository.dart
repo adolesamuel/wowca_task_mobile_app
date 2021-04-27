@@ -66,4 +66,18 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
       return Left(ServerFailure(SERVER_FAILURE_TITLE, SERVER_FAILURE_MESSAGE));
     }
   }
+
+  @override
+  Future<Either<Failure, SignedInUserModel>> verify({String code}) async {
+    try {
+      if (await networkInfo.isConnected) {
+        return Right(await remoteDataSource.verifyUser(code: code));
+      } else {
+        return Left(InternetFailure(
+            NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));
+      }
+    } on ServerException {
+      return Left(ServerFailure(SERVER_FAILURE_TITLE, SERVER_FAILURE_MESSAGE));
+    }
+  }
 }
