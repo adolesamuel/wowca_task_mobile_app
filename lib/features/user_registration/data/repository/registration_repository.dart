@@ -31,12 +31,11 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
     try {
       if (await networkInfo.isConnected) {
         return Right(await remoteDataSource.registerUser(
-            registerUser: RegisterUserModel(
           name: name,
           email: email,
           password: password,
           orgName: orgName,
-        )));
+        ));
       } else {
         return Left(InternetFailure(
             NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));

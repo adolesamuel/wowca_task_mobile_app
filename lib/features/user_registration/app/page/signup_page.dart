@@ -5,6 +5,7 @@ import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/app/page/signIn_page.dart';
+import 'package:wowca_task/features/user_registration/app/page/verification_page.dart';
 import 'package:wowca_task/injection_container.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -79,6 +80,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           keyboardType: TextInputType.name,
                           textInputAction: TextInputAction.next,
                           textCapitalization: TextCapitalization.words,
+                          controller: _nameController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter a Name';
@@ -120,6 +122,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         FormBuilderTextField(
                           name: AppStrings.signUpPageOrgName,
+                          controller: _organizationController,
                           keyboardType: TextInputType.name,
                           textInputAction: TextInputAction.next,
                           textCapitalization: TextCapitalization.words,
@@ -164,6 +167,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         FormBuilderTextField(
                           name: AppStrings.signUpPageEmail,
+                          controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           textCapitalization: TextCapitalization.words,
@@ -212,6 +216,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         FormBuilderTextField(
                           name: AppStrings.signUpPagePassword,
+                          controller: _passwordController,
                           keyboardType: TextInputType.name,
                           obscureText: _obscurePassword,
                           textInputAction: TextInputAction.next,
@@ -326,12 +331,21 @@ class _SignUpPageState extends State<SignUpPage> {
                 BlocProvider(
                   create: (context) => registrationBloc,
                   child: BlocConsumer<SignUpBloc, SignUpState>(
-                    listener: (context, state) {},
+                    listener: (context, state) {
+                      if (state is UserRegisteredState) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                settings:
+                                    RouteSettings(name: '/VerificationPage'),
+                                builder: (context) => VerificationPage(
+                                      email: _emailController.text,
+                                    )));
+                      }
+                    },
                     builder: (context, state) {
                       return Column(
                         children: [
-                          if (state is RegisterUserLoadingState)
-                            LinearProgressIndicator(),
                           Row(
                             children: [
                               ElevatedButton(
@@ -343,7 +357,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                   //push to page showing user registered and ask for account verification;
                                   //if organization has one admin, say organization has admin already;
                                   print('Register Button pressed');
+
                                   if (_formKey.currentState.validate()) {
+                                    _formKey.currentState.save();
                                     print('form validated successfully');
                                     registrationBloc.add(RegisterUserEvent(
                                       name: _nameController.text,
@@ -352,6 +368,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                       email: _emailController.text,
                                     ));
                                   }
+                                  print(
+                                      'name: ${_nameController.text} , orgName: ${_organizationController.text} , password: ${_passwordController.text} , email: ${_emailController.text}, ');
                                 },
                               ),
                               SizedBox(
@@ -377,6 +395,11 @@ class _SignUpPageState extends State<SignUpPage> {
                             ],
                           ),
                           Text(AppStrings.existingOrgText),
+                          SizedBox(
+                            height: 4.0,
+                          ),
+                          if (state is RegisterUserLoadingState)
+                            LinearProgressIndicator(),
                         ],
                       );
                     },

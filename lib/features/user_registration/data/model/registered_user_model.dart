@@ -16,7 +16,7 @@ class RegisteredUserModel extends RegisteredUserEntity {
     return RegisteredUserModel(
       title: data['title'],
       message: data['message'],
-      status: data['status'],
+      status: data['status'].toString(),
     );
   }
 
