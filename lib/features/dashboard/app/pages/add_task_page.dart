@@ -68,14 +68,15 @@ class AddTaskPageState extends State<AddTaskPage> {
           padding: EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              // Create Project Textfield widget
+              // Create Department Textfield widget
               // only shows if user is
               // an admin or a supervisor
               CustomTextFieldWidget(
-                textFieldTitle: 'Create Project',
+                textFieldTitle: 'Create Department',
                 textFieldController: _projectFieldController,
-                hintText: 'Project Name',
+                hintText: 'Department Name',
                 validate: _validateProjectName,
                 onChanged: (value) {
                   setState(() {

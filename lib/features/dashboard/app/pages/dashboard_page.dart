@@ -26,50 +26,25 @@ class _DashboardPageState extends State<DashboardPage> {
         color: Colors.white,
         child: Column(
           children: [
-            Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(Quantity.mediumBorderRadius),
-                      bottomRight: Radius.circular(Quantity.mediumBorderRadius),
-                    )),
-                height: MediaQuery.of(context).size.height * 0.18,
+            Flexible(
+              child: Container(
+                margin: EdgeInsets.all(10.0),
+                height: 75.0,
                 width: MediaQuery.of(context).size.width,
-                child: Row(
+                decoration: BoxDecoration(
+                    color: Colors.pinkAccent,
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(Quantity.smallBorderRadius))),
+                child: Column(
                   children: [
-                    //Those two pink boxes up there
-                    //one is meant for profile image
-                    //and the other is meant for the user info, say name,
-                    //organisation
-                    //department, role in company etc.
-                    //projects and total number of modules,
-                    //modules contain detail of projects they're connected to
-                    //switch between module and project view
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        margin: EdgeInsets.only(left: 10.0),
-                        height: 100.0,
-                        decoration: BoxDecoration(
-                            color: Colors.pinkAccent,
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(Quantity.smallBorderRadius))),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 8,
-                      child: Container(
-                        margin: EdgeInsets.all(10.0),
-                        height: 100.0,
-                        decoration: BoxDecoration(
-                            color: Colors.pinkAccent,
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(Quantity.smallBorderRadius))),
-                        child: Text(widget.user.name),
-                      ),
-                    ),
+                    Text(widget.user.name),
+                    Text(widget.user.email),
+                    Text(widget.user.orgName),
+                    Text(widget.user.role),
                   ],
-                )),
+                ),
+              ),
+            ),
             Expanded(
               child: AddTaskPage(),
             )
@@ -77,18 +52,6 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
       ),
       drawer: DashBoardDrawer(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  settings: RouteSettings(name: '/AddTaskPage'),
-                  builder: (context) {
-                    return AddTaskPage();
-                  }));
-        },
-      ),
     );
   }
 }
