@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:wowca_task/core/usecase/read_local_pref.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/core/utils/strings.dart';
-import 'package:wowca_task/features/user_registration/app/page/signIn_page.dart';
+import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/app/page/signup_page.dart';
+import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
+import 'package:wowca_task/injection_container.dart';
+import 'package:wowca_task/task_app.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -15,6 +20,7 @@ class _SignInPageState extends State<SignInPage> {
   bool _obscurePassword = true;
   TextEditingController _emailController;
   TextEditingController _passwordController;
+  final signInBloc = sl<SignUpBloc>();
 
   @override
   void initState() {
@@ -61,6 +67,7 @@ class _SignInPageState extends State<SignInPage> {
                       children: [
                         FormBuilderTextField(
                           name: AppStrings.signUpPageEmail,
+                          controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           textCapitalization: TextCapitalization.words,
@@ -109,6 +116,7 @@ class _SignInPageState extends State<SignInPage> {
                         ),
                         FormBuilderTextField(
                           name: AppStrings.signUpPagePassword,
+                          controller: _passwordController,
                           keyboardType: TextInputType.name,
                           obscureText: _obscurePassword,
                           textInputAction: TextInputAction.next,
@@ -177,48 +185,73 @@ class _SignInPageState extends State<SignInPage> {
 
                 // Button Row for Register or Sign Up
 
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          child: Text(AppStrings.signInPageSignInText),
-                          onPressed: () {
-                            //create user object
-                            // push to database
-                            //add linearprogressindicator
-                            //push to page showing user registered and ask for account verification;
-                            //if organization has one admin, say organization has admin already;
-                            print('Register Button pressed');
-                            if (_formKey.currentState.validate()) {
-                              print('form validated successfully');
-                            }
-                          },
-                        ),
-                        SizedBox(
-                          width: Quantity.mediumSpace,
-                        ),
-                        Text(AppStrings.orText),
-                        SizedBox(
-                          width: Quantity.mediumSpace,
-                        ),
-                        OutlinedButton(
-                            onPressed: () {
-                              print('Sign In button pressed');
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      settings:
-                                          RouteSettings(name: '/SignUpPage'),
-                                      builder: (context) {
-                                        return SignUpPage();
-                                      }));
-                            },
-                            child: Text(AppStrings.signUpPageRegisterText))
-                      ],
-                    ),
-                    Text(AppStrings.newOrgText),
-                  ],
+                BlocProvider(
+                  create: (context) => signInBloc,
+                  child: BlocConsumer<SignUpBloc, SignUpState>(
+                    listener: (context, state) async {
+                      if (state is SignedInUserState) {
+                        String accessToken = await LocalPreference(sl())
+                            .readPrefFromObject(
+                                CACHED_REGISTERED_USER, 'access_token');
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TaskApp(
+                                      accessToken: accessToken,
+                                    )));
+                      }
+                    },
+                    builder: (context, state) {
+                      return Column(
+                        children: [
+                          Row(
+                            children: [
+                              ElevatedButton(
+                                child: Text(AppStrings.signInPageSignInText),
+                                onPressed: () {
+                                  //create user object
+                                  // push to database
+                                  //add linearprogressindicator
+                                  //push to page showing user registered and ask for account verification;
+                                  //if organization has one admin, say organization has admin already;
+                                  print('Register Button pressed');
+                                  if (_formKey.currentState.validate()) {
+                                    print(
+                                        'Sign In form validated successfully');
+                                    signInBloc.add(SignInUserEvent(
+                                        _emailController.text,
+                                        _passwordController.text));
+                                  }
+                                },
+                              ),
+                              SizedBox(
+                                width: Quantity.mediumSpace,
+                              ),
+                              Text(AppStrings.orText),
+                              SizedBox(
+                                width: Quantity.mediumSpace,
+                              ),
+                              OutlinedButton(
+                                  onPressed: () {
+                                    print('Sign In button pressed');
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            settings: RouteSettings(
+                                                name: '/SignUpPage'),
+                                            builder: (context) {
+                                              return SignUpPage();
+                                            }));
+                                  },
+                                  child:
+                                      Text(AppStrings.signUpPageRegisterText))
+                            ],
+                          ),
+                          Text(AppStrings.newOrgText),
+                        ],
+                      );
+                    },
+                  ),
                 )
               ],
             ),
