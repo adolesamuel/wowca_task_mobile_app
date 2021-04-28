@@ -34,3 +34,5 @@ class VerifyUserEvent extends SignUpEvent {
 
   VerifyUserEvent(this.code);
 }
+
+class SignOutEvent extends SignUpEvent {}

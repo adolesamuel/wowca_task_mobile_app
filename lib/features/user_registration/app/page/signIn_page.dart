@@ -190,14 +190,16 @@ class _SignInPageState extends State<SignInPage> {
                   child: BlocConsumer<SignUpBloc, SignUpState>(
                     listener: (context, state) async {
                       if (state is SignedInUserState) {
-                        String accessToken = await LocalPreference(sl())
-                            .readPrefFromObject(
-                                CACHED_REGISTERED_USER, 'token');
+                        final user =
+                            await LocalPreference(sl()).readPrefFromObject(
+                          CACHED_REGISTERED_USER,
+                        );
+                        print('accesstoken from signin $user');
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => TaskApp(
-                                      accessToken: accessToken,
+                                      user: user,
                                     )));
                       }
                     },

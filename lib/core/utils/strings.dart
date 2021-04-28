@@ -5,7 +5,7 @@ class AppStrings {
 
   //Dashboard Strings
 
-  static final String dashboardTitle = 'Dashboard';
+  static final String dashboardTitle = 'Home';
 
   //SignUp page strings
   static final String signUpTitle = 'Create Task Manager Admin Account';

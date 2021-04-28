@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/usecase/read_local_pref.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
+import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 import 'package:wowca_task/injection_container.dart' as di;
 import 'package:wowca_task/task_app.dart';
 
@@ -18,10 +19,13 @@ void main() async {
   /// on task complete, task created,
   /// convert cached registered user to cached authenticated user.
 
-  String accessToken = await LocalPreference(di.sl())
-      .readPrefFromObject(CACHED_REGISTERED_USER, 'access_token');
+  final user = await LocalPreference(di.sl()).readPrefFromObject(
+    CACHED_REGISTERED_USER,
+  );
+
+  print('main page accesstoken: $user');
 
   runApp(
-    TaskApp(accessToken: accessToken),
+    TaskApp(user: user),
   );
 }

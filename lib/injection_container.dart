@@ -56,7 +56,7 @@ Future<void> init() async {
 
   //Registration Data Sources
   sl.registerLazySingleton<RegistrationRemoteDataSource>(
-      () => RegistrationRemoteDataSourceImpl(sl(), sl(), sl()));
+      () => RegistrationRemoteDataSourceImpl(sl(), sl()));
   sl.registerLazySingleton<RegistrationLocalDataSource>(
       () => LocalDataSourceImpl(sl()));
 

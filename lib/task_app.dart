@@ -9,11 +9,13 @@ import 'package:wowca_task/features/dashboard/app/widgets/module_item.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/project_item.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/task_item.dart';
 import 'package:wowca_task/features/user_registration/app/page/signup_page.dart';
+import 'package:wowca_task/features/user_registration/data/model/signed_in_user_model.dart';
+import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 
 class TaskApp extends StatefulWidget {
-  final String accessToken;
+  final Map<String, dynamic> user;
 
-  const TaskApp({Key key, this.accessToken}) : super(key: key);
+  const TaskApp({Key key, this.user}) : super(key: key);
 
   @override
   _TaskAppState createState() => _TaskAppState();
@@ -41,55 +43,56 @@ class _TaskAppState extends State<TaskApp> {
       theme: FlexColorScheme.light(scheme: FlexScheme.deepPurple).toTheme,
       darkTheme: FlexColorScheme.dark(scheme: FlexScheme.deepPurple).toTheme,
       themeMode: ThemeMode.system,
-      home: widget.accessToken == null || widget.accessToken.isEmpty
+      home: widget.user == null || widget.user.isEmpty
           ? SignUpPage()
-          :
-          // DashboardPage(),
-          ModulePage(
-              project: Project(
-                  projectId: '1',
-                  projectName: 'TaskMan',
-                  department: 'St. Isidore\'s TechHub',
-                  listOfModules: [
-                    Module(
-                        moduleId: '1',
-                        moduleName: 'task manager module',
-                        percentCompletion: 0.0,
-                        projectName: 'TaskMan',
-                        listOfTasks: [
-                          TaskItem(
-                            taskName: 'Text Task 1',
-                            started: true,
-                            completed: true,
-                            description: 'creating an egg',
-                            moduleName: 'task manager module',
-                          ),
-                          TaskItem(
-                            taskName: 'Text Task 2',
-                            started: false,
-                            completed: false,
-                            description: 'mixing soup',
-                            moduleName: 'task manager module',
-                          ),
-                          TaskItem(
-                            taskName: 'Text Task 3',
-                            started: true,
-                            completed: false,
-                            description: 'grind the beans',
-                            moduleName: 'task manager module',
-                          ),
-                          TaskItem(
-                            taskName: 'Text Task 4',
-                            started: false,
-                            completed: true,
-                            description: 'sit down and enjoy the moi moi',
-                            moduleName: 'task manager module',
-                          ),
-                        ]),
-                    Module(),
-                    Module(),
-                  ]),
+          : DashboardPage(
+              user: SignedInUserModel.fromJson(widget.user),
             ),
+      //  ModulePage(
+      //       project: Project(
+      //           projectId: '1',
+      //           projectName: 'TaskMan',
+      //           department: 'St. Isidore\'s TechHub',
+      //           listOfModules: [
+      //             Module(
+      //                 moduleId: '1',
+      //                 moduleName: 'task manager module',
+      //                 percentCompletion: 0.0,
+      //                 projectName: 'TaskMan',
+      //                 listOfTasks: [
+      //                   TaskItem(
+      //                     taskName: 'Text Task 1',
+      //                     started: true,
+      //                     completed: true,
+      //                     description: 'creating an egg',
+      //                     moduleName: 'task manager module',
+      //                   ),
+      //                   TaskItem(
+      //                     taskName: 'Text Task 2',
+      //                     started: false,
+      //                     completed: false,
+      //                     description: 'mixing soup',
+      //                     moduleName: 'task manager module',
+      //                   ),
+      //                   TaskItem(
+      //                     taskName: 'Text Task 3',
+      //                     started: true,
+      //                     completed: false,
+      //                     description: 'grind the beans',
+      //                     moduleName: 'task manager module',
+      //                   ),
+      //                   TaskItem(
+      //                     taskName: 'Text Task 4',
+      //                     started: false,
+      //                     completed: true,
+      //                     description: 'sit down and enjoy the moi moi',
+      //                     moduleName: 'task manager module',
+      //                   ),
+      //                 ]),
+      //             Module(),
+      //             Module(),
+      //           ]),
+      //     ),
     );
   }
 

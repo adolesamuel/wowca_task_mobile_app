@@ -19,4 +19,6 @@ abstract class RegistrationRepository {
   Future<Either<Failure, SignedInUserEntity>> verify({
     String code,
   });
+
+  Future<Either<Failure, bool>> signOut();
 }

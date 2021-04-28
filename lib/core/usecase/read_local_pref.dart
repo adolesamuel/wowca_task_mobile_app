@@ -12,12 +12,17 @@ class LocalPreference {
         _sharedPreferences.getString(key) != null;
   }
 
-  Future<dynamic> readPrefFromObject(String key1, String key2) async {
+  Future<dynamic> readPrefFromObject(String key1, {String key}) async {
     if (await checkPref(key1)) {
       final decodedString =
           await json.decode(_sharedPreferences.getString(key1));
-      final result = decodedString[key2];
-      return result;
+      if (key != null) {
+        final result = decodedString[key];
+        return result;
+      } else {
+        final result = decodedString;
+        return result;
+      }
     } else {
       return null;
     }
