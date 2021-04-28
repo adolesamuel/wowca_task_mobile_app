@@ -9,7 +9,6 @@ import 'package:wowca_task/features/dashboard/app/widgets/module_item.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/project_item.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/task_item.dart';
 import 'package:wowca_task/features/user_registration/app/page/signup_page.dart';
-import 'package:wowca_task/features/user_registration/app/page/verification_page.dart';
 
 class TaskApp extends StatefulWidget {
   final String accessToken;
@@ -43,7 +42,7 @@ class _TaskAppState extends State<TaskApp> {
       darkTheme: FlexColorScheme.dark(scheme: FlexScheme.deepPurple).toTheme,
       themeMode: ThemeMode.system,
       home: widget.accessToken == null || widget.accessToken.isEmpty
-          ? VerificationPage()
+          ? SignUpPage()
           :
           // DashboardPage(),
           ModulePage(
