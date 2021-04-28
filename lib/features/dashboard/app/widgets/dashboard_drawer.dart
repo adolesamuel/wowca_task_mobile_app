@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/injection_container.dart';
+import 'package:wowca_task/task_app.dart';
 
 class DashBoardDrawer extends StatefulWidget {
   @override
@@ -58,11 +59,22 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
               ),
               BlocProvider<SignUpBloc>(
                 create: (context) => signOutBloc,
-                child: ListTile(
-                  leading: Icon(Icons.logout),
-                  title: Text('Sign Out'),
-                  onTap: () {
-                    print('Drawer Sign out button pressed');
+                child: BlocConsumer<SignUpBloc, SignUpState>(
+                  listener: (context, state) {
+                    if (state is SignedOutState) {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => TaskApp()));
+                    }
+                  },
+                  builder: (context, state) {
+                    return ListTile(
+                      leading: Icon(Icons.logout),
+                      title: Text('Sign Out'),
+                      onTap: () {
+                        print('Drawer Sign out button pressed');
+                        signOutBloc.add(SignOutEvent());
+                      },
+                    );
                   },
                 ),
               ),

@@ -12,6 +12,7 @@ import 'package:wowca_task/features/user_registration/data/sources/registration_
 import 'package:wowca_task/features/user_registration/data/sources/registration_remote_data_source.dart';
 import 'package:wowca_task/features/user_registration/domain/repository/registration_repository.dart';
 import 'package:wowca_task/features/user_registration/domain/usecases/register_user.dart';
+import 'package:wowca_task/features/user_registration/domain/usecases/sign_out_user.dart';
 import 'package:wowca_task/features/user_registration/domain/usecases/signin_user.dart';
 import 'package:wowca_task/features/user_registration/domain/usecases/verification.dart';
 
@@ -25,6 +26,7 @@ Future<void> init() async {
         registerUser: sl(),
         signInUser: sl(),
         verifyUser: sl(),
+        signOutUser: sl(),
       ));
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -35,6 +37,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => RegisterUser(sl()));
   sl.registerLazySingleton(() => SignInUser(sl()));
   sl.registerLazySingleton(() => VerifyUser(sl()));
+  sl.registerLazySingleton(() => SignOutUser(sl()));
 
   ///////////////////////////////////////////////////////////////////////////////////
   /// Application [REPOSITORIES]
