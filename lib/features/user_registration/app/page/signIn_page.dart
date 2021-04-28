@@ -192,7 +192,7 @@ class _SignInPageState extends State<SignInPage> {
                       if (state is SignedInUserState) {
                         String accessToken = await LocalPreference(sl())
                             .readPrefFromObject(
-                                CACHED_REGISTERED_USER, 'access_token');
+                                CACHED_REGISTERED_USER, 'token');
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -248,6 +248,8 @@ class _SignInPageState extends State<SignInPage> {
                             ],
                           ),
                           Text(AppStrings.newOrgText),
+                          if (state is RegisterUserLoadingState)
+                            LinearProgressIndicator(),
                         ],
                       );
                     },

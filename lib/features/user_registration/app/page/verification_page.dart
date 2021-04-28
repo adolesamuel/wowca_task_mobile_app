@@ -78,12 +78,10 @@ class _VerificationPageState extends State<VerificationPage> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter verification code';
-                              }
-                              if (value.length != 6) {
+                              } else if (value.length > 6) {
                                 return 'Please Enter only 6 digits';
-                              } else {
-                                return 'Enter a valid verification code';
-                              }
+                              } else
+                                return null;
                             },
                             // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
 

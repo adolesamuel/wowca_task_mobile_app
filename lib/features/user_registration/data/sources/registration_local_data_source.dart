@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wowca_task/core/errors/exception.dart';
-import 'package:wowca_task/features/user_registration/data/model/registered_user_model.dart';
 import 'package:wowca_task/features/user_registration/data/model/signed_in_user_model.dart';
 
 abstract class RegistrationLocalDataSource {
@@ -48,7 +47,7 @@ class LocalDataSourceImpl implements RegistrationLocalDataSource {
     if (sharedPreferences.containsKey(CACHED_REGISTERED_USER)) {
       final cachedUser = sharedPreferences.getString(CACHED_REGISTERED_USER);
 
-      return Future.value(json.decode(cachedUser)['access_token']);
+      return Future.value(json.decode(cachedUser)['token']);
     } else {
       throw CacheException();
     }

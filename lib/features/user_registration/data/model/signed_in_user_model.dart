@@ -36,9 +36,9 @@ class SignedInUserModel extends SignedInUserEntity {
         userId: data['_id'],
         orgName: data['orgName'],
         role: data['role'],
-        token: data['token'],
+        token: data['token'].toString(),
         email: data['email'],
-        activated: data['active'],
+        activated: data['active'].toString(),
       );
     }
   }
