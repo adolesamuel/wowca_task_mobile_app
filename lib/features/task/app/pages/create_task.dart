@@ -17,6 +17,8 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   List<File> listOfPickedFiles = [];
+  bool isStarted = false;
+  bool isCompleted = false;
 
   @override
   void initState() {
@@ -39,7 +41,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: widget.task == null ? Text('Create Task') : Text('Edit Task'),
         centerTitle: true,
@@ -49,7 +51,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         child: Container(
           width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-          color: Colors.grey[300],
+          color: Theme.of(context).backgroundColor,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -65,7 +67,6 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 child: TextField(
                   controller: titleController,
                   decoration: InputDecoration(
-                      fillColor: Colors.grey[200],
                       errorStyle:
                           TextStyle(color: Theme.of(context).primaryColor),
                       errorBorder: OutlineInputBorder(
@@ -112,7 +113,6 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                   maxLines: null,
                   minLines: 3,
                   decoration: InputDecoration(
-                      fillColor: Colors.grey[200],
                       errorStyle:
                           TextStyle(color: Theme.of(context).primaryColor),
                       errorBorder: OutlineInputBorder(
@@ -148,20 +148,65 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 height: Quantity.largeSpace,
               ),
               Text(
-                'Attachments',
+                'Attachments(optional)',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              OutlinedButton(
-                onPressed: () async {
-                  listOfPickedFiles = await pickFile();
-                  setState(() {});
-                },
-                child: Text('Choose Attachments'),
+              Row(
+                children: [
+                  OutlinedButton(
+                    onPressed: () async {
+                      final file = await pickFile();
+                      listOfPickedFiles.addAll(file);
+                      setState(() {});
+                    },
+                    child: Text('Add Attachments'),
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        listOfPickedFiles = [];
+                        setState(() {});
+                      },
+                      child: Text('remove all')),
+                ],
               ),
               Column(children: [
                 for (File item in listOfPickedFiles)
                   Text('File: ${item.path.toString()}'),
               ]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Start',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Checkbox(
+                      activeColor: Colors.green,
+                      value: isStarted,
+                      onChanged: (value) {
+                        setState(() {
+                          isStarted = value;
+                        });
+                      }),
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  Text(
+                    'Completed',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Checkbox(
+                      value: isCompleted,
+                      onChanged: (value) {
+                        setState(() {
+                          isCompleted = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: Quantity.largeSpace,
+              ),
               Container(
                   width: MediaQuery.of(context).size.width,
                   padding:
