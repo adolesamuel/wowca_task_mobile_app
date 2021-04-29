@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/features/task/app/widgets/task_model.dart';
@@ -13,6 +16,7 @@ class CreateTaskPage extends StatefulWidget {
 class _CreateTaskPageState extends State<CreateTaskPage> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  List<File> listOfPickedFiles = [];
 
   @override
   void initState() {
@@ -35,9 +39,11 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         title: widget.task == null ? Text('Create Task') : Text('Edit Task'),
         centerTitle: true,
+        elevation: 10.0,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -59,6 +65,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 child: TextField(
                   controller: titleController,
                   decoration: InputDecoration(
+                      fillColor: Colors.grey[200],
                       errorStyle:
                           TextStyle(color: Theme.of(context).primaryColor),
                       errorBorder: OutlineInputBorder(
@@ -105,6 +112,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                   maxLines: null,
                   minLines: 3,
                   decoration: InputDecoration(
+                      fillColor: Colors.grey[200],
                       errorStyle:
                           TextStyle(color: Theme.of(context).primaryColor),
                       errorBorder: OutlineInputBorder(
@@ -143,6 +151,17 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 'Attachments',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
+              OutlinedButton(
+                onPressed: () async {
+                  listOfPickedFiles = await pickFile();
+                  setState(() {});
+                },
+                child: Text('Choose Attachments'),
+              ),
+              Column(children: [
+                for (File item in listOfPickedFiles)
+                  Text('File: ${item.path.toString()}'),
+              ]),
               Container(
                   width: MediaQuery.of(context).size.width,
                   padding:
@@ -162,5 +181,29 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         ),
       ),
     );
+  }
+
+  Future<List<File>> pickFile() async {
+    final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowMultiple: true,
+        allowedExtensions: [
+          'svg',
+          'jpg',
+          'jpeg',
+          'png',
+          'mp4',
+          'pdf',
+          'docx',
+          'doc',
+          'xlsx',
+          'mov',
+          'mp3',
+          'aac',
+          'wav',
+          'flv',
+        ]);
+    List<File> files = result.paths.map((path) => File(path)).toList();
+    return result == null ? <File>[] : files;
   }
 }
