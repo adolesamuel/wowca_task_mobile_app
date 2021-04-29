@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wowca_task/core/utils/quantities.dart';
-import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/task/app/pages/create_task.dart';
 import 'package:wowca_task/features/task/app/widgets/task_model.dart';
 

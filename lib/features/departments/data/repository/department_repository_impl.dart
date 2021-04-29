@@ -4,6 +4,7 @@ import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/core/network_info/network_info.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/departments/data/models/create_dept_model.dart';
+import 'package:wowca_task/features/departments/data/models/get_dept.dart';
 import 'package:wowca_task/features/departments/data/sources/department_remote_data_source.dart';
 import 'package:wowca_task/features/departments/domain/repository/dept_repository.dart';
 import 'package:wowca_task/features/user_registration/data/repository/registration_repository.dart';
@@ -18,17 +19,32 @@ class DepartmentRepositoryImpl implements DepartmentRepository {
 
   @override
   Future<Either<Failure, CreatedDeptModel>> createDept({
-    String userId,
-    String userRole,
+    String deptDescription,
     String deptName,
   }) async {
     try {
       if (await networkInfo.isConnected) {
         return Right(await remoteDataSource.createDept(
-          userId: userId,
-          userRole: userRole,
-          deptName: deptName,
+          deptTitle: deptName,
+          deptDescription: deptDescription,
         ));
+      } else {
+        return Left(InternetFailure(
+            NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));
+      }
+    } on ServerException {
+      return Left(ServerFailure(
+        SERVER_FAILURE_TITLE,
+        SERVER_FAILURE_MESSAGE,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<DeptModel>>> getDept() async {
+    try {
+      if (await networkInfo.isConnected) {
+        return Right(await remoteDataSource.getDept());
       } else {
         return Left(InternetFailure(
             NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));

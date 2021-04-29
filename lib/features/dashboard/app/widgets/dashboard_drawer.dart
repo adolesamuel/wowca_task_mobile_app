@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wowca_task/features/dashboard/app/pages/dashboard_page.dart';
+import 'package:wowca_task/features/departments/app/page/department_page.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 import 'package:wowca_task/injection_container.dart';
@@ -36,12 +38,23 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
             title: Text('Home'),
             onTap: () {
               print('Drawer Home button pressed');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DashboardPage(
+                            user: widget.user,
+                          )));
             },
           ),
           ListTile(
-            title: Text('Department'),
+            title: Text('Departments'),
             onTap: () {
               print('Drawer Department button pressed');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DepartmentPage(user: widget.user),
+                  ));
             },
           ),
           ListTile(
@@ -56,12 +69,6 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              ListTile(
-                title: Text('Users'),
-                onTap: () {
-                  print('Drawer User button pressed');
-                },
-              ),
               BlocProvider<SignUpBloc>(
                 create: (context) => signOutBloc,
                 child: BlocConsumer<SignUpBloc, SignUpState>(

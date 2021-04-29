@@ -5,15 +5,15 @@ import 'package:wowca_task/core/helpers/json_checker.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/departments/data/models/create_dept_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:wowca_task/features/departments/data/models/get_dept.dart';
 
 abstract class DepartmentRemoteDataSource {
   Future<CreatedDeptModel> createDept({
-    final String userId,
-    final String userRole,
-    final String deptName,
+    final String deptDescription,
+    final String deptTitle,
   });
 
-  //getdept({});
+  Future<List<DeptModel>> getDept();
 }
 
 class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
@@ -24,20 +24,18 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
 
   @override
   Future<CreatedDeptModel> createDept({
-    final String userId,
-    final String userRole,
-    final String deptName,
+    final String deptDescription,
+    final String deptTitle,
   }) async {
-    String url = AppStrings.base + AppStrings.registerUser;
+    String url = AppStrings.base + AppStrings.createDept;
 
     ///Headers [Object] specifying [JSON] as return tyme from api
     // Map<String, String> headers = {'Content-Type': 'application/json'};
 
     ///Body of the [POST] request
     Map<String, dynamic> body = {
-      'userId': userId,
-      'userRole': userRole,
-      'deptName': deptName,
+      'dept_title': deptTitle,
+      'description': deptDescription,
     };
 
     final response = await client.post(
@@ -83,5 +81,10 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
       //throws Server Failure
       throw ServerException();
     }
+  }
+
+  @override
+  Future<List<DeptModel>> getDept() async {
+    final url = AppStrings.base + AppStrings.getDept;
   }
 }

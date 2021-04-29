@@ -42,6 +42,8 @@ class AppStrings {
   static final String registerUser = '/register';
   static final String signInUser = '/login';
   static final String verifyUser = '/verify';
+  static final String createDept = '/create-departments';
+  static final String getDept = '/get-departments';
 }
 
 //Error Messages

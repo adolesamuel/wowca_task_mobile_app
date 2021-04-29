@@ -14,28 +14,24 @@ class CreateDept extends Usecase<CreatedDeptEntity, CreateDeptParams> {
   Future<Either<Failure, CreatedDeptEntity>> call(
       CreateDeptParams params) async {
     return await departmentRepository.createDept(
-      userId: params.userId,
-      userRole: params.userRole,
+      deptDescription: params.departmentDescription,
       deptName: params.departmentName,
     );
   }
 }
 
 class CreateDeptParams extends Equatable {
-  final String userId;
-  final String userRole;
+  final String departmentDescription;
   final String departmentName;
 
   CreateDeptParams({
-    this.userId,
-    this.userRole,
+    this.departmentDescription,
     this.departmentName,
   });
 
   @override
   List<Object> get props => [
-        userId,
-        userRole,
+        departmentDescription,
         departmentName,
       ];
 }

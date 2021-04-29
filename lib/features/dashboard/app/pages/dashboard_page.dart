@@ -22,35 +22,7 @@ class _DashboardPageState extends State<DashboardPage> {
         title: Text(AppStrings.dashboardTitle),
         elevation: 5.0,
       ),
-      body: Container(
-        color: Colors.white,
-        child: Column(
-          children: [
-            Flexible(
-              child: Container(
-                margin: EdgeInsets.all(10.0),
-                height: 75.0,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    color: Colors.pinkAccent,
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(Quantity.smallBorderRadius))),
-                child: Column(
-                  children: [
-                    Text(widget.user.name),
-                    Text(widget.user.email),
-                    Text(widget.user.orgName),
-                    Text(widget.user.role),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: AddTaskPage(),
-            )
-          ],
-        ),
-      ),
+      body: Container(),
       drawer: DashBoardDrawer(user: widget.user),
     );
   }
