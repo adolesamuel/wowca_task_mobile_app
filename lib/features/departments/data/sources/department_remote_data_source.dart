@@ -51,20 +51,14 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
         print(data);
 
         ///Verify that the [data] received is [OK] or [error]
-        if (data['status'] == 201) {
+        if (data['status'] == 'success') {
           //       //
-          final createdDept =
-              CreatedDeptModel.fromJson(json.decode(response.body));
+          final createdDept = CreatedDeptModel.fromJson(data['data']);
 
           return createdDept;
-        } else if (data['status'] == 'failed') {
-          final createdDeptFail =
-              CreatedDeptModel.fromJson(json.decode(response.body));
-          return createdDeptFail;
         } else {
           //Warning, Failure response from server
-          final title = data['reason']['summary'],
-              message = data['reason']['details'];
+          final title = data['title'], message = data['message'];
 
           String errorMessage = json.encode({
             'title': title,
@@ -86,5 +80,41 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
   @override
   Future<List<DeptModel>> getDept() async {
     final url = AppStrings.base + AppStrings.getDept;
+
+    final response = await client.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      //Check to verify response data format is json
+      if (await jsonChecker.isJson(response.body)) {
+        final data = await json.decode(response.body);
+        print(data);
+
+        ///Verify that the [data] received is [OK] or [error]
+        if (data['status'] == 'OKAY') {
+          //       //
+          final List<DeptModel> recievedDept = data['createdTasks'].map((e) {
+            return DeptModel.fromJson(e);
+          }).toList();
+
+          return recievedDept;
+        } else {
+          //Warning, Failure response from server
+          final title = data['status'], message = data['message'];
+
+          String errorMessage = json.encode({
+            'title': title,
+            'message': message,
+          });
+
+          throw errorMessage;
+        }
+      } else {
+        //throw FormatException if response is not json format
+        throw FormatException();
+      }
+    } else {
+      //throws Server Failure
+      throw ServerException();
+    }
   }
 }
