@@ -1,16 +1,14 @@
 import 'package:equatable/equatable.dart';
 
 class CreatedDeptEntity extends Equatable {
-  final String supervisorId;
-  final String supervisorName;
+  final String departmentDescription;
   final String departmentId;
   final String departmentName;
   final List<String> listofUsers;
   final List<String> listofProject;
 
   CreatedDeptEntity({
-    this.supervisorId,
-    this.supervisorName,
+    this.departmentDescription,
     this.departmentId,
     this.departmentName,
     this.listofUsers,
@@ -19,8 +17,7 @@ class CreatedDeptEntity extends Equatable {
 
   @override
   List<Object> get props => [
-        supervisorId,
-        supervisorName,
+        departmentDescription,
         departmentId,
         departmentName,
         listofUsers,

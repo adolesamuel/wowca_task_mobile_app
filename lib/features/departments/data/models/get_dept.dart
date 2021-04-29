@@ -1,23 +1,20 @@
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 
 class DeptModel extends DeptEntity {
-  final String supervisorId;
-  final String supervisorName;
+  final String departmentDescription;
   final String departmentId;
   final String departmentName;
   final List<String> listofUsers;
   final List<String> listofProject;
 
   DeptModel({
-    this.supervisorId,
-    this.supervisorName,
+    this.departmentDescription,
     this.departmentId,
     this.departmentName,
     this.listofUsers,
     this.listofProject,
   }) : super(
-          supervisorId: supervisorId,
-          supervisorName: supervisorName,
+          departmentDescription: departmentDescription,
           departmentId: departmentId,
           departmentName: departmentName,
           listofUsers: listofUsers,
@@ -25,13 +22,21 @@ class DeptModel extends DeptEntity {
         );
 
   factory DeptModel.fromJson(Map<String, dynamic> data) {
-    return DeptModel();
+    if (data == null) {
+      return DeptModel();
+    } else
+      return DeptModel(
+        departmentDescription: data['description'],
+        departmentId: data['_id'],
+        departmentName: data['dept_title'],
+        listofUsers: data['user'],
+        listofProject: data['projects'],
+      );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'supervisorId': supervisorId,
-      'supervisorName': supervisorName,
+      'departmentDescription': departmentDescription,
       'departmentId': departmentId,
       'departmentName': departmentName,
       'listofUsers': listofUsers,
