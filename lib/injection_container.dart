@@ -6,6 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wowca_task/core/helpers/json_checker.dart';
 import 'package:wowca_task/core/network_info/network_info.dart';
 import 'package:http/http.dart' as http;
+import 'package:wowca_task/features/departments/app/bloc/department_bloc.dart';
+import 'package:wowca_task/features/departments/data/repository/department_repository_impl.dart';
+import 'package:wowca_task/features/departments/data/sources/department_remote_data_source.dart';
+import 'package:wowca_task/features/departments/domain/repository/dept_repository.dart';
+import 'package:wowca_task/features/departments/domain/usecases/create_dept.dart';
+import 'package:wowca_task/features/departments/domain/usecases/get_dept.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/data/repository/registration_repository.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
@@ -29,6 +35,9 @@ Future<void> init() async {
         signOutUser: sl(),
       ));
 
+  //Department Bloc
+  sl.registerFactory(() => DepartmentBloc(sl(), sl()));
+
   ///////////////////////////////////////////////////////////////////////////////////
   /// Application [USECASES]
   ///////////////////////////////////////////////////////////////////////////////////
@@ -38,6 +47,10 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SignInUser(sl()));
   sl.registerLazySingleton(() => VerifyUser(sl()));
   sl.registerLazySingleton(() => SignOutUser(sl()));
+
+  //Department Usecases
+  sl.registerLazySingleton(() => CreateDept(sl()));
+  sl.registerLazySingleton(() => GetDept(sl()));
 
   ///////////////////////////////////////////////////////////////////////////////////
   /// Application [REPOSITORIES]
@@ -53,6 +66,10 @@ Future<void> init() async {
     ),
   );
 
+  //Department Repository
+  sl.registerLazySingleton<DepartmentRepository>(
+      () => DepartmentRepositoryImpl(sl(), sl()));
+
   ///////////////////////////////////////////////////////////////////////////////////
   ///Application [DATA_SOURCES]
   ///////////////////////////////////////////////////////////////////////////////////
@@ -62,6 +79,10 @@ Future<void> init() async {
       () => RegistrationRemoteDataSourceImpl(sl(), sl()));
   sl.registerLazySingleton<RegistrationLocalDataSource>(
       () => LocalDataSourceImpl(sl()));
+
+  //Department Data Sources
+  sl.registerLazySingleton<DepartmentRemoteDataSource>(
+      () => DepartmentRemoteDataSourceImpl(sl(), sl()));
 
   ///////////////////////////////////////////////////////////////////////////////////
 

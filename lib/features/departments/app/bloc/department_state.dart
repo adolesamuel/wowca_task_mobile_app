@@ -22,3 +22,9 @@ class ListOfDepartmentState extends DepartmentState {
 
   ListOfDepartmentState(this.listOfDept);
 }
+
+class CreatedDepartmentState extends DepartmentState {
+  final CreatedDeptEntity dept;
+
+  CreatedDepartmentState(this.dept);
+}

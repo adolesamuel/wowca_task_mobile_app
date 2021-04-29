@@ -22,17 +22,17 @@ class CreatedDeptModel extends CreatedDeptEntity {
         );
 
   factory CreatedDeptModel.fromJson(Map<String, dynamic> data) {
-    if (data = null) {
+    if (data == null) {
       return CreatedDeptModel();
+    } else {
+      return CreatedDeptModel(
+        departmentDescription: data['description'],
+        departmentId: data['_id'],
+        departmentName: data['dept_title'],
+        listofUsers: [],
+        listofProject: [],
+      );
     }
-
-    return CreatedDeptModel(
-      departmentDescription: data['description'],
-      departmentId: data['_id'],
-      departmentName: data['dept_title'],
-      listofUsers: [],
-      listofProject: [],
-    );
   }
 
   Map<String, dynamic> toJson() {
