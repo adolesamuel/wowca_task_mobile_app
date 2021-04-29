@@ -5,7 +5,7 @@ class Module extends Project {
   final String moduleId;
   final String moduleName;
   final double percentCompletion;
-  final List<TaskItem> listOfTasks;
+  final List<TaskModel> listOfTasks;
   final String projectName;
 
   Module({

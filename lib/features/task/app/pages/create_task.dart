@@ -29,6 +29,11 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     widget.task?.taskDescription != null
         ? descriptionController.text = widget.task.taskDescription
         : descriptionController.text = null;
+    listOfPickedFiles = widget.task.listOfMediaFileUrls != null
+        ? widget.task.listOfMediaFileUrls
+        : [];
+    isStarted = widget.task.started;
+    isCompleted = widget.task.completed;
   }
 
   @override
