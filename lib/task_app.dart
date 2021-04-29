@@ -8,6 +8,7 @@ import 'package:wowca_task/features/dashboard/app/pages/module_page.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/module_item.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/project_item.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/task_item.dart';
+import 'package:wowca_task/features/task/app/pages/create_task.dart';
 import 'package:wowca_task/features/user_registration/app/page/signIn_page.dart';
 import 'package:wowca_task/features/user_registration/app/page/signup_page.dart';
 import 'package:wowca_task/features/user_registration/data/model/signed_in_user_model.dart';
@@ -44,11 +45,12 @@ class _TaskAppState extends State<TaskApp> {
       theme: FlexColorScheme.light(scheme: FlexScheme.deepPurple).toTheme,
       darkTheme: FlexColorScheme.dark(scheme: FlexScheme.deepPurple).toTheme,
       themeMode: ThemeMode.system,
-      home: widget.user == null || widget.user.isEmpty
-          ? SignInPage()
-          : DashboardPage(
-              user: SignedInUserModel.fromJson(widget.user),
-            ),
+      home: CreateTaskPage(),
+      // home: widget.user == null || widget.user.isEmpty
+      //     ? SignInPage()
+      //     : DashboardPage(
+      //         user: SignedInUserModel.fromJson(widget.user),
+      //       ),
       //  ModulePage(
       //       project: Project(
       //           projectId: '1',

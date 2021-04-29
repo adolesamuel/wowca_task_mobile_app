@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
+import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 import 'package:wowca_task/injection_container.dart';
 import 'package:wowca_task/task_app.dart';
 
 class DashBoardDrawer extends StatefulWidget {
+  final SignedInUserEntity user;
+
+  const DashBoardDrawer({Key key, this.user}) : super(key: key);
+
   @override
   _DashBoardDrawerState createState() => _DashBoardDrawerState();
 }
@@ -20,7 +25,7 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
         children: [
           DrawerHeader(
             child: Text(
-              'Drawer Header',
+              'Drawer Header: ${widget.user.name}',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),

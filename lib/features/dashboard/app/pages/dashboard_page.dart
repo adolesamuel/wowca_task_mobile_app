@@ -51,7 +51,7 @@ class _DashboardPageState extends State<DashboardPage> {
           ],
         ),
       ),
-      drawer: DashBoardDrawer(),
+      drawer: DashBoardDrawer(user: widget.user),
     );
   }
 }

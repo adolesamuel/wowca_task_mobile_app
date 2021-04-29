@@ -3,7 +3,6 @@ import 'package:wowca_task/core/errors/exception.dart';
 import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/core/network_info/network_info.dart';
 import 'package:wowca_task/core/utils/strings.dart';
-import 'package:wowca_task/features/user_registration/data/model/register_user_data.dart';
 import 'package:wowca_task/features/user_registration/data/model/registered_user_model.dart';
 import 'package:wowca_task/features/user_registration/data/model/signed_in_user_model.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
