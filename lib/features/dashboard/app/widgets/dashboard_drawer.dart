@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wowca_task/features/dashboard/app/pages/dashboard_page.dart';
 import 'package:wowca_task/features/departments/app/page/department_page.dart';
+import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 import 'package:wowca_task/injection_container.dart';
@@ -9,8 +10,13 @@ import 'package:wowca_task/task_app.dart';
 
 class DashBoardDrawer extends StatefulWidget {
   final SignedInUserEntity user;
+  final DeptEntity dept;
 
-  const DashBoardDrawer({Key key, this.user}) : super(key: key);
+  const DashBoardDrawer({
+    Key key,
+    @required this.user,
+    @required this.dept,
+  }) : super(key: key);
 
   @override
   _DashBoardDrawerState createState() => _DashBoardDrawerState();
@@ -42,6 +48,7 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => DashboardPage(
+                            dept: widget.dept,
                             user: widget.user,
                           )));
             },
@@ -53,7 +60,10 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DepartmentPage(user: widget.user),
+                    builder: (context) => DepartmentPage(
+                      dept: widget.dept,
+                      user: widget.user,
+                    ),
                   ));
             },
           ),

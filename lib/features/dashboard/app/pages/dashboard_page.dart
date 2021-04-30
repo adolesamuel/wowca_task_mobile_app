@@ -26,7 +26,10 @@ class _DashboardPageState extends State<DashboardPage> {
       body: widget.dept == null
           ? AddDeptPage(user: widget.user, dept: widget.dept)
           : Container(),
-      drawer: DashBoardDrawer(user: widget.user),
+      drawer: DashBoardDrawer(
+        user: widget.user,
+        dept: widget.dept,
+      ),
     );
   }
 }

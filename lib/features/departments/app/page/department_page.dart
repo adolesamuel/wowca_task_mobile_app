@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/dashboard_drawer.dart';
+import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 
 class DepartmentPage extends StatefulWidget {
   final SignedInUserEntity user;
+  final DeptEntity dept;
 
-  const DepartmentPage({Key key, this.user}) : super(key: key);
+  const DepartmentPage({Key key, this.user, @required this.dept})
+      : super(key: key);
 
   @override
   _DepartmentPageState createState() => _DepartmentPageState();
@@ -17,6 +20,7 @@ class _DepartmentPageState extends State<DepartmentPage> {
     return Scaffold(
       drawer: DashBoardDrawer(
         user: widget.user,
+        dept: widget.dept,
       ),
       appBar: AppBar(
         title: Text('Departments'),
