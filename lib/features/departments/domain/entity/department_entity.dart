@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:wowca_task/features/departments/domain/entity/created_dept_entity.dart';
 
 class DeptEntity extends Equatable {
   final String departmentDescription;
@@ -14,6 +15,16 @@ class DeptEntity extends Equatable {
     this.listofUsers,
     this.listofProject,
   });
+
+  DeptEntity from(CreatedDeptEntity dept) {
+    return DeptEntity(
+      departmentName: dept.departmentName,
+      departmentId: dept.departmentId,
+      departmentDescription: dept.departmentDescription,
+      listofUsers: dept.listofUsers,
+      listofProject: dept.listofProject,
+    );
+  }
 
   @override
   List<Object> get props => [

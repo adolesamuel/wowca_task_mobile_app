@@ -23,7 +23,9 @@ class _DashboardPageState extends State<DashboardPage> {
         title: Text(AppStrings.dashboardTitle),
         elevation: 5.0,
       ),
-      body: widget.dept == null ? AddDeptPage() : Container(),
+      body: widget.dept == null
+          ? AddDeptPage(user: widget.user, dept: widget.dept)
+          : Container(),
       drawer: DashBoardDrawer(user: widget.user),
     );
   }

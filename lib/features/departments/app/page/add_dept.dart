@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
+import 'package:wowca_task/features/dashboard/app/pages/dashboard_page.dart';
 import 'package:wowca_task/features/departments/app/bloc/department_bloc.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
+import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 import 'package:wowca_task/injection_container.dart';
 
 class AddDeptPage extends StatefulWidget {
+  final SignedInUserEntity user;
+  final DeptEntity dept;
+
+  const AddDeptPage({Key key, this.user, this.dept}) : super(key: key);
+
   @override
   _AddDeptPageState createState() => _AddDeptPageState();
 }
@@ -154,29 +161,48 @@ class _AddDeptPageState extends State<AddDeptPage> {
             BlocProvider(
               create: (context) => deptBloc,
               child: BlocConsumer<DepartmentBloc, DepartmentState>(
-                listener: (context, state) {},
+                listener: (context, state) {
+                  if (state is DepartmentErrorState) {
+                    setState(() {});
+                  }
+                  if (state is CreatedDepartmentState) {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DashboardPage(
+                                  user: widget.user,
+                                  dept: DeptEntity().from(state.dept),
+                                )));
+                  }
+                },
                 builder: (context, state) {
                   return Container(
                       width: MediaQuery.of(context).size.width,
                       padding:
                           EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          elevation: MaterialStateProperty.all(20.0),
-                        ),
-                        onPressed: () {
-                          if (validateTextFields()) {
-                            setState(() {
-                              validate = validateTextFields();
-                            });
-                          } else {
-                            deptBloc.add(CreateDepartmentEvent(
-                              deptName: deptNameTextController.text,
-                              deptDescription: descriptionController.text,
-                            ));
-                          }
-                        },
-                        child: Text('Create Department'),
+                      child: Column(
+                        children: [
+                          ElevatedButton(
+                            style: ButtonStyle(
+                              elevation: MaterialStateProperty.all(20.0),
+                            ),
+                            onPressed: () {
+                              if (validateTextFields()) {
+                                setState(() {
+                                  validate = validateTextFields();
+                                });
+                              } else {
+                                deptBloc.add(CreateDepartmentEvent(
+                                  deptName: deptNameTextController.text,
+                                  deptDescription: descriptionController.text,
+                                ));
+                              }
+                            },
+                            child: Text('Create Department'),
+                          ),
+                          if (state is DepartmentLoadingState)
+                            LinearProgressIndicator(),
+                        ],
                       ));
                 },
               ),

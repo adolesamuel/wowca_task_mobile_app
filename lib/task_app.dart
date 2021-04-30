@@ -4,13 +4,15 @@ import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/dashboard/app/pages/dashboard_page.dart';
+import 'package:wowca_task/features/departments/data/models/get_dept.dart';
 import 'package:wowca_task/features/user_registration/app/page/signIn_page.dart';
 import 'package:wowca_task/features/user_registration/data/model/signed_in_user_model.dart';
 
 class TaskApp extends StatefulWidget {
   final Map<String, dynamic> user;
+  final Map<String, dynamic> dept;
 
-  const TaskApp({Key key, this.user}) : super(key: key);
+  const TaskApp({Key key, this.user, this.dept}) : super(key: key);
 
   @override
   _TaskAppState createState() => _TaskAppState();
@@ -42,6 +44,7 @@ class _TaskAppState extends State<TaskApp> {
           ? SignInPage()
           : DashboardPage(
               user: SignedInUserModel.fromJson(widget.user),
+              dept: DeptModel.fromJson(widget.dept),
             ),
     );
   }

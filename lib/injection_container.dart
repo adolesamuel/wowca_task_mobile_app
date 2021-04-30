@@ -8,6 +8,7 @@ import 'package:wowca_task/core/network_info/network_info.dart';
 import 'package:http/http.dart' as http;
 import 'package:wowca_task/features/departments/app/bloc/department_bloc.dart';
 import 'package:wowca_task/features/departments/data/repository/department_repository_impl.dart';
+import 'package:wowca_task/features/departments/data/sources/department_local_data_source.dart';
 import 'package:wowca_task/features/departments/data/sources/department_remote_data_source.dart';
 import 'package:wowca_task/features/departments/domain/repository/dept_repository.dart';
 import 'package:wowca_task/features/departments/domain/usecases/create_dept.dart';
@@ -68,7 +69,7 @@ Future<void> init() async {
 
   //Department Repository
   sl.registerLazySingleton<DepartmentRepository>(
-      () => DepartmentRepositoryImpl(sl(), sl()));
+      () => DepartmentRepositoryImpl(sl(), sl(), sl()));
 
   ///////////////////////////////////////////////////////////////////////////////////
   ///Application [DATA_SOURCES]
@@ -83,6 +84,8 @@ Future<void> init() async {
   //Department Data Sources
   sl.registerLazySingleton<DepartmentRemoteDataSource>(
       () => DepartmentRemoteDataSourceImpl(sl(), sl()));
+  sl.registerLazySingleton<DepartmentLocalDataSource>(
+      () => DepartmentLocalDataSourceImpl(sl()));
 
   ///////////////////////////////////////////////////////////////////////////////////
 
