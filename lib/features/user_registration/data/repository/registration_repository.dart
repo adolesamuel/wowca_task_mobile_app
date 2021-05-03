@@ -7,6 +7,8 @@ import 'package:wowca_task/features/user_registration/data/model/registered_user
 import 'package:wowca_task/features/user_registration/data/model/signed_in_user_model.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_remote_data_source.dart';
+import 'package:wowca_task/features/user_registration/domain/entity/registered_user.dart';
+import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 import 'package:wowca_task/features/user_registration/domain/repository/registration_repository.dart';
 
 const SERVER_FAILURE_TITLE = 'Server Failure',
@@ -21,7 +23,7 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
       this.networkInfo, this.remoteDataSource, this.localDataSource);
 
   @override
-  Future<Either<Failure, RegisteredUserModel>> register({
+  Future<Either<Failure, RegisteredUserEntity>> register({
     String email,
     String password,
     String orgName,
@@ -48,7 +50,7 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
   }
 
   @override
-  Future<Either<Failure, SignedInUserModel>> signIn({
+  Future<Either<Failure, SignedInUserEntity>> signIn({
     String email,
     String password,
   }) async {
@@ -69,7 +71,7 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
   }
 
   @override
-  Future<Either<Failure, SignedInUserModel>> verify({String code}) async {
+  Future<Either<Failure, SignedInUserEntity>> verify({String code}) async {
     try {
       if (await networkInfo.isConnected) {
         return Right(await remoteDataSource.verifyUser(code: code));

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wowca_task/features/dashboard/app/pages/dashboard_page.dart';
 import 'package:wowca_task/features/departments/app/page/department_page.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
+import 'package:wowca_task/features/task/app/pages/task_page.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 import 'package:wowca_task/injection_container.dart';
@@ -50,6 +51,19 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
                       builder: (context) => DashboardPage(
                             dept: widget.dept,
                             user: widget.user,
+                          )));
+            },
+          ),
+          ListTile(
+            title: Text('Tasks'),
+            onTap: () {
+              print('Drawer Home button pressed');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => TaskPage(
+                            user: widget.user,
+                            dept: widget.dept,
                           )));
             },
           ),
