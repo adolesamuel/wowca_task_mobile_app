@@ -13,6 +13,11 @@ import 'package:wowca_task/features/departments/data/sources/department_remote_d
 import 'package:wowca_task/features/departments/domain/repository/dept_repository.dart';
 import 'package:wowca_task/features/departments/domain/usecases/create_dept.dart';
 import 'package:wowca_task/features/departments/domain/usecases/get_dept.dart';
+import 'package:wowca_task/features/task/data/repository/task_repository_impl.dart';
+import 'package:wowca_task/features/task/data/sources/task_remote_data_source.dart';
+import 'package:wowca_task/features/task/domain/repository/task_repository.dart';
+import 'package:wowca_task/features/task/domain/usecases/create_task.dart';
+import 'package:wowca_task/features/task/domain/usecases/get_task.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/data/repository/registration_repository.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
@@ -39,6 +44,13 @@ Future<void> init() async {
   //Department Bloc
   sl.registerFactory(() => DepartmentBloc(sl(), sl()));
 
+  //Task Bloc
+  //
+
+  //Moduele Bloc
+
+  //Project Bloc
+
   ///////////////////////////////////////////////////////////////////////////////////
   /// Application [USECASES]
   ///////////////////////////////////////////////////////////////////////////////////
@@ -52,6 +64,15 @@ Future<void> init() async {
   //Department Usecases
   sl.registerLazySingleton(() => CreateDept(sl()));
   sl.registerLazySingleton(() => GetDept(sl()));
+
+  //Task Usecases
+  sl.registerLazySingleton(() => CreateTask(sl()));
+  sl.registerLazySingleton(() => GetTask(sl()));
+
+  //Project usecases
+  //
+
+  //Module usecases
 
   ///////////////////////////////////////////////////////////////////////////////////
   /// Application [REPOSITORIES]
@@ -71,6 +92,14 @@ Future<void> init() async {
   sl.registerLazySingleton<DepartmentRepository>(
       () => DepartmentRepositoryImpl(sl(), sl(), sl()));
 
+  //Task repository
+  sl.registerLazySingleton<TaskRepository>(
+      () => TaskRepositoryImpl(sl(), sl(), sl()));
+
+  //Project repository
+
+  //Module repository
+
   ///////////////////////////////////////////////////////////////////////////////////
   ///Application [DATA_SOURCES]
   ///////////////////////////////////////////////////////////////////////////////////
@@ -86,6 +115,11 @@ Future<void> init() async {
       () => DepartmentRemoteDataSourceImpl(sl(), sl()));
   sl.registerLazySingleton<DepartmentLocalDataSource>(
       () => DepartmentLocalDataSourceImpl(sl()));
+
+  //Task Data Source
+  sl.registerLazySingleton<TaskRemoteDataSource>(
+      () => TaskRemoteDataSourceImpl(sl(), sl()));
+  //task local data source
 
   ///////////////////////////////////////////////////////////////////////////////////
 
