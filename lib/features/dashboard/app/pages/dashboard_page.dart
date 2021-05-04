@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/utils/strings.dart';
-import 'package:wowca_task/features/dashboard/app/pages/dashboard_body.dart';
+import 'package:wowca_task/features/dashboard/app/widgets/dashboard_body.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/dashboard_drawer.dart';
 import 'package:wowca_task/features/departments/app/page/add_dept.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
@@ -26,8 +26,10 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
       body: widget.dept == null
           ? AddDeptPage(user: widget.user, dept: widget.dept)
-          : DashBoardBody(),
-      drawer: DashBoardDrawer(
+          : DashBoardBody(
+              user: widget.user,
+            ),
+      endDrawer: DashBoardDrawer(
         user: widget.user,
         dept: widget.dept,
       ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/project_item.dart';
 
-class DashBoardBody extends StatefulWidget {
+class ProjectBody extends StatefulWidget {
   @override
-  _DashBoardBodyState createState() => _DashBoardBodyState();
+  _ProjectBodyState createState() => _ProjectBodyState();
 }
 
-class _DashBoardBodyState extends State<DashBoardBody> {
+class _ProjectBodyState extends State<ProjectBody> {
   List<Project> listOfProject = [
     Project(
       projectName: 'Google project',

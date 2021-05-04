@@ -1,5 +1,5 @@
 import 'package:wowca_task/features/dashboard/app/widgets/project_item.dart';
-import 'package:wowca_task/features/dashboard/app/widgets/task_item.dart';
+import 'package:wowca_task/features/task/app/widgets/task_model.dart';
 
 class Module extends Project {
   final String moduleId;
