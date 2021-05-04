@@ -6,11 +6,13 @@ import 'package:wowca_task/features/company/domain/entity/company_entity.dart';
 
 abstract class CompanyRepository {
   Future<Either<Failure, CompanyEntity>> createCompany({
-    final String companyId,
-    final String companyName,
-    final File companyLogo,
-    final List companyUsers,
-    final List department,
+    String companyId,
+    String companyName,
+    File companyLogo,
+    List companyUsers,
+    List department,
+    String companyDescription,
+    String companyAddress,
   });
 
   Future<Either<Failure, List<CompanyEntity>>> getCompany();

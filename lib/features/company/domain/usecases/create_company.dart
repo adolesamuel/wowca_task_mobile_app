@@ -31,13 +31,18 @@ class CreateCompanyParams extends Equatable {
   final File companyLogo;
   final List companyUsers;
   final List department;
+  final String companyDescription;
+  final String companyAddress;
 
-  CreateCompanyParams(
-      {this.companyId,
-      this.companyName,
-      this.companyLogo,
-      this.companyUsers,
-      this.department});
+  CreateCompanyParams({
+    this.companyId,
+    this.companyName,
+    this.companyLogo,
+    this.companyUsers,
+    this.department,
+    this.companyAddress,
+    this.companyDescription,
+  });
 
   @override
   List<Object> get props => [
@@ -46,5 +51,7 @@ class CreateCompanyParams extends Equatable {
         companyLogo,
         companyUsers,
         department,
+        companyAddress,
+        companyDescription,
       ];
 }
