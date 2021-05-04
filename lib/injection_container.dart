@@ -13,6 +13,14 @@ import 'package:wowca_task/features/departments/data/sources/department_remote_d
 import 'package:wowca_task/features/departments/domain/repository/dept_repository.dart';
 import 'package:wowca_task/features/departments/domain/usecases/create_dept.dart';
 import 'package:wowca_task/features/departments/domain/usecases/get_dept.dart';
+import 'package:wowca_task/features/module/data/repository/module_repository_impl.dart';
+import 'package:wowca_task/features/module/domain/repository/module_repository.dart';
+import 'package:wowca_task/features/module/domain/usecases/create_module.dart';
+import 'package:wowca_task/features/module/domain/usecases/get_module.dart';
+import 'package:wowca_task/features/project/data/repository/project_repository_impl.dart';
+import 'package:wowca_task/features/project/domain/repository/project_respository.dart';
+import 'package:wowca_task/features/project/domain/usecase/create_project.dart';
+import 'package:wowca_task/features/project/domain/usecase/get_projects.dart';
 import 'package:wowca_task/features/task/data/repository/task_repository_impl.dart';
 import 'package:wowca_task/features/task/data/sources/task_remote_data_source.dart';
 import 'package:wowca_task/features/task/domain/repository/task_repository.dart';
@@ -70,9 +78,12 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetTask(sl()));
 
   //Project usecases
-  //
+  sl.registerLazySingleton(() => CreateProject(sl()));
+  sl.registerLazySingleton(() => GetProject(sl()));
 
   //Module usecases
+  sl.registerLazySingleton(() => CreateModule(sl()));
+  sl.registerLazySingleton(() => GetModule(sl()));
 
   ///////////////////////////////////////////////////////////////////////////////////
   /// Application [REPOSITORIES]
@@ -97,8 +108,12 @@ Future<void> init() async {
       () => TaskRepositoryImpl(sl(), sl(), sl()));
 
   //Project repository
+  sl.registerLazySingleton<ProjectRepository>(
+      () => ProjectRepositoryImpl(sl(), sl()));
 
   //Module repository
+  sl.registerLazySingleton<ModuleRepository>(
+      () => ModuleRepositoryImpl(sl(), sl()));
 
   ///////////////////////////////////////////////////////////////////////////////////
   ///Application [DATA_SOURCES]
@@ -120,6 +135,10 @@ Future<void> init() async {
   sl.registerLazySingleton<TaskRemoteDataSource>(
       () => TaskRemoteDataSourceImpl(sl(), sl()));
   //task local data source
+
+  //Module Data Source
+
+  //Project Data Source
 
   ///////////////////////////////////////////////////////////////////////////////////
 
