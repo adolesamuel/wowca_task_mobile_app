@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_greetings/flutter_greetings.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/grid_widget.dart';
-import 'package:wowca_task/features/dashboard/app/widgets/project_item.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/task_dashboard_item.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 
+//Useful
 class DashBoardBody extends StatefulWidget {
   final SignedInUserEntity user;
 
