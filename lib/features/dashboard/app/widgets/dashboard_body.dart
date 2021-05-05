@@ -15,17 +15,6 @@ class DashBoardBody extends StatefulWidget {
 }
 
 class _DashBoardBodyState extends State<DashBoardBody> {
-  List<Project> listOfProject = [
-    Project(
-      projectName: 'Google project',
-      listOfModules: [],
-    ),
-    Project(projectName: 'Apple', listOfModules: []),
-    Project(projectName: 'Hp', listOfModules: []),
-    Project(projectName: 'Lenovo', listOfModules: []),
-    Project(projectName: 'Discord', listOfModules: []),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return ListView(

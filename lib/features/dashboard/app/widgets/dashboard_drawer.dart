@@ -33,6 +33,7 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
+          //Header
           DrawerHeader(
             child: Text(
               'Drawer Header: ${widget.user.name}',
@@ -42,6 +43,9 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
           Divider(
             thickness: 2.0,
           ),
+
+          // Home Item
+
           ListTile(
             title: Text('Home'),
             onTap: () {
@@ -55,30 +59,23 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
                           )));
             },
           ),
+
+          // Company Item
           ListTile(
-            title: Text('Tasks'),
+            title: Text('Company'),
             onTap: () {
-              print('Drawer Home button pressed');
+              print('Drawer Company button pressed');
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => TaskPage(
-                            user: widget.user,
+                      builder: (context) => DashboardPage(
                             dept: widget.dept,
+                            user: widget.user,
                           )));
             },
           ),
-          ListTile(
-            title: Text('Projects'),
-            onTap: () {
-              print('Drawer Projects button pressed');
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProjectPage(),
-                  ));
-            },
-          ),
+
+          // Department Item
           ListTile(
             title: Text('Departments'),
             onTap: () {
@@ -93,6 +90,49 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
                   ));
             },
           ),
+
+          //Project item
+          ListTile(
+            title: Text('Projects'),
+            onTap: () {
+              print('Drawer Projects button pressed');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProjectPage(),
+                  ));
+            },
+          ),
+
+          //Module Item
+          ListTile(
+            title: Text('Modules'),
+            onTap: () {
+              print('Drawer Module button pressed');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProjectPage(),
+                  ));
+            },
+          ),
+
+          /// Task Item
+
+          ListTile(
+            title: Text('To Do'),
+            onTap: () {
+              print('Drawer Home button pressed');
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => TaskPage(
+                            user: widget.user,
+                            dept: widget.dept,
+                          )));
+            },
+          ),
+
           ListTile(
             title: Text('Users'),
             onTap: () {
