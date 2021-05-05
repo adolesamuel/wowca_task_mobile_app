@@ -29,11 +29,11 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     widget.task?.taskDescription != null
         ? descriptionController.text = widget.task.taskDescription
         : descriptionController.text = null;
-    listOfPickedFiles = widget.task.listOfMediaFileUrls != null
+    listOfPickedFiles = widget.task?.listOfMediaFileUrls != null
         ? widget.task.listOfMediaFileUrls
         : [];
-    isStarted = widget.task.started;
-    isCompleted = widget.task.completed;
+    isStarted = widget.task?.started ?? false;
+    isCompleted = widget.task?.completed ?? false;
   }
 
   @override
@@ -222,6 +222,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                     ),
                     onPressed: () {
                       print('Create mother effing task');
+                      Navigator.pop(context);
                     },
                     child: Text(
                         widget.task == null ? 'Create Task' : 'Update Task'),

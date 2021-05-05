@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/features/dashboard/app/widgets/company_custom_dialog.dart';
+import 'package:wowca_task/features/dashboard/app/widgets/dashboard_body.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/dashboard_drawer.dart';
 import 'package:wowca_task/features/departments/app/page/add_dept.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
@@ -20,13 +22,36 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppStrings.dashboardTitle),
+        title: GestureDetector(
+          onTap: () {
+            print('App bar tapped');
+
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return CustomDialogBox();
+                });
+            // Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //         builder: (context) => CustomDialogBox(
+            //               title: 'title',
+            //               descriptions: 'descriptions',
+            //               text: 'text',
+            //             )));
+          },
+          child: Container(
+            child: Text('Company Name'),
+          ),
+        ),
         elevation: 5.0,
       ),
       body: widget.dept == null
           ? AddDeptPage(user: widget.user, dept: widget.dept)
-          : Container(),
-      drawer: DashBoardDrawer(
+          : DashBoardBody(
+              user: widget.user,
+            ),
+      endDrawer: DashBoardDrawer(
         user: widget.user,
         dept: widget.dept,
       ),

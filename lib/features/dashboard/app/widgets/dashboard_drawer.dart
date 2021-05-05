@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wowca_task/features/dashboard/app/pages/dashboard_page.dart';
 import 'package:wowca_task/features/departments/app/page/department_page.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
+import 'package:wowca_task/features/project/app/pages/project_page.dart';
+import 'package:wowca_task/features/task/app/pages/task_page.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 import 'package:wowca_task/injection_container.dart';
@@ -31,6 +33,7 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
+          //Header
           DrawerHeader(
             child: Text(
               'Drawer Header: ${widget.user.name}',
@@ -40,11 +43,14 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
           Divider(
             thickness: 2.0,
           ),
+
+          // Home Item
+
           ListTile(
             title: Text('Home'),
             onTap: () {
               print('Drawer Home button pressed');
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (context) => DashboardPage(
@@ -53,11 +59,28 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
                           )));
             },
           ),
+
+          // Company Item
+          ListTile(
+            title: Text('Company'),
+            onTap: () {
+              print('Drawer Company button pressed');
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DashboardPage(
+                            dept: widget.dept,
+                            user: widget.user,
+                          )));
+            },
+          ),
+
+          // Department Item
           ListTile(
             title: Text('Departments'),
             onTap: () {
               print('Drawer Department button pressed');
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => DepartmentPage(
@@ -67,6 +90,49 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
                   ));
             },
           ),
+
+          //Project item
+          ListTile(
+            title: Text('Projects'),
+            onTap: () {
+              print('Drawer Projects button pressed');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProjectPage(),
+                  ));
+            },
+          ),
+
+          //Module Item
+          ListTile(
+            title: Text('Modules'),
+            onTap: () {
+              print('Drawer Module button pressed');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProjectPage(),
+                  ));
+            },
+          ),
+
+          /// Task Item
+
+          ListTile(
+            title: Text('To Do'),
+            onTap: () {
+              print('Drawer Home button pressed');
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => TaskPage(
+                            user: widget.user,
+                            dept: widget.dept,
+                          )));
+            },
+          ),
+
           ListTile(
             title: Text('Users'),
             onTap: () {
