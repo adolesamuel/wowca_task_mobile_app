@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/company_custom_dialog.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/dashboard_body.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/dashboard_drawer.dart';

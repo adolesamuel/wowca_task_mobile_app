@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wowca_task/features/company/app/pages/company_page.dart';
 import 'package:wowca_task/features/company/domain/entity/company_entity.dart';
 import 'package:wowca_task/features/dashboard/app/pages/dashboard_page.dart';
+import 'package:wowca_task/features/dashboard/app/widgets/dashboard_drawer_head.dart';
 import 'package:wowca_task/features/departments/app/page/department_page.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 import 'package:wowca_task/features/project/app/pages/project_page.dart';
@@ -40,10 +41,7 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
         children: [
           //Header
           DrawerHeader(
-            child: Text(
-              'Drawer Header: ${widget.user.name}',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+            child: DrawerHead(user: widget.user),
           ),
           Divider(
             thickness: 2.0,

@@ -21,10 +21,8 @@ class _TaskDashBoardItemState extends State<TaskDashBoardItem> {
     return GestureDetector(
       onTap: () {
         showTaskBottomSheetMenu(
-            context: context,
-            rebuildState: () {
-              setState(() {});
-            });
+          context: context,
+        );
       },
       child: Padding(
         padding: EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),

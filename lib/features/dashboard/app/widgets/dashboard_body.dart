@@ -72,7 +72,7 @@ class _DashBoardBodyState extends State<DashBoardBody> {
             ),
           ),
         ),
-        BasicGrid(gap: 10.0, padding: EdgeInsets.all(10.0), children: [
+        GridForDashBoard(gap: 10.0, padding: EdgeInsets.all(10.0), children: [
           Container(
             width: 100.0,
             height: 100.0,
@@ -106,7 +106,7 @@ class _DashBoardBodyState extends State<DashBoardBody> {
             ),
           ),
         ),
-        BasicGrid(gap: 10.0, padding: EdgeInsets.all(10.0), children: [
+        GridForDashBoard(gap: 10.0, padding: EdgeInsets.all(10.0), children: [
           Container(
             width: 100.0,
             height: 100.0,

@@ -5,10 +5,7 @@ import 'package:wowca_task/core/network_info/network_info.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/module/data/model/module_model.dart';
 import 'package:wowca_task/features/module/data/sources/module_remote_data_source.dart';
-import 'package:wowca_task/features/module/domain/entity/module_entity.dart';
 import 'package:wowca_task/features/module/domain/repository/module_repository.dart';
-import 'package:wowca_task/features/module/domain/usecases/create_module.dart';
-import 'package:wowca_task/features/project/data/model/project_model.dart';
 import 'package:wowca_task/features/task/domain/entities/get_task_entity.dart';
 import 'package:wowca_task/features/user_registration/data/repository/registration_repository.dart';
 
