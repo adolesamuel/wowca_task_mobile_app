@@ -7,6 +7,7 @@ import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/registered_user.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 import 'package:wowca_task/features/user_registration/domain/usecases/register_user.dart';
+import 'package:wowca_task/features/user_registration/domain/usecases/sign_out_user.dart';
 import 'package:wowca_task/features/user_registration/domain/usecases/signin_user.dart';
 import 'package:wowca_task/features/user_registration/domain/usecases/verification.dart';
 
@@ -17,11 +18,13 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final RegisterUser registerUser;
   final SignInUser signInUser;
   final VerifyUser verifyUser;
+  final SignOutUser signOutUser;
 
   SignUpBloc({
     this.registerUser,
     this.signInUser,
     this.verifyUser,
+    this.signOutUser,
   }) : super(SignupInitial());
 
   @override
@@ -63,6 +66,15 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
       yield verifyOrError.fold((failure) => VerificationErrorState(failure),
           (signedInUserEntity) => VerifiedUserState(signedInUserEntity));
+    }
+
+    if (event is SignOutEvent) {
+      yield SignOutLoadingState();
+
+      final isTrueOrFailed = await signOutUser(SignOutParams());
+
+      yield isTrueOrFailed.fold((failure) => SignOutErrorState(failure),
+          (isLoggedOut) => SignedOutState(isLoggedOut));
     }
   }
 }

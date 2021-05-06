@@ -5,7 +5,7 @@ class AppStrings {
 
   //Dashboard Strings
 
-  static final String dashboardTitle = 'Dashboard';
+  static final String dashboardTitle = 'Home';
 
   //SignUp page strings
   static final String signUpTitle = 'Create Task Manager Admin Account';
@@ -42,6 +42,8 @@ class AppStrings {
   static final String registerUser = '/register';
   static final String signInUser = '/login';
   static final String verifyUser = '/verify';
+  static final String createDept = '/create-departments';
+  static final String getDept = '/get-departments';
 }
 
 //Error Messages

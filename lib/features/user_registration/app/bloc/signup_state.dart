@@ -51,3 +51,16 @@ class VerificationErrorState extends SignUpState {
 
   VerificationErrorState(this.failure);
 }
+
+class SignOutLoadingState extends SignUpState {}
+
+class SignOutErrorState extends SignUpState {
+  final Failure failure;
+  SignOutErrorState(this.failure);
+}
+
+class SignedOutState extends SignUpState {
+  final bool signedOutUserEntity;
+
+  SignedOutState(this.signedOutUserEntity);
+}

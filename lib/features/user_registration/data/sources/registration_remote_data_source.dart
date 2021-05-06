@@ -4,10 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:wowca_task/core/errors/exception.dart';
 import 'package:wowca_task/core/helpers/json_checker.dart';
 import 'package:wowca_task/core/utils/strings.dart';
-import 'package:wowca_task/features/user_registration/data/model/register_user_data.dart';
 import 'package:wowca_task/features/user_registration/data/model/registered_user_model.dart';
 import 'package:wowca_task/features/user_registration/data/model/signed_in_user_model.dart';
-import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
 
 abstract class RegistrationRemoteDataSource {
   Future<RegisteredUserModel> registerUser({
@@ -22,12 +20,10 @@ abstract class RegistrationRemoteDataSource {
 }
 
 class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
-  final RegistrationLocalDataSource localDataSource;
   final http.Client client;
   final JsonChecker jsonChecker;
 
   RegistrationRemoteDataSourceImpl(
-    this.localDataSource,
     this.client,
     this.jsonChecker,
   );
@@ -71,9 +67,6 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
           //       //
           final registeredUserModel =
               RegisteredUserModel.fromJson(json.decode(response.body));
-
-          ///Cache RegisteredUserInfo returned from the API
-          // localDataSource.cacheRegisteredUserData(registeredUserModel);
 
           return registeredUserModel;
         } else if (data['status'] == 'failed') {
@@ -123,7 +116,6 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
         if (data['status'] == 201) {
           final signedInUserModel = SignedInUserModel.fromJson(data["data"]);
 
-          localDataSource.cacheRegisteredUserData(signedInUserModel);
           return signedInUserModel;
         } else {
           final title = data['title'], message = data['message'];
@@ -160,8 +152,6 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
 
         if (data['status'] == 201) {
           final signedInUserModel = SignedInUserModel.fromJson(data["data"]);
-
-          localDataSource.cacheRegisteredUserData(signedInUserModel);
           return signedInUserModel;
         } else {
           final title = data['title'], message = data['message'];
