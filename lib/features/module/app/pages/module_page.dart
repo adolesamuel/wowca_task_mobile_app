@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:wowca_task/features/module/app/pages/create_module_page.dart';
+import 'package:wowca_task/features/module/app/pages/module_body.dart';
 
 class ModulePage extends StatefulWidget {
   @override
@@ -14,9 +14,7 @@ class _ModulePageState extends State<ModulePage> {
       appBar: AppBar(
         title: Text('Module'),
       ),
-      body: Center(
-        child: Text('Under Construction'),
-      ),
+      body: ModuleBody(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {

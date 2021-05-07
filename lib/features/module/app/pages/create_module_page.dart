@@ -85,9 +85,6 @@ class _CreateModulePageState extends State<CreateModulePage> {
               SizedBox(
                 height: Quantity.mediumSpace,
               ),
-              SizedBox(
-                height: Quantity.mediumSpace,
-              ),
               OutlinedButton(
                 onPressed: () {},
                 child: Text('Add Existing Tasks'),
@@ -97,6 +94,13 @@ class _CreateModulePageState extends State<CreateModulePage> {
               ),
               Text(
                 'Tasks',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: Quantity.largeSpace,
+              ),
+              Text(
+                'Percentage Completed: 0%',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(
