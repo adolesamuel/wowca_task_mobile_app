@@ -8,7 +8,6 @@ Future<dynamic> showTaskBottomSheetMenu({
   GetTaskEntity task,
   bool isTaskStarted = true,
   bool isTaskCompleted = false,
-  Function rebuildState,
 }) {
   //ToDo Make this page respond to tasks present
   return showBarModalBottomSheet(

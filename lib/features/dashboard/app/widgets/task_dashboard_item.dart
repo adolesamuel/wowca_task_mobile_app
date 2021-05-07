@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wowca_task/features/dashboard/app/widgets/draggable_scrollable_task_sheet.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/task_modal_bottom_sheet.dart';
 import 'package:wowca_task/features/task/domain/entities/get_task_entity.dart';
 
@@ -22,10 +21,8 @@ class _TaskDashBoardItemState extends State<TaskDashBoardItem> {
     return GestureDetector(
       onTap: () {
         showTaskBottomSheetMenu(
-            context: context,
-            rebuildState: () {
-              setState(() {});
-            });
+          context: context,
+        );
       },
       child: Padding(
         padding: EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
