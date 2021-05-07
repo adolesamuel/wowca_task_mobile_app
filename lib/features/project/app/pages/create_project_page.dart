@@ -94,16 +94,6 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: Quantity.mediumSpace,
-                ),
-                SizedBox(
-                  height: Quantity.mediumSpace,
-                ),
-                Text(
-                  'Projects',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
                   height: Quantity.largeSpace,
                 ),
                 Container(
