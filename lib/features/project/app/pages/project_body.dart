@@ -14,8 +14,6 @@ class _ProjectBodyState extends State<ProjectBody> {
     ),
     Project(projectName: 'Apple', listOfModules: []),
     Project(projectName: 'Hp', listOfModules: []),
-    Project(projectName: 'Lenovo', listOfModules: []),
-    Project(projectName: 'Discord', listOfModules: []),
   ];
 
   @override
@@ -62,13 +60,11 @@ class _ProjectContainerState extends State<ProjectContainer> {
                   width: 91,
                   color: Colors.purple,
                 ),
-                Container(
-                  height: 95.0,
-                  width: 300.0,
+                Expanded(
                   child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: 10, //widget.project.listOfModules.length,
+                    itemCount: 3, //widget.project.listOfModules.length,
                     itemBuilder: (context, index) {
                       return Container(
                         margin: EdgeInsets.all(5.0),
