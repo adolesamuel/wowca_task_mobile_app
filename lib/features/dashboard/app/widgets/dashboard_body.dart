@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_greetings/flutter_greetings.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
+import 'package:wowca_task/features/dashboard/app/widgets/dashboard_item_box.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/grid_widget.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/task_dashboard_item.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
@@ -73,25 +74,25 @@ class _DashBoardBodyState extends State<DashBoardBody> {
           ),
         ),
         GridForDashBoard(gap: 10.0, padding: EdgeInsets.all(10.0), children: [
-          Container(
-            width: 100.0,
-            height: 100.0,
+          DashboardBox(
+            number: 5,
+            boxName: 'Department',
+            color: Colors.yellow,
+          ),
+          DashboardBox(
+            number: 15,
+            boxName: 'Project',
             color: Colors.blue,
           ),
-          Container(
-            width: 100.0,
-            height: 100.0,
-            color: Colors.blue,
+          DashboardBox(
+            number: 29,
+            boxName: 'Modules',
+            color: Colors.green,
           ),
-          Container(
-            width: 100.0,
-            height: 100.0,
-            color: Colors.blue,
-          ),
-          Container(
-            width: 100.0,
-            height: 100.0,
-            color: Colors.blue,
+          DashboardBox(
+            number: 112,
+            boxName: 'Tasks',
+            color: Colors.blueGrey,
           ),
         ]),
         Divider(
@@ -107,25 +108,25 @@ class _DashBoardBodyState extends State<DashBoardBody> {
           ),
         ),
         GridForDashBoard(gap: 10.0, padding: EdgeInsets.all(10.0), children: [
-          Container(
-            width: 100.0,
-            height: 100.0,
+          DashboardBox(
+            number: 5,
+            boxName: 'Department',
+            color: Colors.yellow,
+          ),
+          DashboardBox(
+            number: 15,
+            boxName: 'Project',
             color: Colors.blue,
           ),
-          Container(
-            width: 100.0,
-            height: 100.0,
-            color: Colors.blue,
+          DashboardBox(
+            number: 29,
+            boxName: 'Modules',
+            color: Colors.green,
           ),
-          Container(
-            width: 100.0,
-            height: 100.0,
-            color: Colors.blue,
-          ),
-          Container(
-            width: 100.0,
-            height: 100.0,
-            color: Colors.blue,
+          DashboardBox(
+            number: 112,
+            boxName: 'Tasks',
+            color: Colors.blueGrey,
           ),
         ]),
       ],

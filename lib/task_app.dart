@@ -38,7 +38,6 @@ class _TaskAppState extends State<TaskApp> {
       title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
       theme: FlexColorScheme.light(scheme: FlexScheme.deepPurple).toTheme,
-      darkTheme: FlexColorScheme.dark(scheme: FlexScheme.deepPurple).toTheme,
       themeMode: ThemeMode.system,
       home: widget.user == null || widget.user.isEmpty
           ? SignInPage()

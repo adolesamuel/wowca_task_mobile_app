@@ -18,9 +18,6 @@ class _DrawerHeadState extends State<DrawerHead> {
       accountName: Text(widget.user.name),
       accountEmail: Text(widget.user.email),
       currentAccountPicture: CircleAvatar(
-        backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
-            ? Colors.blue
-            : Colors.white,
         child: Text(
           widget.user.name[0],
           style: TextStyle(fontSize: 40.0),

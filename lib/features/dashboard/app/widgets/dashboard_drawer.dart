@@ -37,14 +37,13 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        padding: EdgeInsets.zero,
         children: [
           //Header
           DrawerHeader(
             child: DrawerHead(user: widget.user),
           ),
           Divider(
-            thickness: 2.0,
+            thickness: 1.0,
           ),
 
           // Home Item
@@ -53,7 +52,7 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
             leading: Icon(Icons.home),
             title: Text('Home'),
             onTap: () {
-              print('Drawer Home button pressed');
+              Navigator.pop(context);
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -69,7 +68,7 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
             leading: Icon(Icons.location_city),
             title: Text('Company'),
             onTap: () {
-              print('Drawer Company button pressed');
+              Navigator.pop(context);
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -86,8 +85,8 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
             leading: Icon(Icons.meeting_room),
             title: Text('Departments'),
             onTap: () {
-              print('Drawer Department button pressed');
-              Navigator.pushReplacement(
+              Navigator.pop(context);
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => DepartmentPage(
@@ -103,7 +102,7 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
             leading: Icon(Icons.recommend),
             title: Text('Projects'),
             onTap: () {
-              print('Drawer Projects button pressed');
+              Navigator.pop(context);
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -117,7 +116,7 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
             leading: Icon(Icons.list_alt),
             title: Text('Modules'),
             onTap: () {
-              print('Drawer Module button pressed');
+              Navigator.pop(context);
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -132,7 +131,7 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
             leading: Icon(Icons.notes),
             title: Text('To Do'),
             onTap: () {
-              print('Drawer Home button pressed');
+              Navigator.pop(context);
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -147,7 +146,7 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
             leading: Icon(Icons.people),
             title: Text('Users'),
             onTap: () {
-              print('Drawer User button pressed');
+              Navigator.pop(context);
             },
           ),
           Divider(
@@ -170,7 +169,6 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
                       leading: Icon(Icons.logout),
                       title: Text('Sign Out'),
                       onTap: () {
-                        print('Drawer Sign out button pressed');
                         signOutBloc.add(SignOutEvent());
                       },
                     );
