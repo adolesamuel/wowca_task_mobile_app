@@ -72,8 +72,6 @@ class ProjectContainer extends StatefulWidget {
 }
 
 class _ProjectContainerState extends State<ProjectContainer> {
-  //custom method to capitalize first letter of each word.
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -85,60 +83,70 @@ class _ProjectContainerState extends State<ProjectContainer> {
           height: 100.0,
           width: MediaQuery.of(context).size.width * .9,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                width: 20,
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 7.0, vertical: 3.0),
-                  color: Colors.yellow,
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
                   SizedBox(
-                    height: 10.0,
+                    width: 20,
+                    child: Container(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 7.0, vertical: 3.0),
+                      color: Colors.yellow,
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(toCapital(sentence: widget.project.projectName),
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 20.0, fontWeight: FontWeight.bold)),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'Empty',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15.0),
+                      SizedBox(
+                        height: 10.0,
                       ),
-                      Icon(Icons.arrow_forward_ios),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(toCapital(sentence: widget.project.projectName),
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Modules: ${widget.project.listOfModules.length}',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15.0),
+                          ),
+                        ],
+                      )
                     ],
-                  )
+                  ),
                 ],
               ),
-              Container(
-                //use glow avatar with changing levels from red to orange to yellow
-                // to yellowish green to green and then blue.
-                // based on percentage completion from database.
-
-                width: 100.0,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 30.0,
+              Row(
+                children: [
+                  Text(
+                    '45%',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                    CircleAvatar(
-                      backgroundColor: Colors.green,
-                    ),
-                  ],
-                ),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(16.0),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.green,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),
