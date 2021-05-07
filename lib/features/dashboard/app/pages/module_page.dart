@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wowca_task/features/dashboard/app/pages/task_list_page.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/project_item.dart';
 
 class ModulePage extends StatefulWidget {
@@ -20,17 +19,7 @@ class _ModulePageState extends State<ModulePage> {
       ),
       body: Center(
         child: GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    settings: RouteSettings(name: '/TaskList'),
-                    builder: (context) {
-                      //takes a task list
-                      return TaskListPage(
-                          module: widget.project.listOfModules[0]);
-                    }));
-          },
+          onTap: () {},
           child: PhysicalModel(
             color: Colors.white,
             elevation: 5.0,

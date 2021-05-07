@@ -14,6 +14,8 @@ abstract class RegistrationLocalDataSource {
   Map<String, dynamic> getCachedServerError();
 
   void cacheServerError(String title, String message);
+
+  Future<bool> signOut();
 }
 
 const String CACHED_REGISTERED_USER = 'CACHED_REGISTERED_USER';
@@ -65,5 +67,10 @@ class LocalDataSourceImpl implements RegistrationLocalDataSource {
     final message = sharedPreferences.getString(CACHED_SERVER_ERROR_MESSAGE);
 
     return {'title': title, 'message': message};
+  }
+
+  @override
+  Future<bool> signOut() {
+    return sharedPreferences.remove(CACHED_REGISTERED_USER);
   }
 }
