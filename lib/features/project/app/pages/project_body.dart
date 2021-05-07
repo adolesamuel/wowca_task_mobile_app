@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/helpers/capitalize_first_letter.dart';
+import 'package:wowca_task/features/module/domain/entity/module_entity.dart';
+import 'package:wowca_task/features/project/app/widgets/show_project_bottom_sheet.dart';
 import 'package:wowca_task/features/project/domain/entity/project_entity.dart';
 
 class ProjectBody extends StatefulWidget {
@@ -13,18 +15,40 @@ class _ProjectBodyState extends State<ProjectBody> {
   List<ProjectEntity> listOfProject = [
     ProjectEntity(
       projectName: 'Google project',
-      listOfModules: [],
+      listOfModules: [
+        ModuleEntity(),
+        ModuleEntity(),
+        ModuleEntity(),
+        ModuleEntity()
+      ],
     ),
-    ProjectEntity(projectName: 'Apple', listOfModules: []),
-    ProjectEntity(projectName: 'Hp', listOfModules: []),
-    ProjectEntity(projectName: 'Hp', listOfModules: []),
-    ProjectEntity(projectName: 'Hp', listOfModules: []),
-    ProjectEntity(projectName: 'Hp', listOfModules: []),
-    ProjectEntity(projectName: 'Hp', listOfModules: []),
-    ProjectEntity(projectName: 'Hp', listOfModules: []),
-    ProjectEntity(projectName: 'Hp', listOfModules: []),
-    ProjectEntity(projectName: 'Hp', listOfModules: []),
-    ProjectEntity(projectName: 'Hp', listOfModules: []),
+    ProjectEntity(
+        projectName: 'Apple',
+        listOfModules: [ModuleEntity(), ModuleEntity(), ModuleEntity()],
+        department: 'IT'),
+    ProjectEntity(
+        projectName: 'Hp',
+        listOfModules: [ModuleEntity()],
+        department: 'Photography'),
+    ProjectEntity(
+        projectName: 'Hp',
+        listOfModules: [
+          ModuleEntity(),
+          ModuleEntity(),
+          ModuleEntity(),
+        ],
+        department: 'Drama'),
+    ProjectEntity(
+        projectName: 'Hp', listOfModules: [ModuleEntity(), ModuleEntity()]),
+    ProjectEntity(projectName: 'Hp', listOfModules: [
+      ModuleEntity(),
+      ModuleEntity(),
+      ModuleEntity(),
+      ModuleEntity()
+    ]),
+    ProjectEntity(
+        projectName: 'Hp',
+        listOfModules: [ModuleEntity(), ModuleEntity(), ModuleEntity()]),
     ProjectEntity(projectName: 'Hp', listOfModules: []),
     ProjectEntity(projectName: 'Hp', listOfModules: []),
     ProjectEntity(projectName: 'Hp', listOfModules: []),
@@ -54,7 +78,26 @@ class _ProjectBodyState extends State<ProjectBody> {
           child: ListView.builder(
               itemCount: listOfProject.length,
               itemBuilder: (context, index) {
-                return ProjectContainer(project: listOfProject[index]);
+                if (listOfProject.length - 1 == index) {
+                  return Column(
+                    children: [
+                      ProjectContainer(
+                        project: listOfProject[index],
+                      ),
+                      SizedBox(
+                        height: 48.0,
+                      )
+                    ],
+                  );
+                }
+                return Column(
+                  children: [
+                    ProjectContainer(project: listOfProject[index]),
+                    SizedBox(
+                      height: 16.0,
+                    )
+                  ],
+                );
               }),
         ),
       ],
@@ -74,8 +117,12 @@ class ProjectContainer extends StatefulWidget {
 class _ProjectContainerState extends State<ProjectContainer> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
+    return InkWell(
+      onTap: () {
+        showProjectBottomSheet(
+          context: context,
+        );
+      },
       child: PhysicalModel(
         color: Colors.white,
         elevation: 5.0,
@@ -121,7 +168,12 @@ class _ProjectContainerState extends State<ProjectContainer> {
                                 fontWeight: FontWeight.bold, fontSize: 15.0),
                           ),
                         ],
-                      )
+                      ),
+                      Text(
+                        ' Department: ${widget.project.department}',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
+                      ),
                     ],
                   ),
                 ],

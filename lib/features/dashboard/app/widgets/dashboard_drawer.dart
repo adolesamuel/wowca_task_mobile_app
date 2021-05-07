@@ -132,7 +132,7 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
             title: Text('To Do'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushReplacement(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => TaskPage(

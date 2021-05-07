@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:wowca_task/features/company/app/pages/create_company_page.dart';
-import 'package:wowca_task/features/departments/app/page/create_dept_page.dart';
-import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
+import 'package:wowca_task/features/project/app/pages/create_project_page.dart';
+import 'package:wowca_task/features/project/domain/entity/project_entity.dart';
 
 //Useful
-Future<dynamic> showDeptBottomSheet({
+Future<dynamic> showProjectBottomSheet({
   @required BuildContext context,
-  DeptEntity dept,
+  ProjectEntity project,
 }) {
   return showBarModalBottomSheet(
       elevation: 5.0,
@@ -17,9 +16,9 @@ Future<dynamic> showDeptBottomSheet({
             builder: (BuildContext context, StateSetter setModalState) =>
                 Scaffold(
               appBar: AppBar(
-                title: dept == null
-                    ? Text('Department Name')
-                    : Text(dept.departmentName),
+                title: project == null
+                    ? Text('Project Name')
+                    : Text(project.projectName),
               ),
               body: SingleChildScrollView(
                 controller: ModalScrollController.of(context),
@@ -28,29 +27,8 @@ Future<dynamic> showDeptBottomSheet({
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Container(
-                      //   clipBehavior: Clip.hardEdge,
-                      //   child: company == null
-                      //       ? CircleAvatar(
-                      //           child: Text('No Image'),
-                      //         )
-                      //       : Image.file(company.companyLogo),
-                      // ),
-
                       Text(
-                        'Department Description',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-
-                      //Selectable widget to show the task description
-                      SelectableText(dept?.departmentDescription == null
-                          ? 'No Department description'
-                          : dept.departmentDescription),
-                      SizedBox(
-                        height: 8.0,
-                      ),
-                      Text(
-                        'Projects',
+                        'Project',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
@@ -60,9 +38,11 @@ Future<dynamic> showDeptBottomSheet({
                         'Users',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-
+                      SizedBox(
+                        height: 8.0,
+                      ),
                       Text(
-                        'Status',
+                        'list of Modules',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
 
@@ -75,9 +55,9 @@ Future<dynamic> showDeptBottomSheet({
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          CreateDepartmentPage()));
+                                          CreateProjectPage()));
                             },
-                            child: Text('Update Department Details')),
+                            child: Text('Update Project Details')),
                       ),
                       SizedBox(
                         height: 8.0,
