@@ -6,6 +6,7 @@ import 'package:wowca_task/features/dashboard/app/pages/dashboard_page.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/dashboard_drawer_head.dart';
 import 'package:wowca_task/features/departments/app/page/department_page.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
+import 'package:wowca_task/features/module/app/pages/module_page.dart';
 import 'package:wowca_task/features/project/app/pages/project_page.dart';
 import 'package:wowca_task/features/task/app/pages/task_page.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
@@ -120,7 +121,7 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProjectPage(),
+                    builder: (context) => ModulePage(),
                   ));
             },
           ),

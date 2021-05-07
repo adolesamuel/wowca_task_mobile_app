@@ -170,7 +170,7 @@ class _ProjectContainerState extends State<ProjectContainer> {
                         ],
                       ),
                       Text(
-                        ' Department: ${widget.project.department}',
+                        'Department: ${widget.project.department}',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 15.0),
                       ),
