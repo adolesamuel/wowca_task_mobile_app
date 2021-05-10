@@ -11,6 +11,7 @@ import 'package:wowca_task/features/project/app/pages/project_page.dart';
 import 'package:wowca_task/features/task/app/pages/task_page.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
+import 'package:wowca_task/features/users/app/pages/user_search_and_display_page.dart';
 import 'package:wowca_task/injection_container.dart';
 import 'package:wowca_task/task_app.dart';
 
@@ -148,6 +149,14 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
             title: Text('Users'),
             onTap: () {
               Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserSearchAndDisplayPage(
+                    user: widget.user,
+                  ),
+                ),
+              );
             },
           ),
           Divider(

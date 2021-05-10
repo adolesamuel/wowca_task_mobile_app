@@ -38,6 +38,5 @@ class _ModuleBodyState extends State<ModuleBody> {
         ),
       ],
     );
-    ;
   }
 }
