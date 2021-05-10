@@ -60,7 +60,8 @@ class _DashBoardBodyState extends State<DashBoardBody> {
             TaskDashBoardItem(color: Colors.green),
             TextButton(
                 onPressed: () {
-                  print('See more');
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => TaskPage()));
                 },
                 child: Text('See more...'))
           ],
