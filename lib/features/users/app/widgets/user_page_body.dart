@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/helpers/capitalize_first_letter.dart';
-import 'package:wowca_task/features/company/domain/entity/company_entity.dart';
-import 'package:wowca_task/features/module/domain/entity/module_entity.dart';
-import 'package:wowca_task/features/project/app/widgets/show_project_bottom_sheet.dart';
-import 'package:wowca_task/features/project/domain/entity/project_entity.dart';
 import 'package:wowca_task/features/task/domain/entities/get_task_entity.dart';
+import 'package:wowca_task/features/users/app/widgets/user_bottom_sheet.dart';
 import 'package:wowca_task/features/users/domain/entity/user_entity.dart';
 
 class UserPageBody extends StatefulWidget {
@@ -89,7 +86,7 @@ class _UserPageBodyState extends State<UserPageBody> {
         userCompanies: [],
         userDepartment: 'Kitchen'),
     UserEntity(
-        userName: 'Jacuzzi Doctor',
+        userName: 'Jacuzzi Doctorhgdghdgdgdgdgdgdgdgdgdgdgdgdgdgdg',
         userEmail: 'JacDoctor@gmail.com',
         userProfilePicture: null,
         userTasks: [
@@ -99,7 +96,7 @@ class _UserPageBodyState extends State<UserPageBody> {
           GetTaskEntity(),
         ],
         userCompanies: [],
-        userDepartment: 'Cordination'),
+        userDepartment: 'Cordinationnzxvdvdvdvdvdvdvdvdvdvdvdvdvd'),
     UserEntity(
         userName: 'Gigi Hadid',
         userEmail: 'gigi@gmail.com',
@@ -214,8 +211,9 @@ class _UserContainerState extends State<UserContainer> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        showProjectBottomSheet(
+        showUserBottomSheet(
           context: context,
+          user: widget.user,
         );
       },
       child: PhysicalModel(
@@ -243,39 +241,38 @@ class _UserContainerState extends State<UserContainer> {
                       SizedBox(
                         height: 10.0,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                              toCapital(
-                                sentence: widget.user.userName,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontSize: 20.0, fontWeight: FontWeight.bold)),
-                        ],
+                      Container(
+                        width: 200.0,
+                        child: Text(
+                            toCapital(
+                              sentence: widget.user.userName,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 18.0, fontWeight: FontWeight.bold)),
                       ),
                       SizedBox(
                         height: 10.0,
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            'Tasks: ${widget.user.userTasks.length}',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15.0),
-                          ),
-                        ],
+                      Text(
+                        'Tasks: ${widget.user.userTasks.length}',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
                       ),
                       Text(
                         'Companies: ${widget.user.userCompanies.length}',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 15.0),
                       ),
-                      Text(
-                        'Department: ${widget.user.userDepartment}',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15.0),
+                      Container(
+                        width: 200,
+                        child: Text(
+                          'Department: ${widget.user.userDepartment}',
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15.0),
+                        ),
                       ),
                     ],
                   ),
@@ -283,20 +280,23 @@ class _UserContainerState extends State<UserContainer> {
               ),
               Row(
                 children: [
-                  Text(
-                    '45%',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(16.0),
+                        padding: EdgeInsets.only(right: 40.0),
                         child: CircleAvatar(
-                          backgroundColor: Colors.green,
+                          radius: 40.0,
+                          backgroundColor: Colors.grey,
+                          child: Container(
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50.0)),
+                            child: Image(
+                              image: AssetImage(
+                                  'lib/core/assets/user_placeholder.png'),
+                            ),
+                          ),
                         ),
                       ),
                     ],
