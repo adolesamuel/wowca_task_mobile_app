@@ -8,7 +8,6 @@ abstract class RegistrationRepository {
     String email,
     String password,
     String name,
-    String orgName,
   });
 
   Future<Either<Failure, SignedInUserEntity>> signIn({

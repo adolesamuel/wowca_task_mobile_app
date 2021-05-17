@@ -10,7 +10,6 @@ class AppStrings {
   //SignUp page strings
   static final String signUpTitle = 'Create Task Manager Admin Account';
   static final String signUpPageName = 'Name';
-  static final String signUpPageOrgName = 'Organization Name';
   static final String signUpPageEmail = 'Email';
   static final String signUpPagePassword = 'Password';
   static final String signUpPageConfirmPassword = 'Confirm Password';

@@ -57,6 +57,7 @@ void main() {
       when(mockSharePreferences.getString(any))
           .thenReturn(fixtureReader('cached_registered_user'));
       //act
+
       final result = await localDataSource.getRegisteredUserData();
 
       //assert

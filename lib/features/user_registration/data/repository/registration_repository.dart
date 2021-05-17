@@ -24,7 +24,6 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
   Future<Either<Failure, RegisteredUserEntity>> register({
     String email,
     String password,
-    String orgName,
     String name,
   }) async {
     try {
@@ -33,7 +32,6 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
           name: name,
           email: email,
           password: password,
-          orgName: orgName,
         ));
       } else {
         return Left(InternetFailure(
