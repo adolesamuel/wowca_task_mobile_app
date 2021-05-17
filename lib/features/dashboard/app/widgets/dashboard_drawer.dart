@@ -6,10 +6,12 @@ import 'package:wowca_task/features/dashboard/app/pages/dashboard_page.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/dashboard_drawer_head.dart';
 import 'package:wowca_task/features/departments/app/page/department_page.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
+import 'package:wowca_task/features/module/app/pages/module_page.dart';
 import 'package:wowca_task/features/project/app/pages/project_page.dart';
 import 'package:wowca_task/features/task/app/pages/task_page.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
+import 'package:wowca_task/features/users/app/pages/user_search_and_display_page.dart';
 import 'package:wowca_task/injection_container.dart';
 import 'package:wowca_task/task_app.dart';
 
@@ -120,7 +122,7 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProjectPage(),
+                    builder: (context) => ModulePage(),
                   ));
             },
           ),
@@ -132,7 +134,7 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
             title: Text('To Do'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushReplacement(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => TaskPage(
@@ -147,6 +149,14 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
             title: Text('Users'),
             onTap: () {
               Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserSearchAndDisplayPage(
+                    user: widget.user,
+                  ),
+                ),
+              );
             },
           ),
           Divider(

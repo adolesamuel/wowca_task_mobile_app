@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wowca_task/features/dashboard/app/widgets/dashboard_drawer.dart';
 import 'package:wowca_task/features/departments/app/page/create_dept_page.dart';
 import 'package:wowca_task/features/departments/app/widgets/department_list_item.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';

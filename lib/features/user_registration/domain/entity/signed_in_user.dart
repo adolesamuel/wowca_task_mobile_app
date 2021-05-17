@@ -16,7 +16,7 @@ class SignedInUserEntity extends Equatable {
     this.token,
     this.email,
     this.activated,
-  });
+  }) : super();
 
   @override
   List<Object> get props => [

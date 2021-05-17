@@ -19,7 +19,6 @@ class _SignUpPageState extends State<SignUpPage> {
   FocusNode _confirmPasswordFocusNode;
   TextEditingController _confirmPasswordController;
   TextEditingController _nameController;
-  TextEditingController _organizationController;
   TextEditingController _emailController;
   TextEditingController _passwordController;
   final registrationBloc = sl<SignUpBloc>();
@@ -30,7 +29,6 @@ class _SignUpPageState extends State<SignUpPage> {
     _confirmPasswordFocusNode = FocusNode();
     _confirmPasswordController = TextEditingController();
     _nameController = TextEditingController();
-    _organizationController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
   }
@@ -40,7 +38,6 @@ class _SignUpPageState extends State<SignUpPage> {
     _confirmPasswordFocusNode.dispose();
     _confirmPasswordController.dispose();
     _nameController.dispose();
-    _organizationController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -91,51 +88,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
                           decoration: InputDecoration(
                               labelText: AppStrings.signUpPageName,
-                              errorStyle: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                                width: 2.0,
-                              ))),
-                        ),
-                        SizedBox(
-                          height: Quantity.mediumSpace,
-                        ),
-                        FormBuilderTextField(
-                          name: AppStrings.signUpPageOrgName,
-                          controller: _organizationController,
-                          keyboardType: TextInputType.name,
-                          textInputAction: TextInputAction.next,
-                          textCapitalization: TextCapitalization.words,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter an Organization name';
-                            }
-                            return null;
-                          },
-                          // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
-
-                          decoration: InputDecoration(
-                              labelText: AppStrings.signUpPageOrgName,
                               errorStyle: TextStyle(
                                   color: Theme.of(context).primaryColor),
                               errorBorder: OutlineInputBorder(
@@ -363,13 +315,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                     print('form validated successfully');
                                     registrationBloc.add(RegisterUserEvent(
                                       name: _nameController.text,
-                                      orgName: _organizationController.text,
                                       password: _passwordController.text,
                                       email: _emailController.text,
                                     ));
                                   }
                                   print(
-                                      'name: ${_nameController.text} , orgName: ${_organizationController.text} , password: ${_passwordController.text} , email: ${_emailController.text}, ');
+                                      'name: ${_nameController.text} ,  password: ${_passwordController.text} , email: ${_emailController.text}, ');
                                 },
                               ),
                               SizedBox(

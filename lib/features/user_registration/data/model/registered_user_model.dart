@@ -22,9 +22,9 @@ class RegisteredUserModel extends RegisteredUserEntity {
 
   Map<String, dynamic> toJson() {
     return {
-      title: title,
-      status: status,
-      message: message,
+      "title": title,
+      "status": int.parse(status),
+      "message": message,
     };
   }
 

@@ -12,7 +12,6 @@ abstract class RegistrationRemoteDataSource {
     final String email,
     final String password,
     final String name,
-    final String orgName,
   });
 
   Future<SignedInUserModel> signInUser({String email, String password});
@@ -33,7 +32,6 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
     final String email,
     final String password,
     final String name,
-    final String orgName,
   }) async {
     //String url = AppStrings().Something;
     ///API request [URL_ENDPOINT] for user preliminary update
@@ -44,7 +42,6 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
 
     ///Body of the [POST] request
     Map<String, dynamic> body = {
-      'orgName': orgName,
       'name': name,
       'email': email,
       'password': password,

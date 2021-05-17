@@ -146,8 +146,6 @@ Future<void> init() async {
   //! Core
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
   sl.registerLazySingleton<JsonChecker>(() => JsonCheckerImpl(sl()));
-  sl.registerLazySingleton<CapitalizeFirstLetter>(
-      () => CapitalizeFirstLetterImpl());
 
   //! External
   final sharedPreferences = await SharedPreferences.getInstance();
