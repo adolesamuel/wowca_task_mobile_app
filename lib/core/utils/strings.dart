@@ -28,10 +28,13 @@ class AppStrings {
 
   //Verification page strings
   static final String verificationPageText = 'Verify your account';
-  static final String verificationPageEnterCodeText = 'Enter 6 digit code';
+  static final String verificationPageEnterCodeText = 'Enter 6 Letter code';
   static final String verificationButtonText = 'Verify';
-  static final String newRegOrgText =
-      'Register a new organization with a different email';
+  static final String newRegOrgText = 'Register with a different email',
+      codeSentToText = 'Verification code sent to',
+      validatorEnterCodeText = 'Please enter verification code',
+      validatorEnterOnly6Letters = 'Please Enter only 6 Letters';
+
   //////////////////////////////////////////////////////////////////////
 
   //SignInPage strings

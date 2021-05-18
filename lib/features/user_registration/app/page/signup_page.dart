@@ -333,7 +333,10 @@ class _SignUpPageState extends State<SignUpPage> {
                               SizedBox(
                                 width: Quantity.mediumSpace,
                               ),
-                              Text(AppStrings.orText),
+                              Text(
+                                AppStrings.orText,
+                                style: AppStyles.registrationPageTextStyle,
+                              ),
                               SizedBox(
                                 width: Quantity.mediumSpace,
                               ),
@@ -352,7 +355,10 @@ class _SignUpPageState extends State<SignUpPage> {
                               SizedBox(
                                 width: Quantity.mediumSpace,
                               ),
-                              Text(AppStrings.orText),
+                              Text(
+                                AppStrings.orText,
+                                style: AppStyles.registrationPageTextStyle,
+                              ),
                               SizedBox(
                                 width: Quantity.mediumSpace,
                               ),
@@ -381,10 +387,8 @@ class _SignUpPageState extends State<SignUpPage> {
                               : state is RegistrationErrorState
                                   ? Text(
                                       state.failure.message,
-                                      style: TextStyle(
-                                        color: Colors.deepPurple,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                      style:
+                                          AppStyles.registrationPageTextStyle,
                                     )
                                   : Text(''),
                         ],
