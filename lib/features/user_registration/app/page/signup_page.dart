@@ -293,7 +293,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: BlocConsumer<SignUpBloc, SignUpState>(
                     listener: (context, state) {
                       if (state is UserRegisteredState) {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 settings:
@@ -349,29 +349,43 @@ class _SignUpPageState extends State<SignUpPage> {
                                             }));
                                   },
                                   child: Text(AppStrings.signUpPageSignInText)),
+                              SizedBox(
+                                width: Quantity.mediumSpace,
+                              ),
+                              Text(AppStrings.orText),
+                              SizedBox(
+                                width: Quantity.mediumSpace,
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            settings: RouteSettings(
+                                                name: '/VerificationPage'),
+                                            builder: (context) {
+                                              return VerificationPage(
+                                                email: _emailController.text,
+                                              );
+                                            }));
+                                  },
+                                  child:
+                                      Text(AppStrings.verificationButtonText)),
                             ],
                           ),
-                          OutlinedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        settings: RouteSettings(
-                                            name: '/VerificationPage'),
-                                        builder: (context) {
-                                          return VerificationPage(
-                                            email: _emailController.text,
-                                          );
-                                        }));
-                              },
-                              child: Text(AppStrings.verificationButtonText)),
                           SizedBox(
                             height: Quantity.mediumSpace,
                           ),
                           state is RegisterUserLoadingState
                               ? LinearProgressIndicator()
                               : state is RegistrationErrorState
-                                  ? Text(state.failure.message)
+                                  ? Text(
+                                      state.failure.message,
+                                      style: TextStyle(
+                                        color: Colors.deepPurple,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )
                                   : Text(''),
                         ],
                       );

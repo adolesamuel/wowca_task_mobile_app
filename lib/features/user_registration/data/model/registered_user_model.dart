@@ -14,9 +14,9 @@ class RegisteredUserModel extends RegisteredUserEntity {
 
   factory RegisteredUserModel.fromJson(Map<String, dynamic> data) {
     return RegisteredUserModel(
-      title: data['count'].toString(),
+      title: 'OK',
       message: data['message'],
-      status: data['code'].toString(),
+      status: 201.toString(),
     );
   }
 
