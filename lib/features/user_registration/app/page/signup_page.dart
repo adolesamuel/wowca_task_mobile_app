@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/core/utils/style.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/app/page/signIn_page.dart';
 import 'package:wowca_task/features/user_registration/app/page/verification_page.dart';
@@ -45,12 +46,11 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         body: Container(
-          width: size.width,
-          height: size.height,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           margin: EdgeInsets.all(20.0),
           child: ListView(children: [
             Column(
@@ -58,13 +58,12 @@ class _SignUpPageState extends State<SignUpPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('!Give this app a logo'),
+                Text(AppStrings.logoText),
                 Container(
                   padding: EdgeInsets.all(20.0),
                   child: Text(
                     AppStrings.signUpTitle,
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
+                    style: AppStyles.signUpButton,
                   ),
                 ),
                 FormBuilder(
@@ -80,7 +79,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           controller: _nameController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter a Name';
+                              return AppStrings.validatorNameText;
                             }
                             return null;
                           },
@@ -112,7 +111,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                   borderSide: BorderSide(
                                 color: Theme.of(context).primaryColor,
                                 width: 2.0,
-                              ))),
+                              )),
+                              prefixIcon: Icon(Icons.person)),
                         ),
                         SizedBox(
                           height: Quantity.mediumSpace,
@@ -125,43 +125,45 @@ class _SignUpPageState extends State<SignUpPage> {
                           textCapitalization: TextCapitalization.words,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter an Email';
+                              return AppStrings.validatorEnterEmailText;
                             }
                             if (value.contains('@')) {
                               return null;
                             } else {
-                              return 'Enter a valid Email';
+                              return AppStrings.validatorValidEmailText;
                             }
                           },
                           // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
 
                           decoration: InputDecoration(
-                              labelText: AppStrings.signUpPageEmail,
-                              errorStyle: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                              errorBorder: OutlineInputBorder(
+                            labelText: AppStrings.signUpPageEmail,
+                            errorStyle: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                                width: 2.0,
-                              ))),
+                              color: Theme.of(context).primaryColor,
+                              width: 2.0,
+                            )),
+                            prefixIcon: Icon(Icons.mail),
+                          ),
                         ),
                         SizedBox(
                           height: Quantity.mediumSpace,
@@ -177,58 +179,60 @@ class _SignUpPageState extends State<SignUpPage> {
                           obscuringCharacter: '*',
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter password';
+                              return AppStrings.validatorValidPasswordText;
                             }
                             if (value != _confirmPasswordController.text) {
-                              return 'Passwords are not the same';
+                              return AppStrings.validatorSamePasswordText;
                             } else {
                               return null;
                             }
                           },
                           // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
                           decoration: InputDecoration(
-                              errorStyle: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                              errorBorder: OutlineInputBorder(
+                            errorStyle: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscurePassword
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Theme.of(context).accentColor,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  if (_obscurePassword)
+                                    _obscurePassword = false;
+                                  else
+                                    _obscurePassword = true;
+                                });
+                              },
+                            ),
+                            labelText: AppStrings.signUpPagePassword,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscurePassword
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: Theme.of(context).accentColor,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    if (_obscurePassword)
-                                      _obscurePassword = false;
-                                    else
-                                      _obscurePassword = true;
-                                  });
-                                },
-                              ),
-                              labelText: AppStrings.signUpPagePassword,
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                                width: 2.0,
-                              ))),
+                              color: Theme.of(context).primaryColor,
+                              width: 2.0,
+                            )),
+                            prefixIcon: Icon(Icons.lock),
+                          ),
                         ),
                         SizedBox(
                           height: Quantity.mediumSpace,
@@ -237,40 +241,44 @@ class _SignUpPageState extends State<SignUpPage> {
                           name: AppStrings.signUpPageConfirmPassword,
                           controller: _confirmPasswordController,
                           keyboardType: TextInputType.name,
-                          textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.done,
                           focusNode: _confirmPasswordFocusNode,
                           obscureText: _obscurePassword,
                           obscuringCharacter: '*',
-                          // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
+                          onEditingComplete: () =>
+                              _confirmPasswordFocusNode.unfocus(),
+                          // onChanged:  ,onSaved: ,onReset: ,
                           decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscurePassword
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: Theme.of(context).accentColor,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    if (_obscurePassword)
-                                      _obscurePassword = false;
-                                    else
-                                      _obscurePassword = true;
-                                  });
-                                },
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscurePassword
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Theme.of(context).accentColor,
                               ),
-                              labelText: AppStrings.signUpPageConfirmPassword,
-                              focusedBorder: OutlineInputBorder(
+                              onPressed: () {
+                                setState(() {
+                                  if (_obscurePassword)
+                                    _obscurePassword = false;
+                                  else
+                                    _obscurePassword = true;
+                                });
+                              },
+                            ),
+                            labelText: AppStrings.signUpPageConfirmPassword,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                                width: 2.0,
-                              ))),
+                              color: Theme.of(context).primaryColor,
+                              width: 2.0,
+                            )),
+                            prefixIcon: Icon(Icons.lock),
+                          ),
                         ),
                         SizedBox(
                           height: Quantity.mediumSpace,
@@ -278,14 +286,14 @@ class _SignUpPageState extends State<SignUpPage> {
                       ],
                     )),
 
-                // Button Row for Register or Sign Up
+                // Button Row for Register or Sign Up and Verification
 
                 BlocProvider(
                   create: (context) => registrationBloc,
                   child: BlocConsumer<SignUpBloc, SignUpState>(
                     listener: (context, state) {
                       if (state is UserRegisteredState) {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                             context,
                             MaterialPageRoute(
                                 settings:
@@ -308,7 +316,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                   //add linearprogressindicator
                                   //push to page showing user registered and ask for account verification;
                                   //if organization has one admin, say organization has admin already;
-                                  print('Register Button pressed');
 
                                   if (_formKey.currentState.validate()) {
                                     _formKey.currentState.save();
@@ -316,7 +323,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     registrationBloc.add(RegisterUserEvent(
                                       name: _nameController.text,
                                       password: _passwordController.text,
-                                      email: _emailController.text,
+                                      email: _emailController.text.trim(),
                                     ));
                                   }
                                   print(
@@ -332,7 +339,6 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),
                               OutlinedButton(
                                   onPressed: () {
-                                    print('Sign In button pressed');
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
@@ -345,12 +351,28 @@ class _SignUpPageState extends State<SignUpPage> {
                                   child: Text(AppStrings.signUpPageSignInText)),
                             ],
                           ),
-                          Text(AppStrings.existingOrgText),
+                          OutlinedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        settings: RouteSettings(
+                                            name: '/VerificationPage'),
+                                        builder: (context) {
+                                          return VerificationPage(
+                                            email: _emailController.text,
+                                          );
+                                        }));
+                              },
+                              child: Text(AppStrings.verificationButtonText)),
                           SizedBox(
-                            height: 4.0,
+                            height: Quantity.mediumSpace,
                           ),
-                          if (state is RegisterUserLoadingState)
-                            LinearProgressIndicator(),
+                          state is RegisterUserLoadingState
+                              ? LinearProgressIndicator()
+                              : state is RegistrationErrorState
+                                  ? Text(state.failure.message)
+                                  : Text(''),
                         ],
                       );
                     },

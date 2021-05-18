@@ -44,9 +44,9 @@ class _SignInOrRegisterChooserState extends State<SignInOrRegisterChooser>
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('!Give this app a Logo'),
+              Text(AppStrings.logoText),
               Text(
-                'Complete Projects The Right Way...',
+                AppStrings.firstPageText,
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

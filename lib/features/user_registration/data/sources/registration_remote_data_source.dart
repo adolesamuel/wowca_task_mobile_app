@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:wowca_task/core/errors/exception.dart';
+import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/core/helpers/json_checker.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/user_registration/data/model/registered_user_model.dart';
@@ -60,10 +61,10 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
         print(data);
 
         ///Verify that the [data] received is [OK] or [error]
-        if (data['status'] == 201) {
+        if (data['status'] == 'OK') {
+          final content = await data['response'][0];
           //       //
-          final registeredUserModel =
-              RegisteredUserModel.fromJson(json.decode(response.body));
+          final registeredUserModel = RegisteredUserModel.fromJson(content);
 
           return registeredUserModel;
         } else if (data['status'] == 'failed') {
@@ -72,15 +73,11 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
           return userEmailUsedData;
         } else {
           //Warning, Failure response from server
-          final title = data['reason']['summary'],
-              message = data['reason']['details'];
+          final title = data['message'], message = data['errorDetails'];
 
-          String errorMessage = json.encode({
-            'title': title,
-            'message': message,
-          });
+          CommonFailure error = CommonFailure(message, title);
 
-          throw errorMessage;
+          throw error;
         }
       } else {
         //throw FormatException if response is not json format

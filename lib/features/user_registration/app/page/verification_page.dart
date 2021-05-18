@@ -11,7 +11,7 @@ import 'package:wowca_task/injection_container.dart';
 class VerificationPage extends StatefulWidget {
   final String email;
 
-  const VerificationPage({Key key, this.email}) : super(key: key);
+  const VerificationPage({Key key, @required this.email}) : super(key: key);
 
   @override
   _VerificationPageState createState() => _VerificationPageState();

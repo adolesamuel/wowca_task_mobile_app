@@ -28,11 +28,15 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
   }) async {
     try {
       if (await networkInfo.isConnected) {
-        return Right(await remoteDataSource.registerUser(
-          name: name,
-          email: email,
-          password: password,
-        ));
+        try {
+          return Right(await remoteDataSource.registerUser(
+            name: name,
+            email: email,
+            password: password,
+          ));
+        } catch (e) {
+          return Left(CommonFailure(e.title, e.message));
+        }
       } else {
         return Left(InternetFailure(
             NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));
