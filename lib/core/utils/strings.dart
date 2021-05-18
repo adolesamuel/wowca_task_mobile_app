@@ -43,6 +43,9 @@ class AppStrings {
   static final String verifyUser = '/verify';
   static final String createDept = '/create-departments';
   static final String getDept = '/get-departments';
+
+  //AssetStrings
+  static final String loginImage = 'lib/core/assets/testone.jpg';
 }
 
 //Error Messages
