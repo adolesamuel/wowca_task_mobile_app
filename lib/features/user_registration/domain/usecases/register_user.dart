@@ -17,7 +17,6 @@ class RegisterUser extends Usecase<RegisteredUserEntity, RegistrationParams> {
       name: params.name,
       password: params.password,
       email: params.email,
-      orgName: params.orgName,
     );
   }
 }
@@ -26,13 +25,11 @@ class RegistrationParams extends Equatable {
   final String name;
   final String password;
   final String email;
-  final String orgName;
 
   RegistrationParams({
     this.name,
     this.password,
     this.email,
-    this.orgName,
   });
 
   @override
@@ -40,6 +37,5 @@ class RegistrationParams extends Equatable {
         name,
         password,
         email,
-        orgName,
       ];
 }

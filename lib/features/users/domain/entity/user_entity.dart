@@ -9,6 +9,7 @@ class UserEntity extends Equatable {
   final File userProfilePicture;
   final List userTasks;
   final List userCompanies;
+  final String userDepartment;
 
   UserEntity(
       {this.userId,
@@ -16,6 +17,7 @@ class UserEntity extends Equatable {
       this.userEmail,
       this.userProfilePicture,
       this.userTasks,
+      this.userDepartment,
       this.userCompanies});
 
   @override

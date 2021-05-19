@@ -4,6 +4,10 @@ import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/dashboard_item_box.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/grid_widget.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/task_dashboard_item.dart';
+import 'package:wowca_task/features/departments/app/page/department_page.dart';
+import 'package:wowca_task/features/module/app/pages/module_page.dart';
+import 'package:wowca_task/features/project/app/pages/project_page.dart';
+import 'package:wowca_task/features/task/app/pages/task_page.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 
 //Useful
@@ -56,7 +60,8 @@ class _DashBoardBodyState extends State<DashBoardBody> {
             TaskDashBoardItem(color: Colors.green),
             TextButton(
                 onPressed: () {
-                  print('See more');
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => TaskPage()));
                 },
                 child: Text('See more...'))
           ],
@@ -78,21 +83,29 @@ class _DashBoardBodyState extends State<DashBoardBody> {
             number: 5,
             boxName: 'Department',
             color: Colors.yellow,
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => DepartmentPage())),
           ),
           DashboardBox(
             number: 15,
             boxName: 'Project',
             color: Colors.blue,
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ProjectPage())),
           ),
           DashboardBox(
             number: 29,
             boxName: 'Modules',
             color: Colors.green,
+            onTap: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => ModulePage())),
           ),
           DashboardBox(
             number: 112,
             boxName: 'Tasks',
             color: Colors.blueGrey,
+            onTap: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => TaskPage())),
           ),
         ]),
         Divider(
@@ -112,6 +125,8 @@ class _DashBoardBodyState extends State<DashBoardBody> {
             number: 5,
             boxName: 'Department',
             color: Colors.yellow,
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => DepartmentPage())),
           ),
           DashboardBox(
             number: 15,
@@ -122,11 +137,15 @@ class _DashBoardBodyState extends State<DashBoardBody> {
             number: 29,
             boxName: 'Modules',
             color: Colors.green,
+            onTap: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => ModulePage())),
           ),
           DashboardBox(
             number: 112,
             boxName: 'Tasks',
             color: Colors.blueGrey,
+            onTap: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => TaskPage())),
           ),
         ]),
       ],

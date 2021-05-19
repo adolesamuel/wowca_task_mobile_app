@@ -1,0 +1,9 @@
+{
+    "name": "name",
+    "userId": "userId",
+    "orgName": "orgName",
+    "role": "role",
+    "token": "token",
+    "email": "email",
+    "activated": "activated"
+}

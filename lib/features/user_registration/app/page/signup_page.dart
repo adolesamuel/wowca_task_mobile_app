@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/core/utils/style.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/app/page/signIn_page.dart';
 import 'package:wowca_task/features/user_registration/app/page/verification_page.dart';
@@ -19,7 +20,6 @@ class _SignUpPageState extends State<SignUpPage> {
   FocusNode _confirmPasswordFocusNode;
   TextEditingController _confirmPasswordController;
   TextEditingController _nameController;
-  TextEditingController _organizationController;
   TextEditingController _emailController;
   TextEditingController _passwordController;
   final registrationBloc = sl<SignUpBloc>();
@@ -30,7 +30,6 @@ class _SignUpPageState extends State<SignUpPage> {
     _confirmPasswordFocusNode = FocusNode();
     _confirmPasswordController = TextEditingController();
     _nameController = TextEditingController();
-    _organizationController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
   }
@@ -40,7 +39,6 @@ class _SignUpPageState extends State<SignUpPage> {
     _confirmPasswordFocusNode.dispose();
     _confirmPasswordController.dispose();
     _nameController.dispose();
-    _organizationController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -48,12 +46,11 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         body: Container(
-          width: size.width,
-          height: size.height,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           margin: EdgeInsets.all(20.0),
           child: ListView(children: [
             Column(
@@ -61,13 +58,12 @@ class _SignUpPageState extends State<SignUpPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('!Give this app a logo'),
+                Text(AppStrings.logoText),
                 Container(
                   padding: EdgeInsets.all(20.0),
                   child: Text(
                     AppStrings.signUpTitle,
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
+                    style: AppStyles.signUpButton,
                   ),
                 ),
                 FormBuilder(
@@ -83,7 +79,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           controller: _nameController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter a Name';
+                              return AppStrings.validatorNameText;
                             }
                             return null;
                           },
@@ -115,52 +111,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                   borderSide: BorderSide(
                                 color: Theme.of(context).primaryColor,
                                 width: 2.0,
-                              ))),
-                        ),
-                        SizedBox(
-                          height: Quantity.mediumSpace,
-                        ),
-                        FormBuilderTextField(
-                          name: AppStrings.signUpPageOrgName,
-                          controller: _organizationController,
-                          keyboardType: TextInputType.name,
-                          textInputAction: TextInputAction.next,
-                          textCapitalization: TextCapitalization.words,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter an Organization name';
-                            }
-                            return null;
-                          },
-                          // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
-
-                          decoration: InputDecoration(
-                              labelText: AppStrings.signUpPageOrgName,
-                              errorStyle: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                                width: 2.0,
-                              ))),
+                              )),
+                              prefixIcon: Icon(Icons.person)),
                         ),
                         SizedBox(
                           height: Quantity.mediumSpace,
@@ -173,43 +125,45 @@ class _SignUpPageState extends State<SignUpPage> {
                           textCapitalization: TextCapitalization.words,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter an Email';
+                              return AppStrings.validatorEnterEmailText;
                             }
                             if (value.contains('@')) {
                               return null;
                             } else {
-                              return 'Enter a valid Email';
+                              return AppStrings.validatorValidEmailText;
                             }
                           },
                           // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
 
                           decoration: InputDecoration(
-                              labelText: AppStrings.signUpPageEmail,
-                              errorStyle: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                              errorBorder: OutlineInputBorder(
+                            labelText: AppStrings.signUpPageEmail,
+                            errorStyle: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                                width: 2.0,
-                              ))),
+                              color: Theme.of(context).primaryColor,
+                              width: 2.0,
+                            )),
+                            prefixIcon: Icon(Icons.mail),
+                          ),
                         ),
                         SizedBox(
                           height: Quantity.mediumSpace,
@@ -225,58 +179,60 @@ class _SignUpPageState extends State<SignUpPage> {
                           obscuringCharacter: '*',
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter password';
+                              return AppStrings.validatorValidPasswordText;
                             }
                             if (value != _confirmPasswordController.text) {
-                              return 'Passwords are not the same';
+                              return AppStrings.validatorSamePasswordText;
                             } else {
                               return null;
                             }
                           },
                           // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
                           decoration: InputDecoration(
-                              errorStyle: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                              errorBorder: OutlineInputBorder(
+                            errorStyle: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscurePassword
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Theme.of(context).accentColor,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  if (_obscurePassword)
+                                    _obscurePassword = false;
+                                  else
+                                    _obscurePassword = true;
+                                });
+                              },
+                            ),
+                            labelText: AppStrings.signUpPagePassword,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscurePassword
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: Theme.of(context).accentColor,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    if (_obscurePassword)
-                                      _obscurePassword = false;
-                                    else
-                                      _obscurePassword = true;
-                                  });
-                                },
-                              ),
-                              labelText: AppStrings.signUpPagePassword,
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                                width: 2.0,
-                              ))),
+                              color: Theme.of(context).primaryColor,
+                              width: 2.0,
+                            )),
+                            prefixIcon: Icon(Icons.lock),
+                          ),
                         ),
                         SizedBox(
                           height: Quantity.mediumSpace,
@@ -285,40 +241,44 @@ class _SignUpPageState extends State<SignUpPage> {
                           name: AppStrings.signUpPageConfirmPassword,
                           controller: _confirmPasswordController,
                           keyboardType: TextInputType.name,
-                          textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.done,
                           focusNode: _confirmPasswordFocusNode,
                           obscureText: _obscurePassword,
                           obscuringCharacter: '*',
-                          // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
+                          onEditingComplete: () =>
+                              _confirmPasswordFocusNode.unfocus(),
+                          // onChanged:  ,onSaved: ,onReset: ,
                           decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscurePassword
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: Theme.of(context).accentColor,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    if (_obscurePassword)
-                                      _obscurePassword = false;
-                                    else
-                                      _obscurePassword = true;
-                                  });
-                                },
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscurePassword
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Theme.of(context).accentColor,
                               ),
-                              labelText: AppStrings.signUpPageConfirmPassword,
-                              focusedBorder: OutlineInputBorder(
+                              onPressed: () {
+                                setState(() {
+                                  if (_obscurePassword)
+                                    _obscurePassword = false;
+                                  else
+                                    _obscurePassword = true;
+                                });
+                              },
+                            ),
+                            labelText: AppStrings.signUpPageConfirmPassword,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2.0),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                                width: 2.0,
-                              ))),
+                              color: Theme.of(context).primaryColor,
+                              width: 2.0,
+                            )),
+                            prefixIcon: Icon(Icons.lock),
+                          ),
                         ),
                         SizedBox(
                           height: Quantity.mediumSpace,
@@ -326,7 +286,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ],
                     )),
 
-                // Button Row for Register or Sign Up
+                // Button Row for Register or Sign Up and Verification
 
                 BlocProvider(
                   create: (context) => registrationBloc,
@@ -356,32 +316,32 @@ class _SignUpPageState extends State<SignUpPage> {
                                   //add linearprogressindicator
                                   //push to page showing user registered and ask for account verification;
                                   //if organization has one admin, say organization has admin already;
-                                  print('Register Button pressed');
 
                                   if (_formKey.currentState.validate()) {
                                     _formKey.currentState.save();
                                     print('form validated successfully');
                                     registrationBloc.add(RegisterUserEvent(
                                       name: _nameController.text,
-                                      orgName: _organizationController.text,
                                       password: _passwordController.text,
-                                      email: _emailController.text,
+                                      email: _emailController.text.trim(),
                                     ));
                                   }
                                   print(
-                                      'name: ${_nameController.text} , orgName: ${_organizationController.text} , password: ${_passwordController.text} , email: ${_emailController.text}, ');
+                                      'name: ${_nameController.text} ,  password: ${_passwordController.text} , email: ${_emailController.text}, ');
                                 },
                               ),
                               SizedBox(
                                 width: Quantity.mediumSpace,
                               ),
-                              Text(AppStrings.orText),
+                              Text(
+                                AppStrings.orText,
+                                style: AppStyles.registrationPageTextStyle,
+                              ),
                               SizedBox(
                                 width: Quantity.mediumSpace,
                               ),
                               OutlinedButton(
                                   onPressed: () {
-                                    print('Sign In button pressed');
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
@@ -392,14 +352,45 @@ class _SignUpPageState extends State<SignUpPage> {
                                             }));
                                   },
                                   child: Text(AppStrings.signUpPageSignInText)),
+                              SizedBox(
+                                width: Quantity.mediumSpace,
+                              ),
+                              Text(
+                                AppStrings.orText,
+                                style: AppStyles.registrationPageTextStyle,
+                              ),
+                              SizedBox(
+                                width: Quantity.mediumSpace,
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            settings: RouteSettings(
+                                                name: '/VerificationPage'),
+                                            builder: (context) {
+                                              return VerificationPage(
+                                                email: _emailController.text,
+                                              );
+                                            }));
+                                  },
+                                  child:
+                                      Text(AppStrings.verificationButtonText)),
                             ],
                           ),
-                          Text(AppStrings.existingOrgText),
                           SizedBox(
-                            height: 4.0,
+                            height: Quantity.mediumSpace,
                           ),
-                          if (state is RegisterUserLoadingState)
-                            LinearProgressIndicator(),
+                          state is RegisterUserLoadingState
+                              ? LinearProgressIndicator()
+                              : state is RegistrationErrorState
+                                  ? Text(
+                                      state.failure.message,
+                                      style:
+                                          AppStyles.registrationPageTextStyle,
+                                    )
+                                  : Text(''),
                         ],
                       );
                     },
