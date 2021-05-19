@@ -28,6 +28,54 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
     this.jsonChecker,
   );
 
+  /// write a reusable function that takes a
+  /// url string and map,
+  /// queries the api
+  /// checks the content and returns required error
+  /// or json data
+
+  Future<dynamic> sender({
+    String url,
+    Map<String, dynamic> body,
+    Function(Map<String, dynamic>) run,
+  }) async {
+    String endpoint = AppStrings.base + url;
+
+    final response = await client.post(
+      Uri.parse(endpoint),
+      body: body,
+    );
+
+    /// verify it the response is successful from server
+    if (response.statusCode == 200) {
+      /// check if the response data format is json
+      if (await jsonChecker.isJson(response.body)) {
+        final data = await json.decode(response.body);
+        print(data);
+
+        ///Verify that the [data] received is [OK] or [error]
+        if (data['status'] == 'OK') {
+          // final content = await data['response'][0];
+          run(data);
+        } else {
+          final title =
+                  data['message'] == null ? 'Unknown Error' : data['message'],
+              message = data['errorDetails'] == null
+                  ? 'Unknown Error'
+                  : data['errorDetails'];
+
+          CommonFailure error = CommonFailure(message, title);
+
+          throw error;
+        }
+      } else {
+        throw FormatException();
+      }
+    } else {
+      throw ServerException();
+    }
+  }
+
   @override
   Future<RegisteredUserModel> registerUser({
     final String email,
@@ -131,37 +179,45 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
 
   @override
   Future<SignedInUserModel> verifyUser({String code}) async {
-    String url = AppStrings.base + AppStrings.verifyUser;
+    return await sender(
+      url: AppStrings.verifyUser,
+      body: {'code': code},
+      run: (content) {
+        final signedInUserModel = SignedInUserModel.fromJson(content['data']);
+        return signedInUserModel;
+      },
+    );
+    //   String url = AppStrings.base + AppStrings.verifyUser;
 
-    Map<String, dynamic> body = {
-      'code': code,
-    };
+    //   Map<String, dynamic> body = {
+    //     'code': code,
+    //   };
 
-    final response = await client.post(Uri.parse(url), body: body);
+    //   final response = await client.post(Uri.parse(url), body: body);
 
-    if (response.statusCode == 200) {
-      if (await jsonChecker.isJson(response.body)) {
-        final data = await json.decode(response.body);
-        print(data);
+    //   if (response.statusCode == 200) {
+    //     if (await jsonChecker.isJson(response.body)) {
+    //       final data = await json.decode(response.body);
 
-        if (data['status'] == 201) {
-          final signedInUserModel = SignedInUserModel.fromJson(data["data"]);
-          return signedInUserModel;
-        } else {
-          final title = data['title'], message = data['message'];
+    //       if (data['status'] == 'OK') {
+    //         final signedInUserModel = SignedInUserModel.fromJson(data["data"]);
+    //         return signedInUserModel;
+    //       } else {
+    //         final title =
+    //                 data['message'] == null ? 'Unknown Error' : data['message'],
+    //             message = data['errorDetails'] == null
+    //                 ? 'Unknown Error'
+    //                 : data['errorDetails'];
 
-          String errorMessage = json.encode({
-            'title': title,
-            'message': message,
-          });
+    //         CommonFailure error = CommonFailure(message, title);
 
-          throw errorMessage;
-        }
-      } else {
-        throw FormatException();
-      }
-    } else {
-      throw ServerException();
-    }
+    //         throw error;
+    //       }
+    //     } else {
+    //       throw FormatException();
+    //     }
+    //   } else {
+    //     throw ServerException();
+    //   }
   }
 }
