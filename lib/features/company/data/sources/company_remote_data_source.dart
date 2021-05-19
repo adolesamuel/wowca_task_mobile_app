@@ -15,7 +15,7 @@ abstract class CompanyRemoteDataSource {
     List department,
   });
 
-  Future<List<CompanyModel>> getCompany();
+  Future<List<CompanyModel>> getCompanies();
 }
 
 class CompanyDataSourceRemoteImpl implements CompanyRemoteDataSource {
@@ -36,5 +36,5 @@ class CompanyDataSourceRemoteImpl implements CompanyRemoteDataSource {
   }) async {}
 
   @override
-  Future<List<CompanyModel>> getCompany() {}
+  Future<List<CompanyModel>> getCompanies() {}
 }

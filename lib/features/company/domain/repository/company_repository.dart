@@ -15,5 +15,5 @@ abstract class CompanyRepository {
     String companyAddress,
   });
 
-  Future<Either<Failure, List<CompanyEntity>>> getCompany();
+  Future<Either<Failure, List<CompanyEntity>>> getCompanies();
 }

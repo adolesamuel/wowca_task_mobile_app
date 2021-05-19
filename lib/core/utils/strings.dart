@@ -54,6 +54,9 @@ class AppStrings {
   static final String createDept = '/create-departments';
   static final String getDept = '/get-departments';
 
+  //Company Endpoints
+  static final String getCompanies = '/list-companies';
+
   //AssetStrings
   static final String loginImage = 'lib/core/assets/testone.jpg';
 }
