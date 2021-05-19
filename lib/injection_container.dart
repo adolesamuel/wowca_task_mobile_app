@@ -2,11 +2,10 @@ import 'dart:convert';
 
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wowca_task/core/helpers/capitalize_first_letter.dart';
 import 'package:wowca_task/core/helpers/json_checker.dart';
 import 'package:wowca_task/core/network_info/network_info.dart';
-import 'package:http/http.dart' as http;
 import 'package:wowca_task/features/departments/app/bloc/department_bloc.dart';
 import 'package:wowca_task/features/departments/data/repository/department_repository_impl.dart';
 import 'package:wowca_task/features/departments/data/sources/department_local_data_source.dart';

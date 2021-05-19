@@ -1,3 +1,5 @@
+///function that makes each word in a sentence
+/// turn first letter to capital letter
 String toCapital({String sentence}) {
   List bingo = sentence.split(' ');
   List newList = [];
