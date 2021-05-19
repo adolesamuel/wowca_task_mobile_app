@@ -6,7 +6,6 @@ import 'package:wowca_task/choose_signIn_or_register.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/dashboard/app/pages/dashboard_page.dart';
 import 'package:wowca_task/features/departments/data/models/get_dept.dart';
-import 'package:wowca_task/features/user_registration/app/page/signIn_page.dart';
 import 'package:wowca_task/features/user_registration/data/model/signed_in_user_model.dart';
 
 class TaskApp extends StatefulWidget {

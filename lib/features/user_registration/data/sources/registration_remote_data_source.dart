@@ -58,12 +58,12 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
           // final content = await data['response'][0];
           ///call back function to give you the [response.body]
           ///so you can return it as your choice object type
-          run(data);
+          return run(data);
         } else {
           final title =
                   data['message'] == null ? 'Unknown Error' : data['message'],
               message = data['errorDetails'] == null
-                  ? 'Unknown Error'
+                  ? 'Unknown Error Message'
                   : data['errorDetails'];
 
           CommonFailure error = CommonFailure(message, title);
@@ -116,9 +116,10 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
       body: body,
       run: (data) {
         final content = data['response'][0]['data'];
-        final registeredUserModel = SignedInUserModel.fromJson(content);
-
-        return registeredUserModel;
+        print(content);
+        final a = SignedInUserModel.fromJson(content);
+        print(a);
+        return a;
       },
     );
   }

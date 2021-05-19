@@ -3,7 +3,6 @@ import 'package:wowca_task/features/user_registration/domain/entity/signed_in_us
 class SignedInUserModel extends SignedInUserEntity {
   final String name;
   final String userId;
-
   final String role;
   final String token;
   final String email;
@@ -43,11 +42,11 @@ class SignedInUserModel extends SignedInUserEntity {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'userId': userId,
+      '_id': userId,
       'role': role,
-      'token': token,
+      'a_token': token,
       'email': email,
-      'activated': activated,
+      'active': activated,
     };
   }
 }

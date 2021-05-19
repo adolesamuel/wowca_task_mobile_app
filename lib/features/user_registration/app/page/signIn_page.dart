@@ -7,6 +7,7 @@ import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/core/utils/style.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/app/page/signup_page.dart';
+import 'package:wowca_task/features/user_registration/data/model/signed_in_user_model.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
 import 'package:wowca_task/injection_container.dart';
 import 'package:wowca_task/task_app.dart';
