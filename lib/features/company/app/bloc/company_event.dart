@@ -6,3 +6,5 @@ abstract class CompanyEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class GetCompaniesEvent extends CompanyEvent {}
