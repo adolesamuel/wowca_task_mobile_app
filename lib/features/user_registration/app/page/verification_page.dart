@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/core/utils/style.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/app/page/signIn_page.dart';
 import 'package:wowca_task/features/user_registration/app/page/signup_page.dart';
@@ -11,7 +12,7 @@ import 'package:wowca_task/injection_container.dart';
 class VerificationPage extends StatefulWidget {
   final String email;
 
-  const VerificationPage({Key key, this.email}) : super(key: key);
+  const VerificationPage({Key key, @required this.email}) : super(key: key);
 
   @override
   _VerificationPageState createState() => _VerificationPageState();
@@ -51,7 +52,7 @@ class _VerificationPageState extends State<VerificationPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('!Give this app a logo'),
+                  Text(AppStrings.logoText),
                   Container(
                     padding: EdgeInsets.all(20.0),
                     child: Text(
@@ -60,10 +61,13 @@ class _VerificationPageState extends State<VerificationPage> {
                           fontWeight: FontWeight.bold, fontSize: 30.0),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
-                    child: Text('Verification code sent to ${widget.email}'),
-                  ),
+                  widget.email.isNotEmpty
+                      ? Padding(
+                          padding: const EdgeInsets.only(bottom: 20.0),
+                          child: Text(
+                              AppStrings.codeSentToText + ' ${widget.email}'),
+                        )
+                      : Text(''),
                   FormBuilder(
                       key: _formKey,
                       autovalidateMode: AutovalidateMode.disabled,
@@ -72,14 +76,14 @@ class _VerificationPageState extends State<VerificationPage> {
                           FormBuilderTextField(
                             name: AppStrings.signUpPageEmail,
                             controller: _codeTextFieldController,
-                            keyboardType: TextInputType.number,
+
                             textInputAction: TextInputAction.next,
                             textCapitalization: TextCapitalization.words,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please enter verification code';
+                                return AppStrings.validatorEnterCodeText;
                               } else if (value.length > 6) {
-                                return 'Please Enter only 6 digits';
+                                return AppStrings.validatorEnterOnly6Letters;
                               } else
                                 return null;
                             },
@@ -148,7 +152,7 @@ class _VerificationPageState extends State<VerificationPage> {
                                       child: Text(
                                           AppStrings.verificationButtonText),
                                       onPressed: () {
-                                        print('Register Button pressed');
+                                        print('verification button presssed');
                                         if (_formKey.currentState.validate()) {
                                           print('form validated successfully');
                                           _verificationBloc.add(VerifyUserEvent(
@@ -156,13 +160,20 @@ class _VerificationPageState extends State<VerificationPage> {
                                         }
                                       },
                                     ),
-                                    SizedBox(
-                                      width: Quantity.mediumSpace,
-                                    ),
                                   ],
                                 ),
-                                if (state is VerificationLoadingState)
-                                  LinearProgressIndicator(),
+                                SizedBox(
+                                  height: Quantity.mediumSpace,
+                                ),
+                                state is VerificationLoadingState
+                                    ? LinearProgressIndicator()
+                                    : state is VerificationErrorState
+                                        ? Text(
+                                            state.failure.message + ' !',
+                                            style: AppStyles
+                                                .registrationPageTextStyle,
+                                          )
+                                        : Text(''),
                               ],
                             );
                           },
@@ -172,16 +183,21 @@ class _VerificationPageState extends State<VerificationPage> {
                   ),
                 ],
               ),
+              SizedBox(height: Quantity.mediumSpace),
+              Text(
+                AppStrings.orText,
+                style: AppStyles.registrationPageTextStyle,
+              ),
               SizedBox(height: Quantity.smallSpace),
-              Text(AppStrings.orText),
-              SizedBox(height: Quantity.smallSpace),
-              Text(AppStrings.newRegOrgText),
+              Text(
+                AppStrings.newRegOrgText,
+                style: AppStyles.registrationPageTextStyle,
+              ),
               SizedBox(height: Quantity.smallSpace),
               Row(
                 children: [
                   OutlinedButton(
                       onPressed: () {
-                        print('Sign In button pressed');
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

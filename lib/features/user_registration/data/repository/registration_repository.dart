@@ -24,17 +24,19 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
   Future<Either<Failure, RegisteredUserEntity>> register({
     String email,
     String password,
-    String orgName,
     String name,
   }) async {
     try {
       if (await networkInfo.isConnected) {
-        return Right(await remoteDataSource.registerUser(
-          name: name,
-          email: email,
-          password: password,
-          orgName: orgName,
-        ));
+        try {
+          return Right(await remoteDataSource.registerUser(
+            name: name,
+            email: email,
+            password: password,
+          ));
+        } catch (e) {
+          return Left(CommonFailure(e.title, e.message));
+        }
       } else {
         return Left(InternetFailure(
             NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));
@@ -54,11 +56,18 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
   }) async {
     try {
       if (await networkInfo.isConnected) {
-        final remoteData =
-            await remoteDataSource.signInUser(email: email, password: password);
+        try {
+          final remoteData = await remoteDataSource.signInUser(
+              email: email, password: password);
 
-        localDataSource.cacheRegisteredUserData(remoteData);
-        return Right(remoteData);
+          print('remoteData: $remoteData');
+
+          localDataSource.cacheRegisteredUserData(remoteData);
+          return Right(remoteData);
+        } catch (e) {
+          //Change these strings to return reasonable error message
+          return Left(CommonFailure(e.title, e.message));
+        }
       } else {
         return Left(InternetFailure(
             NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));
@@ -72,7 +81,11 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
   Future<Either<Failure, SignedInUserEntity>> verify({String code}) async {
     try {
       if (await networkInfo.isConnected) {
-        return Right(await remoteDataSource.verifyUser(code: code));
+        try {
+          return Right(await remoteDataSource.verifyUser(code: code));
+        } catch (e) {
+          return Left(CommonFailure(e.title, e.message));
+        }
       } else {
         return Left(InternetFailure(
             NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));

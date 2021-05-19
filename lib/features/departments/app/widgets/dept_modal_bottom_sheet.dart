@@ -28,7 +28,6 @@ Future<dynamic> showDeptBottomSheet({
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //TODO: give this page an Image widget
                       // Container(
                       //   clipBehavior: Clip.hardEdge,
                       //   child: company == null

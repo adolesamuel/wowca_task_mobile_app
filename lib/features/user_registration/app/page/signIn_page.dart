@@ -4,8 +4,10 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:wowca_task/core/usecase/read_local_pref.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/core/utils/style.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/app/page/signup_page.dart';
+import 'package:wowca_task/features/user_registration/data/model/signed_in_user_model.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
 import 'package:wowca_task/injection_container.dart';
 import 'package:wowca_task/task_app.dart';
@@ -51,7 +53,7 @@ class _SignInPageState extends State<SignInPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('!Give this app a logo'),
+                Text(AppStrings.logoText),
                 Container(
                   padding: EdgeInsets.all(20.0),
                   child: Text(
@@ -73,12 +75,12 @@ class _SignInPageState extends State<SignInPage> {
                           textCapitalization: TextCapitalization.words,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter an Email';
+                              return AppStrings.validatorEnterEmailText;
                             }
                             if (value.contains('@')) {
                               return null;
                             } else {
-                              return 'Enter a valid Email';
+                              return AppStrings.validatorValidEmailText;
                             }
                           },
                           // onChanged: ,onEditingComplete: ,onSaved: ,onReset: ,
@@ -124,7 +126,7 @@ class _SignInPageState extends State<SignInPage> {
                           obscuringCharacter: '*',
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter password';
+                              return AppStrings.validatorValidPasswordText;
                             } else {
                               return null;
                             }
@@ -216,12 +218,12 @@ class _SignInPageState extends State<SignInPage> {
                                   //add linearprogressindicator
                                   //push to page showing user registered and ask for account verification;
                                   //if organization has one admin, say organization has admin already;
-                                  print('Register Button pressed');
+                                  print('SignIn Button pressed');
                                   if (_formKey.currentState.validate()) {
                                     print(
                                         'Sign In form validated successfully');
                                     signInBloc.add(SignInUserEvent(
-                                        _emailController.text,
+                                        _emailController.text.trim(),
                                         _passwordController.text));
                                   }
                                 },
@@ -235,7 +237,7 @@ class _SignInPageState extends State<SignInPage> {
                               ),
                               OutlinedButton(
                                   onPressed: () {
-                                    print('Sign In button pressed');
+                                    print('Sign Up button pressed');
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
@@ -249,9 +251,18 @@ class _SignInPageState extends State<SignInPage> {
                                       Text(AppStrings.signUpPageRegisterText))
                             ],
                           ),
-                          Text(AppStrings.newOrgText),
-                          if (state is RegisterUserLoadingState)
-                            LinearProgressIndicator(),
+                          SizedBox(
+                            height: Quantity.mediumSpace,
+                          ),
+                          state is RegisterUserLoadingState
+                              ? LinearProgressIndicator()
+                              : state is SignInErrorState
+                                  ? Text(
+                                      state.failure.message,
+                                      style:
+                                          AppStyles.registrationPageTextStyle,
+                                    )
+                                  : Text(''),
                         ],
                       );
                     },

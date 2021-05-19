@@ -18,7 +18,6 @@ class _TaskPageState extends State<TaskPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DashBoardDrawer(user: widget.user, dept: widget.dept),
       appBar: AppBar(
         title: Text('Tasks'),
       ),
