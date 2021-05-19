@@ -51,10 +51,10 @@ class CompanyRepositoryImpl implements CompanyRepository {
   }
 
   @override
-  Future<Either<Failure, List<CompanyModel>>> getCompany() async {
+  Future<Either<Failure, List<CompanyModel>>> getCompanies() async {
     try {
       if (await networkInfo.isConnected) {
-        return Right(await remoteDataSource.getCompany());
+        return Right(await remoteDataSource.getCompanies());
       } else {
         return Left(InternetFailure(
             NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));

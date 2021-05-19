@@ -13,7 +13,7 @@ class GetCompany extends Usecase<List<CompanyEntity>, GetCompanyParams> {
   @override
   Future<Either<Failure, List<CompanyEntity>>> call(
       GetCompanyParams params) async {
-    return await companyRepository.getCompany();
+    return await companyRepository.getCompanies();
   }
 }
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wowca_task/core/helpers/capitalize_first_letter.dart';
+import 'package:wowca_task/core/helpers/helpers.dart';
 import 'package:wowca_task/features/module/app/widgets/module_bottom_sheet.dart';
 import 'package:wowca_task/features/module/domain/entity/module_entity.dart';
 

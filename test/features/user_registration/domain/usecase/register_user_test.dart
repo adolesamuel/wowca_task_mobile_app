@@ -16,7 +16,6 @@ void main() {
   final tName = 'Osaze';
   final tPassword = 'Odeh';
   final tEmail = 'Email';
-  final tOrgName = 'OrgName';
 
   //Output
   final tRegisteredUserEntity =
@@ -33,12 +32,11 @@ void main() {
       email: anyNamed('email'),
       password: anyNamed('password'),
       name: anyNamed('name'),
-      orgName: anyNamed('orgName'),
     )).thenAnswer((_) async => Right(tRegisteredUserEntity));
 
     //act
-    final result = await registerUser(RegistrationParams(
-        email: tEmail, password: tPassword, name: tName, orgName: tOrgName));
+    final result = await registerUser(
+        RegistrationParams(email: tEmail, password: tPassword, name: tName));
 
     //assert
     expect(result, Right(tRegisteredUserEntity));
@@ -47,7 +45,6 @@ void main() {
       email: tEmail,
       password: tPassword,
       name: tName,
-      orgName: tOrgName,
     ));
 
     verifyNoMoreInteractions(mockRegistrationRepository);

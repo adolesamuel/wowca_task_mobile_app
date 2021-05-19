@@ -2,13 +2,15 @@ class AppStrings {
   //Core App Strings
 
   static final String appName = 'WOCA Task Man';
+  static final String logoText = '!Give this app a Logo',
+      firstPageText = 'Complete Projects The Right Way...';
 
   //Dashboard Strings
 
   static final String dashboardTitle = 'Home';
 
   //SignUp page strings
-  static final String signUpTitle = 'Create Task Manager Admin Account';
+  static final String signUpTitle = 'Create Task Manager Account';
   static final String signUpPageName = 'Name';
   static final String signUpPageEmail = 'Email';
   static final String signUpPagePassword = 'Password';
@@ -17,14 +19,22 @@ class AppStrings {
   static final String signUpPageSignInText = 'Sign In';
   static final String existingOrgText = 'to an exisiting Organization';
   static final String orText = 'OR';
+  static final String validatorNameText = 'Please enter a Name';
+  static final String validatorEnterEmailText = 'Please enter an Email';
+  static final String validatorValidEmailText = 'Enter a valid Email';
+  static final String validatorValidPasswordText = 'Please enter password';
+  static final String validatorSamePasswordText = 'Passwords are not the same';
   ///////////////////////////////////////////////////////////////////////
 
   //Verification page strings
   static final String verificationPageText = 'Verify your account';
-  static final String verificationPageEnterCodeText = 'Enter 6 digit code';
+  static final String verificationPageEnterCodeText = 'Enter 6 Letter code';
   static final String verificationButtonText = 'Verify';
-  static final String newRegOrgText =
-      'Register a new organization with a different email';
+  static final String newRegOrgText = 'Register with a different email',
+      codeSentToText = 'Verification code sent to',
+      validatorEnterCodeText = 'Please enter verification code',
+      validatorEnterOnly6Letters = 'Please Enter only 6 Letters';
+
   //////////////////////////////////////////////////////////////////////
 
   //SignInPage strings
@@ -43,6 +53,12 @@ class AppStrings {
   static final String verifyUser = '/verify';
   static final String createDept = '/create-departments';
   static final String getDept = '/get-departments';
+
+  //Company Endpoints
+  static final String getCompanies = '/list-companies';
+
+  //AssetStrings
+  static final String loginImage = 'lib/core/assets/testone.jpg';
 }
 
 //Error Messages

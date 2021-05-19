@@ -35,6 +35,10 @@ class CompanyEntity extends Equatable {
   // upgrade to a list of deparment objects
   final List department;
 
+  // Id of the person that created
+  // the company
+  final String owner;
+
   CompanyEntity({
     @required this.companyId,
     @required this.companyName,
@@ -43,6 +47,7 @@ class CompanyEntity extends Equatable {
     @required this.department,
     @required this.companyAddress,
     @required this.companyDescription,
+    @required this.owner,
   });
 
   @override
@@ -54,5 +59,6 @@ class CompanyEntity extends Equatable {
         department,
         companyAddress,
         companyDescription,
+        owner,
       ];
 }
