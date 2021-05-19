@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/company/app/bloc/company_bloc.dart';
 import 'package:wowca_task/features/company/app/pages/create_company_page.dart';
 import 'package:wowca_task/features/company/app/widget/company_box_item.dart';
@@ -34,7 +35,7 @@ class _CompanyPageState extends State<CompanyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Companies')),
+      appBar: AppBar(title: Text(AppStrings.companieString)),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
@@ -56,7 +57,7 @@ class _CompanyPageState extends State<CompanyPage> {
                 children: [
                   Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Text('User\'s companies ',
+                    child: Text(AppStrings.companieString,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                   ),
                   BlocProvider(
@@ -69,38 +70,30 @@ class _CompanyPageState extends State<CompanyPage> {
                             child: CircularProgressIndicator(),
                           );
                         } else if (state is CompaniesRecievedState) {
-                          return BasicGrid(gap: 5.0, columnCount: 4, children: [
-                            //this container is supposed to load an item from network
-                            //change the default company image and name
-
-                            CompanyBoxItem(),
-                            CompanyBoxItem(),
-                            CompanyBoxItem(),
-                            CompanyBoxItem(),
-                            CompanyBoxItem(),
-                          ]);
+                          return Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            //TODO: Give this container an expandable height
+                            height: 600.0,
+                            child: GridView.builder(
+                                gridDelegate:
+                                    SliverGridDelegateWithMaxCrossAxisExtent(
+                                        maxCrossAxisExtent: 150,
+                                        childAspectRatio: 3 / 2,
+                                        crossAxisSpacing: 10,
+                                        mainAxisSpacing: 10),
+                                itemCount: state.companies.length,
+                                itemBuilder: (BuildContext ctx, index) {
+                                  return CompanyBoxItem(
+                                    company: state.companies[index],
+                                  );
+                                }),
+                          );
                         } else {
                           return Center(child: Text('Company Loading Error'));
                         }
                       },
                     ),
                   ),
-                  Divider(
-                    thickness: 2.0,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Popular Companies',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                  BasicGrid(gap: 5.0, columnCount: 4, children: [
-                    //this container is supposed to load an item from network
-                    //change the default company image and name
-                    //!empty
-                  ]),
-                  SizedBox(
-                    height: 48.0,
-                  )
                 ],
               ),
             ),

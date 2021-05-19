@@ -3,7 +3,8 @@ class AppStrings {
 
   static final String appName = 'WOCA Task Man';
   static final String logoText = '!Give this app a Logo',
-      firstPageText = 'Complete Projects The Right Way...';
+      firstPageText = 'Complete Projects The Right Way...',
+      statusText = 'Status';
 
   //Dashboard Strings
 
@@ -36,6 +37,11 @@ class AppStrings {
       validatorEnterOnly6Letters = 'Please Enter only 6 Letters';
 
   //////////////////////////////////////////////////////////////////////
+  //Department page Strings
+  static final String departmentText = 'Departments',
+      addDepartmentText = 'Add Department';
+
+  //////////////////////////////////////////////////////////////////////
 
   //SignInPage strings
   static final String signInPageSignInText = 'Sign In';
@@ -46,6 +52,27 @@ class AppStrings {
   static final String projectHasNoName = 'Project needs a Name';
   static final String addModule = 'Add Modules to Project';
 
+  //////////////////////////////////////////////////////////////////////
+
+  //CompanyPage strings
+  static final String companieString = 'Companies',
+      companyNameText = 'Company Name',
+      companyAddressText = 'Company Address',
+      noCompanyAddressText = 'No Company Address',
+      companyDescriptionText = 'Company Description',
+      noCompanyDescriptionText = 'No Company Description',
+      updateCompanyDetailsButtonText = 'Update Company Details',
+      createCompanyText = 'Create Company',
+      updateCompanyText = 'Update Company',
+      logoCompanyText = 'Logo for the Company',
+      pickImageText = 'Pick Image',
+      removeText = 'remove';
+  //////////////////////////////////////////////////////////////////////
+
+  //UsersPage Strings
+  static final String usersText = 'Users', addUsersText = 'Add Users';
+
+  //////////////////////////////////////////////////////////////////////
   //API EndPoints
   static final String base = 'https://woca-task.herokuapp.com/api';
   static final String registerUser = '/register';

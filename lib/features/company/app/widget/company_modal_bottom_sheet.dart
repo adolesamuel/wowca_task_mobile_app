@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/company/app/pages/create_company_page.dart';
 import 'package:wowca_task/features/company/domain/entity/company_entity.dart';
 
@@ -17,8 +18,9 @@ Future<dynamic> showCompanyBottomSheet({
                 Scaffold(
               appBar: AppBar(
                 title: company == null
-                    ? Text('Company Name')
+                    ? Text(AppStrings.companyNameText)
                     : Text(company.companyName),
+                centerTitle: true,
               ),
               body: SingleChildScrollView(
                 controller: ModalScrollController.of(context),
@@ -47,31 +49,30 @@ Future<dynamic> showCompanyBottomSheet({
                         height: 8.0,
                       ),
                       Text(
-                        'Company Description',
+                        AppStrings.companyDescriptionText,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
 
                       //Selectable widget to show the task description
                       SelectableText(company == null
-                          ? 'No Company description'
+                          ? AppStrings.noCompanyDescriptionText
                           : company.companyDescription),
                       SizedBox(
                         height: 8.0,
                       ),
+                      //Departments
                       Text(
-                        'Departments',
+                        AppStrings.departmentText +
+                            ': ${company.department.length}',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 8.0,
                       ),
+                      //Users
                       Text(
-                        'Users',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-
-                      Text(
-                        'Status',
+                        AppStrings.usersText +
+                            ': ${company.companyUsers.length}',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
 
@@ -83,10 +84,12 @@ Future<dynamic> showCompanyBottomSheet({
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          CreateCompanyPage()));
+                                      builder: (context) => CreateCompanyPage(
+                                            company: company,
+                                          )));
                             },
-                            child: Text('Update Company Details')),
+                            child: Text(
+                                AppStrings.updateCompanyDetailsButtonText)),
                       ),
                       SizedBox(
                         height: 8.0,

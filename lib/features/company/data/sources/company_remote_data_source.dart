@@ -105,7 +105,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
       Uri.parse(endpoint),
     );
 
-    /// verify it the response is successful from server
+    // verify it the response is successful from server
     if (response.statusCode == 200) {
       /// check if the response data format is json
       if (await jsonChecker.isJson(response.body)) {
@@ -114,8 +114,8 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
         ///Verify that the [data] received is [OK] or [error]
         if (data['status'] == 'OK') {
           // final content = await data['response'][0];
-          ///call back function to give you the [response.body]
-          ///so you can return it as your choice object type
+          // call back function to give you the [response.body]
+          // so you can return it as your choice object type
 
           final jsonList = data['response'][0]['data'];
 
