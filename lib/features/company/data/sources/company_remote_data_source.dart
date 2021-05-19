@@ -18,11 +18,11 @@ abstract class CompanyRemoteDataSource {
   Future<List<CompanyModel>> getCompanies();
 }
 
-class CompanyDataSourceRemoteImpl implements CompanyRemoteDataSource {
+class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
   final Client client;
   final JsonChecker jsonChecker;
 
-  CompanyDataSourceRemoteImpl(this.client, this.jsonChecker);
+  CompanyRemoteDataSourceImpl(this.client, this.jsonChecker);
 
   @override
   Future<CompanyModel> createCompany({
@@ -36,5 +36,5 @@ class CompanyDataSourceRemoteImpl implements CompanyRemoteDataSource {
   }) async {}
 
   @override
-  Future<List<CompanyModel>> getCompanies() {}
+  Future<List<CompanyModel>> getCompanies() async {}
 }

@@ -6,6 +6,12 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wowca_task/core/helpers/json_checker.dart';
 import 'package:wowca_task/core/network_info/network_info.dart';
+import 'package:wowca_task/features/company/app/bloc/company_bloc.dart';
+import 'package:wowca_task/features/company/data/repository_impl/company_repository_impl.dart';
+import 'package:wowca_task/features/company/data/sources/company_remote_data_source.dart';
+import 'package:wowca_task/features/company/domain/repository/company_repository.dart';
+import 'package:wowca_task/features/company/domain/usecases/create_company.dart';
+import 'package:wowca_task/features/company/domain/usecases/get_company.dart';
 import 'package:wowca_task/features/departments/app/bloc/department_bloc.dart';
 import 'package:wowca_task/features/departments/data/repository/department_repository_impl.dart';
 import 'package:wowca_task/features/departments/data/sources/department_local_data_source.dart';
@@ -55,9 +61,15 @@ Future<void> init() async {
   //Task Bloc
   //
 
-  //Moduele Bloc
+  //Module Bloc
 
   //Project Bloc
+
+  //Company Bloc
+  sl.registerFactory(() => CompanyBloc(
+        createCompany: sl(),
+        getCompanies: sl(),
+      ));
 
   ///////////////////////////////////////////////////////////////////////////////////
   /// Application [USECASES]
@@ -84,6 +96,10 @@ Future<void> init() async {
   //Module usecases
   sl.registerLazySingleton(() => CreateModule(sl()));
   sl.registerLazySingleton(() => GetModule(sl()));
+
+  //Company usecases
+  sl.registerLazySingleton(() => CreateCompany(sl()));
+  sl.registerLazySingleton(() => GetCompanies(sl()));
 
   ///////////////////////////////////////////////////////////////////////////////////
   /// Application [REPOSITORIES]
@@ -115,6 +131,10 @@ Future<void> init() async {
   sl.registerLazySingleton<ModuleRepository>(
       () => ModuleRepositoryImpl(sl(), sl()));
 
+  //Company repository
+  sl.registerLazySingleton<CompanyRepository>(
+      () => CompanyRepositoryImpl(sl(), sl()));
+
   ///////////////////////////////////////////////////////////////////////////////////
   ///Application [DATA_SOURCES]
   ///////////////////////////////////////////////////////////////////////////////////
@@ -139,6 +159,11 @@ Future<void> init() async {
   //Module Data Source
 
   //Project Data Source
+
+  //Company Data Source
+  // company local data source
+  sl.registerLazySingleton<CompanyRemoteDataSource>(
+      () => CompanyRemoteDataSourceImpl(sl(), sl()));
 
   ///////////////////////////////////////////////////////////////////////////////////
 

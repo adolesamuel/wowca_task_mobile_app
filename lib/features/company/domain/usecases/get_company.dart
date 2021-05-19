@@ -5,10 +5,10 @@ import 'package:wowca_task/core/usecase/usecase.dart';
 import 'package:wowca_task/features/company/domain/entity/company_entity.dart';
 import 'package:wowca_task/features/company/domain/repository/company_repository.dart';
 
-class GetCompany extends Usecase<List<CompanyEntity>, GetCompanyParams> {
+class GetCompanies extends Usecase<List<CompanyEntity>, GetCompanyParams> {
   final CompanyRepository companyRepository;
 
-  GetCompany(this.companyRepository);
+  GetCompanies(this.companyRepository);
 
   @override
   Future<Either<Failure, List<CompanyEntity>>> call(
