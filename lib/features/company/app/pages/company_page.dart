@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wowca_task/features/company/app/bloc/company_bloc.dart';
 import 'package:wowca_task/features/company/app/pages/create_company_page.dart';
 import 'package:wowca_task/features/company/app/widget/company_box_item.dart';
 import 'package:wowca_task/features/company/app/widget/company_search_bar.dart';
@@ -6,6 +8,7 @@ import 'package:wowca_task/features/company/domain/entity/company_entity.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/grid_widget.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
+import 'package:wowca_task/injection_container.dart';
 
 class CompanyPage extends StatefulWidget {
   final SignedInUserEntity user;
@@ -20,6 +23,14 @@ class CompanyPage extends StatefulWidget {
 }
 
 class _CompanyPageState extends State<CompanyPage> {
+  final companyBloc = sl<CompanyBloc>();
+
+  @override
+  void initState() {
+    super.initState();
+    companyBloc.add(GetCompaniesEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,16 +59,32 @@ class _CompanyPageState extends State<CompanyPage> {
                     child: Text('User\'s companies ',
                         style: TextStyle(fontWeight: FontWeight.bold)),
                   ),
-                  BasicGrid(gap: 5.0, columnCount: 4, children: [
-                    //this container is supposed to load an item from network
-                    //change the default company image and name
+                  BlocProvider(
+                    create: (context) => companyBloc,
+                    child: BlocConsumer<CompanyBloc, CompanyState>(
+                      listener: (context, state) {},
+                      builder: (context, state) {
+                        if (state is CompanyLoadingState) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (state is CompaniesRecievedState) {
+                          return BasicGrid(gap: 5.0, columnCount: 4, children: [
+                            //this container is supposed to load an item from network
+                            //change the default company image and name
 
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                  ]),
+                            CompanyBoxItem(),
+                            CompanyBoxItem(),
+                            CompanyBoxItem(),
+                            CompanyBoxItem(),
+                            CompanyBoxItem(),
+                          ]);
+                        } else {
+                          return Center(child: Text('Company Loading Error'));
+                        }
+                      },
+                    ),
+                  ),
                   Divider(
                     thickness: 2.0,
                   ),
@@ -69,43 +96,7 @@ class _CompanyPageState extends State<CompanyPage> {
                   BasicGrid(gap: 5.0, columnCount: 4, children: [
                     //this container is supposed to load an item from network
                     //change the default company image and name
-
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
-                    CompanyBoxItem(),
+                    //!empty
                   ]),
                   SizedBox(
                     height: 48.0,
