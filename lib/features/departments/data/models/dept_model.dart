@@ -1,13 +1,13 @@
-import 'package:wowca_task/features/departments/domain/entity/created_dept_entity.dart';
+import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 
-class CreatedDeptModel extends CreatedDeptEntity {
+class DeptModel extends DeptEntity {
   final String departmentDescription;
   final String departmentId;
   final String departmentName;
   final List<String> listofUsers;
   final List<String> listofProject;
 
-  CreatedDeptModel({
+  DeptModel({
     this.departmentDescription,
     this.departmentId,
     this.departmentName,
@@ -21,11 +21,11 @@ class CreatedDeptModel extends CreatedDeptEntity {
           listofProject: listofProject,
         );
 
-  factory CreatedDeptModel.fromJson(Map<String, dynamic> data) {
+  factory DeptModel.fromJson(Map<String, dynamic> data) {
     if (data == null) {
-      return CreatedDeptModel();
+      return DeptModel();
     } else {
-      return CreatedDeptModel(
+      return DeptModel(
         departmentDescription: data['description'],
         departmentId: data['_id'],
         departmentName: data['dept_title'],

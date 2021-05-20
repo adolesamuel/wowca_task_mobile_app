@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wowca_task/features/departments/domain/entity/created_dept_entity.dart';
+import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 
 class EmptyDeptPage extends StatefulWidget {
-  final CreatedDeptEntity dept;
+  final DeptEntity dept;
 
   const EmptyDeptPage({Key key, this.dept}) : super(key: key);
 

@@ -3,11 +3,9 @@ import 'package:wowca_task/core/errors/exception.dart';
 import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/core/network_info/network_info.dart';
 import 'package:wowca_task/core/utils/strings.dart';
-import 'package:wowca_task/features/departments/data/models/create_dept_model.dart';
-import 'package:wowca_task/features/departments/data/models/get_dept.dart';
+import 'package:wowca_task/features/departments/data/models/dept_model.dart';
 import 'package:wowca_task/features/departments/data/sources/department_local_data_source.dart';
 import 'package:wowca_task/features/departments/data/sources/department_remote_data_source.dart';
-import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 import 'package:wowca_task/features/departments/domain/repository/dept_repository.dart';
 import 'package:wowca_task/features/user_registration/data/repository/registration_repository.dart';
 
@@ -22,7 +20,7 @@ class DepartmentRepositoryImpl implements DepartmentRepository {
   //
 
   @override
-  Future<Either<Failure, CreatedDeptModel>> createDept({
+  Future<Either<Failure, DeptModel>> createDept({
     String deptDescription,
     String deptName,
   }) async {
@@ -32,8 +30,8 @@ class DepartmentRepositoryImpl implements DepartmentRepository {
           deptTitle: deptName,
           deptDescription: deptDescription,
         );
-        localDataSource
-            .cacheCreatedDepartmentData(DeptEntity().from(remoteData));
+        // localDataSource
+        //     .cacheCreatedDepartmentData(DeptEntity().from(remoteData));
         return Right(remoteData);
       } else {
         return Left(InternetFailure(

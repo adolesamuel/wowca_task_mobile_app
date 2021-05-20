@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wowca_task/features/departments/data/models/get_dept.dart';
+import 'package:wowca_task/features/departments/data/models/dept_model.dart';
 
 abstract class DepartmentLocalDataSource {
   Future<void> cacheCreatedDepartmentData(DeptModel dept);

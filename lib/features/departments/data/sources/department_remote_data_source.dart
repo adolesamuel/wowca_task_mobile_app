@@ -3,12 +3,11 @@ import 'dart:convert';
 import 'package:wowca_task/core/errors/exception.dart';
 import 'package:wowca_task/core/helpers/json_checker.dart';
 import 'package:wowca_task/core/utils/strings.dart';
-import 'package:wowca_task/features/departments/data/models/create_dept_model.dart';
+import 'package:wowca_task/features/departments/data/models/dept_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:wowca_task/features/departments/data/models/get_dept.dart';
 
 abstract class DepartmentRemoteDataSource {
-  Future<CreatedDeptModel> createDept({
+  Future<DeptModel> createDept({
     final String deptDescription,
     final String deptTitle,
   });
@@ -23,7 +22,7 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
   DepartmentRemoteDataSourceImpl(this.client, this.jsonChecker);
 
   @override
-  Future<CreatedDeptModel> createDept({
+  Future<DeptModel> createDept({
     final String deptDescription,
     final String deptTitle,
   }) async {
@@ -53,7 +52,7 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
         ///Verify that the [data] received is [OK] or [error]
         if (data['status'] == 'success') {
           //       //
-          final createdDept = CreatedDeptModel.fromJson(data['data']);
+          final createdDept = DeptModel.fromJson(data['data']);
 
           return createdDept;
         } else {
