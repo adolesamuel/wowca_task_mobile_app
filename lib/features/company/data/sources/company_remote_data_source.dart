@@ -20,8 +20,19 @@ abstract class CompanyRemoteDataSource {
     List companyUsers,
     List department,
   });
+  Future<CompanyModel> updateCompany({
+    String companyId,
+    String companyName,
+    String companyAddress,
+    String companyDescription,
+    File companyLogo,
+    List companyUsers,
+    List department,
+    String owner,
+  });
 
   Future<List<CompanyModel>> getCompanies();
+  Future<CompanyModel> getOneCompany({String companyId});
 
   Future<DeleteSuccessModel> deleteCompany(String id);
 }
@@ -91,13 +102,12 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
     String endpoint = AppStrings.base + AppStrings.createCompanies;
 
     final response = await client.post(Uri.parse(endpoint), body: {
-      '': companyId,
-      '': companyName,
-      '': companyAddress,
-      '': companyDescription,
-      '': companyLogo,
-      '': companyUsers,
-      '': department
+      'company_name': companyName,
+      'company_address': companyAddress,
+      'company_desc': companyDescription,
+      //'companyLogo': companyLogo,
+      //'members': companyUsers,
+      //'departments': department
     });
 
     // verify it the response is successful from server
@@ -192,6 +202,63 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
   }
 
   @override
+  Future<CompanyModel> getOneCompany({String companyId}) async {
+    // return await sender(
+    //   url: AppStrings.getCompanies,
+    //   run: (data) {
+    //     List<Map<String, dynamic>> jsonList = data['response'][0]['data'];
+    //     print('json list: $jsonList');
+    //     final List<CompanyModel> companies =
+    //         jsonList.map((value) => CompanyModel.fromJson(value)).toList();
+    //     print('comany model list : $companies');
+    //     return companies;
+    //   },
+    // );
+    String endpoint =
+        AppStrings.base + AppStrings.getOneCompany + '/:$companyId';
+
+    final response = await client.get(
+      Uri.parse(endpoint),
+    );
+
+    // verify it the response is successful from server
+    if (response.statusCode == 200) {
+      /// check if the response data format is json
+      if (await jsonChecker.isJson(response.body)) {
+        final data = await json.decode(response.body);
+
+        ///Verify that the [data] received is [OK] or [error]
+        if (data['status'] == 'OK') {
+          // final content = await data['response'][0];
+          // call back function to give you the [response.body]
+          // so you can return it as your choice object type
+
+          final jsonList = data['response'][0]['data'];
+
+          CompanyModel company = CompanyModel.fromJson(jsonList);
+
+          return company;
+        } else {
+          // Default error message if site returns error
+          final title =
+                  data['message'] == null ? 'Unknown Error' : data['message'],
+              message = data['errorDetails'] == null
+                  ? 'Unknown Error Message'
+                  : data['errorDetails'];
+
+          CommonFailure error = CommonFailure(message, title);
+
+          throw error;
+        }
+      } else {
+        throw FormatException();
+      }
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
   Future<DeleteSuccessModel> deleteCompany(String id) async {
     String endpoint = AppStrings.base + AppStrings.deleteCompany + '/:$id';
     final response = await client.get(Uri.parse(endpoint));
@@ -210,6 +277,63 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
           final jsonList = data['response'][0]['data'];
 
           DeleteSuccessModel company = DeleteSuccessModel.fromJson(jsonList);
+          return company;
+        } else {
+          final title =
+                  data['message'] == null ? 'Unknown Error' : data['message'],
+              message = data['errorDetails'] == null
+                  ? 'Unknown Error Message'
+                  : data['errorDetails'];
+
+          CommonFailure error = CommonFailure(message, title);
+
+          throw error;
+        }
+      } else {
+        throw FormatException();
+      }
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<CompanyModel> updateCompany({
+    String companyId,
+    String companyName,
+    String companyAddress,
+    String companyDescription,
+    File companyLogo,
+    List companyUsers,
+    List department,
+    String owner,
+  }) async {
+    String endpoint =
+        AppStrings.base + AppStrings.updateCompany + '/:$companyId';
+
+    final response = await client.post(Uri.parse(endpoint), body: {
+      'company_name': companyName,
+      'company_address': companyAddress,
+      'company_desc': companyDescription,
+      'members': companyUsers,
+      'department': department
+    });
+
+    // verify it the response is successful from server
+    if (response.statusCode == 200) {
+      /// check if the response data format is json
+      if (await jsonChecker.isJson(response.body)) {
+        final data = await json.decode(response.body);
+
+        ///Verify that the [data] received is [OK] or [error]
+        if (data['status'] == 'OK') {
+          // final content = await data['response'][0];
+          // call back function to give you the [response.body]
+          // so you can return it as your choice object type
+
+          final jsonList = data['response'][0]['data'];
+
+          CompanyModel company = CompanyModel.fromJson(jsonList);
           return company;
         } else {
           final title =

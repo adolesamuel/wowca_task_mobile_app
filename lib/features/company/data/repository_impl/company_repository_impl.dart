@@ -69,10 +69,64 @@ class CompanyRepositoryImpl implements CompanyRepository {
   }
 
   @override
+  Future<Either<Failure, CompanyModel>> getOneCompany(
+      {String companyId}) async {
+    try {
+      if (await networkInfo.isConnected) {
+        return Right(
+            await remoteDataSource.getOneCompany(companyId: companyId));
+      } else {
+        return Left(InternetFailure(
+            NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));
+      }
+    } on ServerException {
+      return Left(ServerFailure(
+        SERVER_FAILURE_TITLE,
+        SERVER_FAILURE_MESSAGE,
+      ));
+    }
+  }
+
+  @override
   Future<Either<Failure, DeleteSuccessModel>> deleteCompany({String id}) async {
     try {
       if (await networkInfo.isConnected) {
         return Right(await remoteDataSource.deleteCompany(id));
+      } else {
+        return Left(InternetFailure(
+            NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));
+      }
+    } on ServerException {
+      return Left(ServerFailure(
+        SERVER_FAILURE_TITLE,
+        SERVER_FAILURE_MESSAGE,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, CompanyEntity>> updateCompany({
+    companyId,
+    companyName,
+    companyLogo,
+    companyUsers,
+    department,
+    companyAddress,
+    companyDescription,
+    owner,
+  }) async {
+    try {
+      if (await networkInfo.isConnected) {
+        return Right(await remoteDataSource.updateCompany(
+          companyId: companyId,
+          companyName: companyName,
+          companyLogo: companyLogo,
+          companyUsers: companyUsers,
+          department: department,
+          companyAddress: companyAddress,
+          companyDescription: companyDescription,
+          owner: owner,
+        ));
       } else {
         return Left(InternetFailure(
             NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));

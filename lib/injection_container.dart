@@ -11,7 +11,10 @@ import 'package:wowca_task/features/company/data/repository_impl/company_reposit
 import 'package:wowca_task/features/company/data/sources/company_remote_data_source.dart';
 import 'package:wowca_task/features/company/domain/repository/company_repository.dart';
 import 'package:wowca_task/features/company/domain/usecases/create_company.dart';
+import 'package:wowca_task/features/company/domain/usecases/delete_company.dart';
 import 'package:wowca_task/features/company/domain/usecases/get_company.dart';
+import 'package:wowca_task/features/company/domain/usecases/get_one_company.dart';
+import 'package:wowca_task/features/company/domain/usecases/update_company.dart';
 import 'package:wowca_task/features/departments/app/bloc/department_bloc.dart';
 import 'package:wowca_task/features/departments/data/repository/department_repository_impl.dart';
 import 'package:wowca_task/features/departments/data/sources/department_local_data_source.dart';
@@ -69,6 +72,9 @@ Future<void> init() async {
   sl.registerFactory(() => CompanyBloc(
         createCompany: sl(),
         getCompanies: sl(),
+        getOneCompany: sl(),
+        deleteCompany: sl(),
+        updateCompany: sl(),
       ));
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -100,6 +106,9 @@ Future<void> init() async {
   //Company usecases
   sl.registerLazySingleton(() => CreateCompany(sl()));
   sl.registerLazySingleton(() => GetCompanies(sl()));
+  sl.registerLazySingleton(() => GetOneCompany(sl()));
+  sl.registerLazySingleton(() => DeleteCompany(sl()));
+  sl.registerLazySingleton(() => UpdateCompany(sl()));
 
   ///////////////////////////////////////////////////////////////////////////////////
   /// Application [REPOSITORIES]
@@ -162,6 +171,7 @@ Future<void> init() async {
 
   //Company Data Source
   // company local data source
+
   sl.registerLazySingleton<CompanyRemoteDataSource>(
       () => CompanyRemoteDataSourceImpl(sl(), sl()));
 

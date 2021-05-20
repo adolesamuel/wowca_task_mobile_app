@@ -27,7 +27,7 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
     final String deptDescription,
     final String deptTitle,
   }) async {
-    String url = AppStrings.base + AppStrings.createDept;
+    String url = AppStrings.base + AppStrings.createDepartment;
 
     ///Headers [Object] specifying [JSON] as return tyme from api
     // Map<String, String> headers = {'Content-Type': 'application/json'};
@@ -79,7 +79,7 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
 
   @override
   Future<List<DeptModel>> getDept() async {
-    final url = AppStrings.base + AppStrings.getDept;
+    final url = AppStrings.base + AppStrings.getDepartments;
 
     final response = await client.get(Uri.parse(url));
 
