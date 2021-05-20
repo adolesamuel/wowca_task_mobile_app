@@ -4,6 +4,7 @@ class DeptEntity extends Equatable {
   final String departmentDescription;
   final String departmentId;
   final String departmentName;
+  final String companyId;
   final List<String> listofUsers;
   final List<String> listofProject;
 
@@ -13,6 +14,7 @@ class DeptEntity extends Equatable {
     this.departmentName,
     this.listofUsers,
     this.listofProject,
+    this.companyId,
   });
 
   @override
@@ -22,5 +24,6 @@ class DeptEntity extends Equatable {
         departmentName,
         listofUsers,
         listofProject,
+        companyId,
       ];
 }

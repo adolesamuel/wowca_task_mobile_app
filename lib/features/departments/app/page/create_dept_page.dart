@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
+import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/core/utils/style.dart';
 import 'package:wowca_task/features/departments/app/bloc/department_bloc.dart';
 import 'package:wowca_task/features/departments/app/page/department_page.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
@@ -46,7 +48,7 @@ class _CreateDepartmentPageState extends State<CreateDepartmentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Create a Department'),
+          title: Text(AppStrings.createADepartmentText),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -60,14 +62,14 @@ class _CreateDepartmentPageState extends State<CreateDepartmentPage> {
                   height: Quantity.mediumSpace,
                 ),
                 Text(
-                  'Create a Department ',
+                  AppStrings.createADepartmentText,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: Quantity.mediumSpace,
                 ),
                 Text(
-                  'Department Name',
+                  AppStrings.departmentNameText,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Container(
@@ -77,7 +79,8 @@ class _CreateDepartmentPageState extends State<CreateDepartmentPage> {
                     controller: deptNameTextController,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                        errorText: validate ? 'Enter a name' : null,
+                        errorText:
+                            validate ? AppStrings.validatorNameText : null,
                         errorStyle:
                             TextStyle(color: Theme.of(context).primaryColor),
                         errorBorder: OutlineInputBorder(
@@ -113,7 +116,7 @@ class _CreateDepartmentPageState extends State<CreateDepartmentPage> {
                   height: Quantity.mediumSpace,
                 ),
                 Text(
-                  'Description',
+                  AppStrings.descriptionText,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Container(
@@ -124,7 +127,9 @@ class _CreateDepartmentPageState extends State<CreateDepartmentPage> {
                     maxLines: null,
                     minLines: 3,
                     decoration: InputDecoration(
-                        errorText: validate ? 'Enter a Description' : null,
+                        errorText: validate
+                            ? AppStrings.validatorEnterDescriptionText
+                            : null,
                         errorStyle:
                             TextStyle(color: Theme.of(context).primaryColor),
                         errorBorder: OutlineInputBorder(
@@ -161,13 +166,13 @@ class _CreateDepartmentPageState extends State<CreateDepartmentPage> {
                 ),
                 OutlinedButton(
                   onPressed: () {},
-                  child: Text('Add Users '),
+                  child: Text(AppStrings.addUsersText),
                 ),
                 SizedBox(
                   height: Quantity.mediumSpace,
                 ),
                 Text(
-                  'Users',
+                  AppStrings.usersText,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -175,13 +180,13 @@ class _CreateDepartmentPageState extends State<CreateDepartmentPage> {
                 ),
                 OutlinedButton(
                   onPressed: () {},
-                  child: Text('Add Existing Projects'),
+                  child: Text(AppStrings.addExistingProjectsText),
                 ),
                 SizedBox(
                   height: Quantity.mediumSpace,
                 ),
                 Text(
-                  'Projects',
+                  AppStrings.projectText,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -195,10 +200,7 @@ class _CreateDepartmentPageState extends State<CreateDepartmentPage> {
                         setState(() {});
                       }
                       if (state is CreatedDepartmentState) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DepartmentPage()));
+                        Navigator.pop(context);
                       }
                     },
                     builder: (context, state) {
@@ -225,10 +227,20 @@ class _CreateDepartmentPageState extends State<CreateDepartmentPage> {
                                     ));
                                   }
                                 },
-                                child: Text('Create Department'),
+                                child: Text(AppStrings.createDeptText),
                               ),
-                              if (state is DepartmentLoadingState)
-                                LinearProgressIndicator(),
+                              SizedBox(
+                                height: Quantity.mediumSpace,
+                              ),
+                              state is DepartmentLoadingState
+                                  ? LinearProgressIndicator()
+                                  : state is DepartmentErrorState
+                                      ? Text(
+                                          state.failure.message,
+                                          style: AppStyles
+                                              .registrationPageTextStyle,
+                                        )
+                                      : Text(''),
                             ],
                           ));
                     },

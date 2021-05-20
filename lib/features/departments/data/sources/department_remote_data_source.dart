@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:wowca_task/core/errors/exception.dart';
+import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/core/helpers/json_checker.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/departments/data/models/dept_model.dart';
@@ -50,21 +51,22 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
         print(data);
 
         ///Verify that the [data] received is [OK] or [error]
-        if (data['status'] == 'success') {
+        if (data['status'] == 'OK') {
           //       //
-          final createdDept = DeptModel.fromJson(data['data']);
+          final createdDept = DeptModel.fromJson(data['response'][0]['data']);
 
           return createdDept;
         } else {
           //Warning, Failure response from server
-          final title = data['title'], message = data['message'];
+          final title =
+                  data['message'] == null ? 'Unknown Error' : data['message'],
+              message = data['errorDetails'] == null
+                  ? 'Unknown Error Message'
+                  : data['errorDetails'];
 
-          String errorMessage = json.encode({
-            'title': title,
-            'message': message,
-          });
+          CommonFailure error = CommonFailure(message, title);
 
-          throw errorMessage;
+          throw error;
         }
       } else {
         //throw FormatException if response is not json format
@@ -98,14 +100,15 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
           return recievedDept;
         } else {
           //Warning, Failure response from server
-          final title = data['status'], message = data['message'];
+          final title =
+                  data['message'] == null ? 'Unknown Error' : data['message'],
+              message = data['errorDetails'] == null
+                  ? 'Unknown Error Message'
+                  : data['errorDetails'];
 
-          String errorMessage = json.encode({
-            'title': title,
-            'message': message,
-          });
+          CommonFailure error = CommonFailure(message, title);
 
-          throw errorMessage;
+          throw error;
         }
       } else {
         //throw FormatException if response is not json format

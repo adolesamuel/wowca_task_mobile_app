@@ -39,7 +39,17 @@ class AppStrings {
   //////////////////////////////////////////////////////////////////////
   //Department page Strings
   static final String departmentText = 'Departments',
-      addDepartmentText = 'Add Department';
+      addDepartmentText = 'Add Department',
+      createADepartmentText = 'Create a Department',
+      departmentNameText = 'Department Name',
+      descriptionText = 'Description',
+      validatorEnterDescriptionText = 'Enter a Description',
+      createDeptText = 'Create Department';
+
+  //////////////////////////////////////////////////////////////////////
+  //Project page Strings
+  static final String projectText = 'Projects',
+      addExistingProjectsText = 'Add Existing Projects';
 
   //////////////////////////////////////////////////////////////////////
 

@@ -26,13 +26,17 @@ class DepartmentRepositoryImpl implements DepartmentRepository {
   }) async {
     try {
       if (await networkInfo.isConnected) {
-        final remoteData = await remoteDataSource.createDept(
-          deptTitle: deptName,
-          deptDescription: deptDescription,
-        );
-        // localDataSource
-        //     .cacheCreatedDepartmentData(DeptEntity().from(remoteData));
-        return Right(remoteData);
+        try {
+          final remoteData = await remoteDataSource.createDept(
+            deptTitle: deptName,
+            deptDescription: deptDescription,
+          );
+          // localDataSource
+          //     .cacheCreatedDepartmentData(DeptEntity().from(remoteData));
+          return Right(remoteData);
+        } catch (e) {
+          return Left(CommonFailure(e.title, e.message));
+        }
       } else {
         return Left(InternetFailure(
             NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));
