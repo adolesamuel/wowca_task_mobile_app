@@ -78,11 +78,42 @@ class AppStrings {
   static final String registerUser = '/register';
   static final String signInUser = '/login';
   static final String verifyUser = '/verify';
-  static final String createDept = '/create-departments';
-  static final String getDept = '/get-departments';
 
   //Company Endpoints
-  static final String getCompanies = '/list-companies';
+  static final String getCompanies = '/list-companies',
+      createCompanies = '/create-company',
+      updateCompany = '/update-company',
+      deleteCompany = '/delete-company',
+      getOneCompany = '/list-companies';
+
+  //Department Endpoints
+  static final String createDepartment = '/create-depts',
+      updateDepartment = '/update-dept',
+      getDepartments = '/list-departments',
+      getOneDepartment = '/list-departments',
+      deleteDepartment = '/delete-department';
+
+  //Project Endpoints
+  static final String createProject = '/create-project',
+      getProjects = '/list-project',
+      getOneProject = '/list-project',
+      deleteProject = '/delete-project';
+
+  //Module Endpoints
+  static final String createModule = '/create-module',
+      getModules = '/list-modules',
+      getOneModule = '/list-modules',
+      deleteModule = '/delete-module';
+
+  //Task Endpoints
+  static final String createTask = '/create-task',
+      startTask = '/task-start',
+      suspendTask = '/suspend-task',
+      fininshTask = '/finish-task',
+      deleteTask = '/delete-task',
+      resetTask = 'finish-task';
+
+//////////////////////////////////////////////////////////////////////
 
   //AssetStrings
   static final String loginImage = 'lib/core/assets/testone.jpg';
