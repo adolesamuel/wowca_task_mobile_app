@@ -53,7 +53,11 @@ class DepartmentRepositoryImpl implements DepartmentRepository {
   Future<Either<Failure, List<DeptModel>>> getDept() async {
     try {
       if (await networkInfo.isConnected) {
-        return Right(await remoteDataSource.getDept());
+        try {
+          return Right(await remoteDataSource.getDept());
+        } catch (e) {
+          return Left(CommonFailure(e.title, e.message));
+        }
       } else {
         return Left(InternetFailure(
             NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));

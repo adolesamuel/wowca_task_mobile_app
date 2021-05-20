@@ -44,7 +44,8 @@ class AppStrings {
       departmentNameText = 'Department Name',
       descriptionText = 'Description',
       validatorEnterDescriptionText = 'Enter a Description',
-      createDeptText = 'Create Department';
+      createDeptText = 'Create Department',
+      searchForDeptText = 'Search for department';
 
   //////////////////////////////////////////////////////////////////////
   //Project page Strings

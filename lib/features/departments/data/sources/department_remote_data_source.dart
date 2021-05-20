@@ -91,13 +91,16 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
         print(data);
 
         ///Verify that the [data] received is [OK] or [error]
-        if (data['status'] == 'OKAY') {
+        if (data['status'] == 'OK') {
           //       //
-          final List<DeptModel> recievedDept = data['createdTasks'].map((e) {
+          final List<DeptModel> recievedDeptList =
+              data['response'][0]['data'].map<DeptModel>((e) {
             return DeptModel.fromJson(e);
           }).toList();
 
-          return recievedDept;
+          print('receivedList : $recievedDeptList');
+
+          return recievedDeptList;
         } else {
           //Warning, Failure response from server
           final title =
