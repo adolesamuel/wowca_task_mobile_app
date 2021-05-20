@@ -81,7 +81,7 @@ class AppStrings {
 
   //Company Endpoints
   static final String getCompanies = '/list-companies',
-      createCompanies = '/create-company',
+      createCompany = '/create-company',
       updateCompany = '/update-company',
       deleteCompany = '/delete-company',
       getOneCompany = '/list-companies';

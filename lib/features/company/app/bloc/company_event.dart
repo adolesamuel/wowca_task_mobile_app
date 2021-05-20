@@ -8,3 +8,55 @@ abstract class CompanyEvent extends Equatable {
 }
 
 class GetCompaniesEvent extends CompanyEvent {}
+
+class CreateCompanyEvent extends CompanyEvent {
+  final String companyId;
+  final String companyName;
+  final String companyLogo;
+  final List companyUsers;
+  final List department;
+  final String companyDescription;
+  final String companyAddress;
+
+  CreateCompanyEvent({
+    this.companyId,
+    this.companyName,
+    this.companyLogo,
+    this.companyUsers,
+    this.department,
+    this.companyDescription,
+    this.companyAddress,
+  });
+}
+
+class GetOneCompanyEvent extends CompanyEvent {
+  final String companyId;
+
+  GetOneCompanyEvent(this.companyId);
+}
+
+class DeleteCompanyEvent extends CompanyEvent {
+  final String companyId;
+
+  DeleteCompanyEvent(this.companyId);
+}
+
+class UpdateCompanyEvent extends CompanyEvent {
+  final String companyId;
+  final String companyName;
+  final String companyLogo;
+  final List companyUsers;
+  final List department;
+  final String companyDescription;
+  final String companyAddress;
+
+  UpdateCompanyEvent({
+    this.companyId,
+    this.companyName,
+    this.companyLogo,
+    this.companyUsers,
+    this.department,
+    this.companyDescription,
+    this.companyAddress,
+  });
+}

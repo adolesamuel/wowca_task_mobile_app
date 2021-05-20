@@ -4,7 +4,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/features/company/app/bloc/company_bloc.dart';
 import 'package:wowca_task/features/company/domain/entity/company_entity.dart';
+import 'package:wowca_task/injection_container.dart';
 
 class CreateCompanyPage extends StatefulWidget {
   final CompanyEntity company;
@@ -21,6 +23,8 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
   // an address
   // a company description
   //
+
+  final companyBloc = sl<CompanyBloc>();
 
   TextEditingController companyNameController = TextEditingController();
   TextEditingController companyAddressController = TextEditingController();
@@ -261,8 +265,18 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                       elevation: MaterialStateProperty.all(20.0),
                     ),
                     onPressed: () {
-                      print('Create mother effing task');
-                      Navigator.pop(context);
+                      if (widget.company == null) {
+                        print('Create Company Event');
+                        companyBloc.add(CreateCompanyEvent(
+                          companyName: companyNameController.text,
+                          companyDescription: companyDescriptionController.text,
+                          companyAddress: companyAddressController.text,
+                        ));
+                        companyBloc.add(GetCompaniesEvent());
+                        Navigator.pop(context);
+                      } else {
+                        print('Update company');
+                      }
                     },
                     child: Text(widget.company == null
                         ? AppStrings.createCompanyText

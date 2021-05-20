@@ -22,3 +22,27 @@ class CompaniesRecievedState extends CompanyState {
 
   CompaniesRecievedState(this.companies);
 }
+
+class CompanyCreatedState extends CompanyState {
+  final CompanyEntity company;
+
+  CompanyCreatedState(this.company);
+}
+
+class CompanyReceivedState extends CompanyState {
+  final CompanyEntity company;
+
+  CompanyReceivedState(this.company);
+}
+
+class DeleteCompanySuccessState extends CompanyState {
+  final String status;
+
+  DeleteCompanySuccessState(this.status);
+}
+
+class UpdateCompanyState extends CompanyState {
+  final String status;
+
+  UpdateCompanyState(this.status);
+}

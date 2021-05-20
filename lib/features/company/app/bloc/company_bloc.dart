@@ -40,5 +40,17 @@ class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
       yield getCompaniesOrError.fold((failure) => CompanyErrorState(failure),
           (companies) => CompaniesRecievedState(companies));
     }
+    if (event is CreateCompanyEvent) {
+      yield CompanyLoadingState();
+
+      final createCompanyOrError = await createCompany(
+        CreateCompanyParams(
+            companyName: event.companyName,
+            companyAddress: event.companyAddress,
+            companyDescription: event.companyDescription),
+      );
+      yield createCompanyOrError.fold((failure) => CompanyErrorState(failure),
+          (company) => CompanyCreatedState(company));
+    }
   }
 }

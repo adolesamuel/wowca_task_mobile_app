@@ -99,7 +99,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
     List companyUsers,
     List department,
   }) async {
-    String endpoint = AppStrings.base + AppStrings.createCompanies;
+    String endpoint = AppStrings.base + AppStrings.createCompany;
 
     final response = await client.post(Uri.parse(endpoint), body: {
       'company_name': companyName,
