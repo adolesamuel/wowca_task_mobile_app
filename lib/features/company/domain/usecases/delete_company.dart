@@ -5,13 +5,14 @@ import 'package:wowca_task/core/usecase/usecase.dart';
 import 'package:wowca_task/features/company/domain/entity/delete_success_entity.dart';
 import 'package:wowca_task/features/company/domain/repository/company_repository.dart';
 
-class DeleteCompany extends Usecase<DeleteSuccessEntity, DeleteCompanyParams> {
+class DeleteCompany
+    extends Usecase<DeleteCompSuccessEntity, DeleteCompanyParams> {
   final CompanyRepository companyRepository;
 
   DeleteCompany(this.companyRepository);
 
   @override
-  Future<Either<Failure, DeleteSuccessEntity>> call(
+  Future<Either<Failure, DeleteCompSuccessEntity>> call(
       DeleteCompanyParams params) async {
     return await companyRepository.deleteCompany(id: params.id);
   }

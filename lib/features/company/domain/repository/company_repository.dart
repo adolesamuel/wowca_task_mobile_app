@@ -21,7 +21,7 @@ abstract class CompanyRepository {
   Future<Either<Failure, CompanyEntity>> getOneCompany(
       {@required String companyId});
 
-  Future<Either<Failure, DeleteSuccessEntity>> deleteCompany(
+  Future<Either<Failure, DeleteCompSuccessEntity>> deleteCompany(
       {@required String id});
 
   Future<Either<Failure, CompanyEntity>> updateCompany({

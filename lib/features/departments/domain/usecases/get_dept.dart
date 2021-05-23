@@ -6,13 +6,13 @@ import 'package:wowca_task/features/departments/domain/entity/department_entity.
 import 'package:wowca_task/features/departments/domain/repository/dept_repository.dart';
 
 class GetDept extends Usecase<List<DeptEntity>, GetDeptParams> {
-  final DepartmentRepository departmentRepository;
+  final DepartmentRepository _departmentRepository;
 
-  GetDept(this.departmentRepository);
+  GetDept(this._departmentRepository);
 
   @override
   Future<Either<Failure, List<DeptEntity>>> call(GetDeptParams params) async {
-    return await departmentRepository.getDept();
+    return await _departmentRepository.getDept();
   }
 }
 
