@@ -4,7 +4,6 @@ import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/core/utils/style.dart';
 import 'package:wowca_task/features/departments/app/bloc/department_bloc.dart';
-import 'package:wowca_task/features/departments/app/page/department_page.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 import 'package:wowca_task/injection_container.dart';
 

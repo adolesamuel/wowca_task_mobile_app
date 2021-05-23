@@ -6,7 +6,6 @@ import 'package:wowca_task/features/company/app/pages/create_company_page.dart';
 import 'package:wowca_task/features/company/app/widget/company_box_item.dart';
 import 'package:wowca_task/features/company/app/widget/company_search_bar.dart';
 import 'package:wowca_task/features/company/domain/entity/company_entity.dart';
-import 'package:wowca_task/features/dashboard/app/widgets/grid_widget.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 import 'package:wowca_task/injection_container.dart';

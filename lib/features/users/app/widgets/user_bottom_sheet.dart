@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:wowca_task/features/company/app/pages/company_page.dart';
 import 'package:wowca_task/features/departments/app/page/department_page.dart';
-import 'package:wowca_task/features/project/app/pages/create_project_page.dart';
 import 'package:wowca_task/features/users/domain/entity/user_entity.dart';
 
 //Useful
