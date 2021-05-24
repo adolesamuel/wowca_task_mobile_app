@@ -89,7 +89,7 @@ Future<dynamic> showUserBottomSheet({
                         thickness: 2.0,
                       ),
 
-                      //you'll probably need to inclued a message user button eventually
+                      //you'll probably need to include a message user button eventually
                     ],
                   ),
                 ),
