@@ -18,6 +18,7 @@ class UpdateProject extends Usecase<ProjectEntity, UpdateProjectParams> {
       projectName: params.projectName,
       listOfModules: params.listOfModules,
       department: params.department,
+      projectDescription: params.projectDescription,
     );
   }
 }
@@ -27,12 +28,14 @@ class UpdateProjectParams extends Equatable {
   final String projectName;
   final List<String> listOfModules;
   final String department;
+  final String projectDescription;
 
   UpdateProjectParams(
     this.projectId,
     this.projectName,
     this.listOfModules,
     this.department,
+    this.projectDescription,
   );
 
   @override
@@ -41,5 +44,6 @@ class UpdateProjectParams extends Equatable {
         projectName,
         listOfModules,
         department,
+        projectDescription,
       ];
 }

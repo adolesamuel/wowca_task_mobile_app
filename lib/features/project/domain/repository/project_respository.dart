@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:wowca_task/core/failures/failure.dart';
-import 'package:wowca_task/features/module/domain/entity/module_entity.dart';
 import 'package:wowca_task/features/project/domain/entity/delete_project_success_entity.dart';
 import 'package:wowca_task/features/project/domain/entity/project_entity.dart';
 
@@ -9,13 +8,15 @@ abstract class ProjectRepository {
     String projectId,
     String projectName,
     String department,
-    List<ModuleEntity> listOfModules,
+    List<String> listOfModules,
+    String projectDescription,
   });
   Future<Either<Failure, ProjectEntity>> updateProject({
     String projectId,
     String projectName,
     List<String> listOfModules,
     String department,
+    String projectDescription,
   });
 
   Future<Either<Failure, List<ProjectEntity>>> getProject();

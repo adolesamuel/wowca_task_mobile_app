@@ -4,6 +4,7 @@ class ProjectEntity extends Equatable {
   final String projectId;
   final String projectName;
   final String department;
+  final String description;
   final List<String> listOfModules;
 
   ProjectEntity({
@@ -11,6 +12,7 @@ class ProjectEntity extends Equatable {
     this.projectName,
     this.department,
     this.listOfModules,
+    this.description,
   });
 
   @override
@@ -19,5 +21,6 @@ class ProjectEntity extends Equatable {
         projectName,
         department,
         listOfModules,
+        description,
       ];
 }

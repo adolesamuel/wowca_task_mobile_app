@@ -108,7 +108,8 @@ class AppStrings {
   static final String createProject = '/create-project',
       getProjects = '/list-project',
       getOneProject = '/list-project',
-      deleteProject = '/delete-project';
+      deleteProject = '/delete-project',
+      updateProject = '/update-project';
 
   //Module Endpoints
   static final String createModule = '/create-module',
