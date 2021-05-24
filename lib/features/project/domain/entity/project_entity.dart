@@ -1,11 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:wowca_task/features/module/domain/entity/module_entity.dart';
 
 class ProjectEntity extends Equatable {
   final String projectId;
   final String projectName;
   final String department;
-  final List<ModuleEntity> listOfModules;
+  final List<String> listOfModules;
 
   ProjectEntity({
     this.projectId,
