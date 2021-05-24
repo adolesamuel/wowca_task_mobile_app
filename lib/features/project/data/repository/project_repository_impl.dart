@@ -26,13 +26,17 @@ class ProjectRepositoryImpl implements ProjectRepository {
   }) async {
     try {
       if (await networkInfo.isConnected) {
-        return Right(await remoteDataSource.createProject(
-          projectId: projectId,
-          projectName: projectName,
-          department: department,
-          projectDescription: projectDescription,
-          listOfModules: listOfModules,
-        ));
+        try {
+          return Right(await remoteDataSource.createProject(
+            projectId: projectId,
+            projectName: projectName,
+            department: department,
+            projectDescription: projectDescription,
+            listOfModules: listOfModules,
+          ));
+        } catch (e) {
+          return Left(CommonFailure(e.title, e.message));
+        }
       } else {
         return Left(InternetFailure(
             NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));
@@ -45,10 +49,14 @@ class ProjectRepositoryImpl implements ProjectRepository {
     }
   }
 
-  Future<Either<Failure, List<ProjectModel>>> getProject() async {
+  Future<Either<Failure, List<ProjectModel>>> getProjects() async {
     try {
       if (await networkInfo.isConnected) {
-        return Right(await remoteDataSource.getProject());
+        try {
+          return Right(await remoteDataSource.getProject());
+        } catch (e) {
+          return Left(CommonFailure(e.title, e.message));
+        }
       } else {
         return Left(InternetFailure(
             NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));

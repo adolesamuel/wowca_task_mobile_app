@@ -5,21 +5,22 @@ import 'package:wowca_task/core/usecase/usecase.dart';
 import 'package:wowca_task/features/module/domain/entity/module_entity.dart';
 import 'package:wowca_task/features/module/domain/repository/module_repository.dart';
 
-class GetModule extends Usecase<List<ModuleEntity>, GetModuleParams> {
+class GetOneProject extends Usecase<ModuleEntity, GetOneModuleParams> {
   final ModuleRepository moduleRepository;
 
-  GetModule(this.moduleRepository);
+  GetOneProject(this.moduleRepository);
 
   @override
-  Future<Either<Failure, List<ModuleEntity>>> call(
-      GetModuleParams params) async {
-    return await moduleRepository.getModule();
+  Future<Either<Failure, ModuleEntity>> call(GetOneModuleParams params) async {
+    return await moduleRepository.getOneModule(moduleId: params.moduleId);
   }
 }
 
-class GetModuleParams extends Equatable {
-  GetModuleParams();
+class GetOneModuleParams extends Equatable {
+  final String moduleId;
+
+  GetOneModuleParams(this.moduleId);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [moduleId];
 }

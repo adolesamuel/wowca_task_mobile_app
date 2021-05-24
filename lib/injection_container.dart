@@ -25,8 +25,9 @@ import 'package:wowca_task/features/departments/domain/usecases/get_dept.dart';
 import 'package:wowca_task/features/module/data/repository/module_repository_impl.dart';
 import 'package:wowca_task/features/module/domain/repository/module_repository.dart';
 import 'package:wowca_task/features/module/domain/usecases/create_module.dart';
-import 'package:wowca_task/features/module/domain/usecases/get_module.dart';
+import 'package:wowca_task/features/module/domain/usecases/get_modules.dart';
 import 'package:wowca_task/features/project/data/repository/project_repository_impl.dart';
+import 'package:wowca_task/features/project/data/sources/project_remote_data_source.dart';
 import 'package:wowca_task/features/project/domain/repository/project_respository.dart';
 import 'package:wowca_task/features/project/domain/usecase/create_project.dart';
 import 'package:wowca_task/features/project/domain/usecase/get_projects.dart';
@@ -101,7 +102,7 @@ Future<void> init() async {
 
   //Module usecases
   sl.registerLazySingleton(() => CreateModule(sl()));
-  sl.registerLazySingleton(() => GetModule(sl()));
+  sl.registerLazySingleton(() => GetModules(sl()));
 
   //Company usecases
   sl.registerLazySingleton(() => CreateCompany(sl()));
@@ -168,6 +169,8 @@ Future<void> init() async {
   //Module Data Source
 
   //Project Data Source
+  sl.registerLazySingleton<ProjectRemoteDataSource>(
+      () => ProjectRemoteDataSourceImpl(sl(), sl()));
 
   //Company Data Source
   // company local data source

@@ -11,6 +11,7 @@ abstract class ProjectRepository {
     List<String> listOfModules,
     String projectDescription,
   });
+
   Future<Either<Failure, ProjectEntity>> updateProject({
     String projectId,
     String projectName,
@@ -19,7 +20,7 @@ abstract class ProjectRepository {
     String projectDescription,
   });
 
-  Future<Either<Failure, List<ProjectEntity>>> getProject();
+  Future<Either<Failure, List<ProjectEntity>>> getProjects();
   Future<Either<Failure, ProjectEntity>> getOneProject({String projectId});
   Future<Either<Failure, DeleteProjectSuccessEntity>> deleteProject(
       {String projectId});

@@ -13,7 +13,7 @@ class GetProject extends Usecase<List<ProjectEntity>, GetProjectParams> {
   @override
   Future<Either<Failure, List<ProjectEntity>>> call(
       GetProjectParams params) async {
-    return await projectRepository.getProject();
+    return await projectRepository.getProjects();
   }
 }
 
