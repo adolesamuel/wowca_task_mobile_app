@@ -1,16 +1,14 @@
-import 'dart:io';
+import 'package:wowca_task/features/task/domain/entities/task_entity.dart';
 
-import 'package:wowca_task/features/task/domain/entities/create_task_entity.dart';
-
-class CreateTaskModel extends CreateTaskEntity {
+class TaskModel extends TaskEntity {
   final String taskId;
   final bool started;
   final bool completed;
   final String taskName;
   final String taskDescription;
-  final List<File> listOfMediaFileUrls;
+  final List<String> listOfMediaFileUrls;
 
-  CreateTaskModel({
+  TaskModel({
     this.taskId,
     this.started,
     this.completed,

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:wowca_task/features/task/domain/entities/get_task_entity.dart';
+import 'package:wowca_task/features/task/domain/entities/task_entity.dart';
 
 //Useful
 Future<dynamic> showTaskBottomSheetMenu({
   @required BuildContext context,
-  GetTaskEntity task,
+  TaskEntity task,
   bool isTaskStarted = true,
   bool isTaskCompleted = false,
 }) {

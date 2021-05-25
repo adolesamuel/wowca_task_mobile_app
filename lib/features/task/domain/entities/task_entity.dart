@@ -1,16 +1,14 @@
-import 'dart:io';
-
 import 'package:equatable/equatable.dart';
 
-class GetTaskEntity extends Equatable {
+class TaskEntity extends Equatable {
   final String taskId;
   final bool started;
   final bool completed;
   final String taskName;
   final String taskDescription;
-  final List<File> listOfMediaFileUrls;
+  final List<String> listOfMediaFileUrls;
 
-  GetTaskEntity({
+  TaskEntity({
     this.taskId,
     this.started,
     this.completed,

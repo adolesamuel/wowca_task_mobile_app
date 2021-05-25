@@ -1,23 +1,15 @@
-import 'dart:io';
-
 import 'package:equatable/equatable.dart';
 
-class CreateTaskEntity extends Equatable {
+class TaskParams extends Equatable {
   final String taskId;
   final bool started;
   final bool completed;
   final String taskName;
   final String taskDescription;
-  final List<File> listOfMediaFileUrls;
+  final List<String> listOfMediaFileUrls;
 
-  CreateTaskEntity({
-    this.taskId,
-    this.started,
-    this.completed,
-    this.taskName,
-    this.taskDescription,
-    this.listOfMediaFileUrls,
-  });
+  TaskParams(this.taskId, this.started, this.completed, this.taskName,
+      this.taskDescription, this.listOfMediaFileUrls);
 
   @override
   List<Object> get props => [
