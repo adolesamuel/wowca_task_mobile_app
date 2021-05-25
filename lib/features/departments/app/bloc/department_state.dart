@@ -24,7 +24,7 @@ class ListOfDepartmentState extends DepartmentState {
 }
 
 class CreatedDepartmentState extends DepartmentState {
-  final CreatedDeptEntity dept;
+  final DeptEntity dept;
 
   CreatedDepartmentState(this.dept);
 }

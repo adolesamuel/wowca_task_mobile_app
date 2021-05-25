@@ -15,40 +15,15 @@ class _ProjectBodyState extends State<ProjectBody> {
   List<ProjectEntity> listOfProject = [
     ProjectEntity(
       projectName: 'Google project',
-      listOfModules: [
-        ModuleEntity(),
-        ModuleEntity(),
-        ModuleEntity(),
-        ModuleEntity()
-      ],
+      listOfModules: [],
     ),
+    ProjectEntity(projectName: 'Apple', listOfModules: [], department: 'IT'),
     ProjectEntity(
-        projectName: 'Apple',
-        listOfModules: [ModuleEntity(), ModuleEntity(), ModuleEntity()],
-        department: 'IT'),
-    ProjectEntity(
-        projectName: 'Hp',
-        listOfModules: [ModuleEntity()],
-        department: 'Photography'),
-    ProjectEntity(
-        projectName: 'Hp',
-        listOfModules: [
-          ModuleEntity(),
-          ModuleEntity(),
-          ModuleEntity(),
-        ],
-        department: 'Drama'),
-    ProjectEntity(
-        projectName: 'Hp', listOfModules: [ModuleEntity(), ModuleEntity()]),
-    ProjectEntity(projectName: 'Hp', listOfModules: [
-      ModuleEntity(),
-      ModuleEntity(),
-      ModuleEntity(),
-      ModuleEntity()
-    ]),
-    ProjectEntity(
-        projectName: 'Hp',
-        listOfModules: [ModuleEntity(), ModuleEntity(), ModuleEntity()]),
+        projectName: 'Hp', listOfModules: [], department: 'Photography'),
+    ProjectEntity(projectName: 'Hp', listOfModules: [], department: 'Drama'),
+    ProjectEntity(projectName: 'Hp', listOfModules: []),
+    ProjectEntity(projectName: 'Hp', listOfModules: []),
+    ProjectEntity(projectName: 'Hp', listOfModules: []),
     ProjectEntity(projectName: 'Hp', listOfModules: []),
     ProjectEntity(projectName: 'Hp', listOfModules: []),
     ProjectEntity(projectName: 'Hp', listOfModules: []),

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:wowca_task/core/failures/failure.dart';
-import 'package:wowca_task/features/departments/domain/entity/created_dept_entity.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 import 'package:wowca_task/features/departments/domain/usecases/create_dept.dart';
 import 'package:wowca_task/features/departments/domain/usecases/get_dept.dart';

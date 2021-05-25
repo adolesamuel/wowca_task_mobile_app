@@ -5,20 +5,22 @@ import 'package:wowca_task/core/usecase/usecase.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 import 'package:wowca_task/features/departments/domain/repository/dept_repository.dart';
 
-class GetDept extends Usecase<List<DeptEntity>, GetDeptParams> {
+class GetOneDept extends Usecase<DeptEntity, GetOneDeptParams> {
   final DepartmentRepository _departmentRepository;
 
-  GetDept(this._departmentRepository);
+  GetOneDept(this._departmentRepository);
 
   @override
-  Future<Either<Failure, List<DeptEntity>>> call(GetDeptParams params) async {
-    return await _departmentRepository.getDept();
+  Future<Either<Failure, DeptEntity>> call(GetOneDeptParams params) async {
+    return await _departmentRepository.getOneDept(deptId: params.deptId);
   }
 }
 
-class GetDeptParams extends Equatable {
-  GetDeptParams();
+class GetOneDeptParams extends Equatable {
+  final String deptId;
+
+  GetOneDeptParams(this.deptId);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [deptId];
 }

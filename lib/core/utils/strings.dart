@@ -3,7 +3,8 @@ class AppStrings {
 
   static final String appName = 'WOCA Task Man';
   static final String logoText = '!Give this app a Logo',
-      firstPageText = 'Complete Projects The Right Way...';
+      firstPageText = 'Complete Projects The Right Way...',
+      statusText = 'Status';
 
   //Dashboard Strings
 
@@ -36,6 +37,22 @@ class AppStrings {
       validatorEnterOnly6Letters = 'Please Enter only 6 Letters';
 
   //////////////////////////////////////////////////////////////////////
+  //Department page Strings
+  static final String departmentText = 'Departments',
+      addDepartmentText = 'Add Department',
+      createADepartmentText = 'Create a Department',
+      departmentNameText = 'Department Name',
+      descriptionText = 'Description',
+      validatorEnterDescriptionText = 'Enter a Description',
+      createDeptText = 'Create Department',
+      searchForDeptText = 'Search for department';
+
+  //////////////////////////////////////////////////////////////////////
+  //Project page Strings
+  static final String projectText = 'Projects',
+      addExistingProjectsText = 'Add Existing Projects';
+
+  //////////////////////////////////////////////////////////////////////
 
   //SignInPage strings
   static final String signInPageSignInText = 'Sign In';
@@ -46,13 +63,70 @@ class AppStrings {
   static final String projectHasNoName = 'Project needs a Name';
   static final String addModule = 'Add Modules to Project';
 
+  //////////////////////////////////////////////////////////////////////
+
+  //CompanyPage strings
+  static final String companieString = 'Companies',
+      companyNameText = 'Company Name',
+      companyAddressText = 'Company Address',
+      noCompanyAddressText = 'No Company Address',
+      companyDescriptionText = 'Company Description',
+      noCompanyDescriptionText = 'No Company Description',
+      updateCompanyDetailsButtonText = 'Update Company Details',
+      createCompanyText = 'Create Company',
+      updateCompanyText = 'Update Company',
+      logoCompanyText = 'Logo for the Company',
+      pickImageText = 'Pick Image',
+      removeText = 'remove';
+  //////////////////////////////////////////////////////////////////////
+
+  //UsersPage Strings
+  static final String usersText = 'Users', addUsersText = 'Add Users';
+
+  //////////////////////////////////////////////////////////////////////
   //API EndPoints
   static final String base = 'https://woca-task.herokuapp.com/api';
   static final String registerUser = '/register';
   static final String signInUser = '/login';
   static final String verifyUser = '/verify';
-  static final String createDept = '/create-departments';
-  static final String getDept = '/get-departments';
+
+  //Company Endpoints
+  static final String getCompanies = '/list-companies',
+      createCompany = '/create-company',
+      updateCompany = '/update-company',
+      deleteCompany = '/delete-company',
+      getOneCompany = '/list-companies';
+
+  //Department Endpoints
+  static final String createDepartment = '/create-depts',
+      updateDepartment = '/update-dept',
+      getDepartments = '/list-departments',
+      getOneDepartment = '/list-departments',
+      deleteDepartment = '/delete-department';
+
+  //Project Endpoints
+  static final String createProject = '/create-project',
+      getProjects = '/list-project',
+      getOneProject = '/list-project',
+      deleteProject = '/delete-project',
+      updateProject = '/update-project';
+
+  //Module Endpoints
+  static final String createModule = '/create-module',
+      getModules = '/list-modules',
+      getOneModule = '/list-modules',
+      deleteModule = '/delete-module',
+      updateModule = '/update-module';
+
+  //Task Endpoints
+  static final String createTask = '/create-task',
+      startTask = '/task-start',
+      suspendTask = '/suspend-task',
+      fininshTask = '/finish-task',
+      deleteTask = '/delete-task',
+      resetTask = 'finish-task';
+
+//////////////////////////////////////////////////////////////////////
 
   //AssetStrings
   static final String loginImage = 'lib/core/assets/testone.jpg';

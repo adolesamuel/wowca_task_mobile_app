@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
+import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/features/company/app/bloc/company_bloc.dart';
 import 'package:wowca_task/features/company/domain/entity/company_entity.dart';
+import 'package:wowca_task/injection_container.dart';
 
 class CreateCompanyPage extends StatefulWidget {
   final CompanyEntity company;
@@ -21,6 +24,8 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
   // a company description
   //
 
+  final companyBloc = sl<CompanyBloc>();
+
   TextEditingController companyNameController = TextEditingController();
   TextEditingController companyAddressController = TextEditingController();
   TextEditingController companyDescriptionController = TextEditingController();
@@ -30,6 +35,20 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
 
 // button to add users to company
 // and button to add department to company
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.company != null) {
+      companyNameController.text = widget.company.companyName;
+      companyAddressController.text = widget.company.companyAddress;
+      companyDescriptionController.text = widget.company.companyDescription;
+    } else {
+      companyNameController.text = '';
+      companyAddressController.text = '';
+      companyDescriptionController.text = '';
+    }
+  }
 
   @override
   void dispose() {
@@ -44,8 +63,9 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
     return Scaffold(
       appBar: AppBar(
         title: widget.company == null
-            ? Text('Create Company')
-            : Text('Update Company'),
+            ? Text(AppStrings.createCompanyText)
+            : Text(AppStrings.updateCompanyText),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -59,7 +79,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                 height: Quantity.mediumSpace,
               ),
               Text(
-                'Company Name',
+                AppStrings.companyNameText,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Container(
@@ -102,7 +122,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                 height: Quantity.mediumSpace,
               ),
               Text(
-                'Company Address',
+                AppStrings.companyAddressText,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Container(
@@ -148,7 +168,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                 height: Quantity.mediumSpace,
               ),
               Text(
-                'Company Description',
+                AppStrings.companyDescriptionText,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Container(
@@ -194,7 +214,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                 height: Quantity.largeSpace,
               ),
               Text(
-                'Logo for the Company',
+                AppStrings.logoCompanyText,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Row(
@@ -205,14 +225,14 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                       listOfPickedFiles.addAll(file);
                       setState(() {});
                     },
-                    child: Text('Pick Image'),
+                    child: Text(AppStrings.pickImageText),
                   ),
                   TextButton(
                       onPressed: () {
                         listOfPickedFiles = [];
                         setState(() {});
                       },
-                      child: Text('remove')),
+                      child: Text(AppStrings.removeText)),
                 ],
               ),
               Column(children: [
@@ -225,12 +245,12 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               ),
               OutlinedButton(
                 onPressed: () async {},
-                child: Text('Add Users'),
+                child: Text(AppStrings.addUsersText),
               ),
               // Column showing users added to project
               OutlinedButton(
                 onPressed: () async {},
-                child: Text('Add Department'),
+                child: Text(AppStrings.addDepartmentText),
               ),
 
               SizedBox(
@@ -245,12 +265,22 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                       elevation: MaterialStateProperty.all(20.0),
                     ),
                     onPressed: () {
-                      print('Create mother effing task');
-                      Navigator.pop(context);
+                      if (widget.company == null) {
+                        print('Create Company Event');
+                        companyBloc.add(CreateCompanyEvent(
+                          companyName: companyNameController.text,
+                          companyDescription: companyDescriptionController.text,
+                          companyAddress: companyAddressController.text,
+                        ));
+                        companyBloc.add(GetCompaniesEvent());
+                        Navigator.pop(context);
+                      } else {
+                        print('Update company');
+                      }
                     },
                     child: Text(widget.company == null
-                        ? 'Create Company'
-                        : 'Update Company'),
+                        ? AppStrings.createCompanyText
+                        : AppStrings.updateCompanyText),
                   )),
             ],
           ),

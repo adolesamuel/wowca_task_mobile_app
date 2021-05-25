@@ -6,6 +6,15 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wowca_task/core/helpers/json_checker.dart';
 import 'package:wowca_task/core/network_info/network_info.dart';
+import 'package:wowca_task/features/company/app/bloc/company_bloc.dart';
+import 'package:wowca_task/features/company/data/repository_impl/company_repository_impl.dart';
+import 'package:wowca_task/features/company/data/sources/company_remote_data_source.dart';
+import 'package:wowca_task/features/company/domain/repository/company_repository.dart';
+import 'package:wowca_task/features/company/domain/usecases/create_company.dart';
+import 'package:wowca_task/features/company/domain/usecases/delete_company.dart';
+import 'package:wowca_task/features/company/domain/usecases/get_company.dart';
+import 'package:wowca_task/features/company/domain/usecases/get_one_company.dart';
+import 'package:wowca_task/features/company/domain/usecases/update_company.dart';
 import 'package:wowca_task/features/departments/app/bloc/department_bloc.dart';
 import 'package:wowca_task/features/departments/data/repository/department_repository_impl.dart';
 import 'package:wowca_task/features/departments/data/sources/department_local_data_source.dart';
@@ -16,8 +25,9 @@ import 'package:wowca_task/features/departments/domain/usecases/get_dept.dart';
 import 'package:wowca_task/features/module/data/repository/module_repository_impl.dart';
 import 'package:wowca_task/features/module/domain/repository/module_repository.dart';
 import 'package:wowca_task/features/module/domain/usecases/create_module.dart';
-import 'package:wowca_task/features/module/domain/usecases/get_module.dart';
+import 'package:wowca_task/features/module/domain/usecases/get_modules.dart';
 import 'package:wowca_task/features/project/data/repository/project_repository_impl.dart';
+import 'package:wowca_task/features/project/data/sources/project_remote_data_source.dart';
 import 'package:wowca_task/features/project/domain/repository/project_respository.dart';
 import 'package:wowca_task/features/project/domain/usecase/create_project.dart';
 import 'package:wowca_task/features/project/domain/usecase/get_projects.dart';
@@ -55,9 +65,18 @@ Future<void> init() async {
   //Task Bloc
   //
 
-  //Moduele Bloc
+  //Module Bloc
 
   //Project Bloc
+
+  //Company Bloc
+  sl.registerFactory(() => CompanyBloc(
+        createCompany: sl(),
+        getCompanies: sl(),
+        getOneCompany: sl(),
+        deleteCompany: sl(),
+        updateCompany: sl(),
+      ));
 
   ///////////////////////////////////////////////////////////////////////////////////
   /// Application [USECASES]
@@ -83,7 +102,14 @@ Future<void> init() async {
 
   //Module usecases
   sl.registerLazySingleton(() => CreateModule(sl()));
-  sl.registerLazySingleton(() => GetModule(sl()));
+  sl.registerLazySingleton(() => GetModules(sl()));
+
+  //Company usecases
+  sl.registerLazySingleton(() => CreateCompany(sl()));
+  sl.registerLazySingleton(() => GetCompanies(sl()));
+  sl.registerLazySingleton(() => GetOneCompany(sl()));
+  sl.registerLazySingleton(() => DeleteCompany(sl()));
+  sl.registerLazySingleton(() => UpdateCompany(sl()));
 
   ///////////////////////////////////////////////////////////////////////////////////
   /// Application [REPOSITORIES]
@@ -115,6 +141,10 @@ Future<void> init() async {
   sl.registerLazySingleton<ModuleRepository>(
       () => ModuleRepositoryImpl(sl(), sl()));
 
+  //Company repository
+  sl.registerLazySingleton<CompanyRepository>(
+      () => CompanyRepositoryImpl(sl(), sl()));
+
   ///////////////////////////////////////////////////////////////////////////////////
   ///Application [DATA_SOURCES]
   ///////////////////////////////////////////////////////////////////////////////////
@@ -139,6 +169,14 @@ Future<void> init() async {
   //Module Data Source
 
   //Project Data Source
+  sl.registerLazySingleton<ProjectRemoteDataSource>(
+      () => ProjectRemoteDataSourceImpl(sl(), sl()));
+
+  //Company Data Source
+  // company local data source
+
+  sl.registerLazySingleton<CompanyRemoteDataSource>(
+      () => CompanyRemoteDataSourceImpl(sl(), sl()));
 
   ///////////////////////////////////////////////////////////////////////////////////
 

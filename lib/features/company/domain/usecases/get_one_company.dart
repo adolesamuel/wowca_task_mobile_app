@@ -5,20 +5,22 @@ import 'package:wowca_task/core/usecase/usecase.dart';
 import 'package:wowca_task/features/company/domain/entity/company_entity.dart';
 import 'package:wowca_task/features/company/domain/repository/company_repository.dart';
 
-class GetCompanies extends Usecase<List<CompanyEntity>, GetCompanyParams> {
+class GetOneCompany extends Usecase<CompanyEntity, GetOneCompanyParams> {
   final CompanyRepository companyRepository;
 
-  GetCompanies(this.companyRepository);
+  GetOneCompany(this.companyRepository);
 
   @override
-  Future<Either<Failure, List<CompanyEntity>>> call(
-      GetCompanyParams params) async {
-    return await companyRepository.getCompanies();
+  Future<Either<Failure, CompanyEntity>> call(
+      GetOneCompanyParams params) async {
+    return await companyRepository.getOneCompany(companyId: params.companyId);
   }
 }
 
-class GetCompanyParams extends Equatable {
-  GetCompanyParams();
+class GetOneCompanyParams extends Equatable {
+  final String companyId;
+
+  GetOneCompanyParams(this.companyId);
   @override
-  List<Object> get props => [];
+  List<Object> get props => [companyId];
 }

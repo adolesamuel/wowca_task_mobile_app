@@ -23,7 +23,6 @@ void main() {
   final SignedInUserModel signedInUserModel = SignedInUserModel(
     name: 'name',
     userId: 'userId',
-    orgName: 'orgName',
     role: 'role',
     token: 'token',
     email: 'email',
@@ -36,7 +35,6 @@ void main() {
       await localDataSource.cacheRegisteredUserData(SignedInUserModel(
         name: 'name',
         userId: 'userId',
-        orgName: 'orgName',
         role: 'role',
         token: 'token',
         email: 'email',

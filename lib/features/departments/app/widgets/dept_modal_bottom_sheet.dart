@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:wowca_task/features/company/app/pages/create_company_page.dart';
 import 'package:wowca_task/features/departments/app/page/create_dept_page.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 

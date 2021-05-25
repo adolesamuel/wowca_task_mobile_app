@@ -171,7 +171,7 @@ class _AddDeptPageState extends State<AddDeptPage> {
                         MaterialPageRoute(
                             builder: (context) => DashboardPage(
                                   user: widget.user,
-                                  dept: DeptEntity().from(state.dept),
+                                  dept: state.dept,
                                 )));
                   }
                 },
