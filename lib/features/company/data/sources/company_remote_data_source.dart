@@ -43,7 +43,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
 
   CompanyRemoteDataSourceImpl(this.client, this.jsonChecker);
 
-  /// reusable function that takes a
+  /// unused reusable function that takes a
   /// url string and map,
   /// queries the api
   /// checks the content and returns required error
@@ -127,11 +127,8 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
           CompanyModel company = CompanyModel.fromJson(jsonList);
           return company;
         } else {
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
@@ -183,11 +180,8 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
               .toList();
           return companies;
         } else {
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
@@ -240,11 +234,8 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
           return company;
         } else {
           // Default error message if site returns error
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
@@ -279,11 +270,8 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
           DeleteSuccessModel company = DeleteSuccessModel.fromJson(jsonList);
           return company;
         } else {
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
@@ -336,11 +324,8 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
           CompanyModel company = CompanyModel.fromJson(jsonList);
           return company;
         } else {
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
