@@ -23,4 +23,19 @@ class TaskModel extends TaskEntity {
           taskDescription: taskDescription,
           listOfMediaFileUrls: listOfMediaFileUrls,
         );
+
+  factory TaskModel.fromJson(Map<String, dynamic> data) {
+    if (data == null)
+      return TaskModel();
+    else {
+      return TaskModel(
+        taskId: data['_id'],
+        // started: data[''],
+        //completed: data[''],
+        taskName: data['task_title'],
+        taskDescription: data['task_desc'],
+        // listOfMediaFileUrls: data[''],
+      );
+    }
+  }
 }

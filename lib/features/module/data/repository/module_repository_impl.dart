@@ -6,8 +6,6 @@ import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/module/data/model/delete_module_success_model.dart';
 import 'package:wowca_task/features/module/data/model/module_model.dart';
 import 'package:wowca_task/features/module/data/sources/module_remote_data_source.dart';
-import 'package:wowca_task/features/module/domain/entity/delete_module_success_entity.dart';
-import 'package:wowca_task/features/module/domain/entity/module_entity.dart';
 import 'package:wowca_task/features/module/domain/repository/module_repository.dart';
 import 'package:wowca_task/features/user_registration/data/repository/registration_repository.dart';
 
