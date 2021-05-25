@@ -60,11 +60,8 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
           ///so you can return it as your choice object type
           return run(data);
         } else {
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 

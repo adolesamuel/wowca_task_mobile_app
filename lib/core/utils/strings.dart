@@ -122,9 +122,12 @@ class AppStrings {
   static final String createTask = '/create-task',
       startTask = '/task-start',
       suspendTask = '/suspend-task',
-      fininshTask = '/finish-task',
+      finishTask = '/finish-task',
       deleteTask = '/delete-task',
-      resetTask = 'finish-task';
+      resetTask = 'finish-task',
+      getTasks = '/list-tasks',
+      getOneTask = '/list-tasks',
+      updateTask = '/update-task';
 
 //////////////////////////////////////////////////////////////////////
 

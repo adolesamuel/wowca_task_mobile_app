@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/task_modal_bottom_sheet.dart';
-import 'package:wowca_task/features/task/domain/entities/get_task_entity.dart';
+import 'package:wowca_task/features/task/domain/entities/task_entity.dart';
 
 //useful
 class TaskDashBoardItem extends StatefulWidget {
-  final GetTaskEntity taskEntity;
+  final TaskEntity taskEntity;
   final Color color;
 
   const TaskDashBoardItem(

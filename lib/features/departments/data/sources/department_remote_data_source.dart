@@ -69,11 +69,8 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
           return createdDept;
         } else {
           //Warning, Failure response from server
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
@@ -114,11 +111,8 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
           return recievedDeptList;
         } else {
           //Warning, Failure response from server
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
@@ -154,11 +148,8 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
           return DeleteDeptSuccessModel.fromJson(recieved);
         } else {
           //Warning, Failure response from server
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
@@ -197,11 +188,8 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
           return recievedDept;
         } else {
           //Warning, Failure response from server
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
@@ -259,11 +247,8 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
           return updatedDept;
         } else {
           //Warning, Failure response from server
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 

@@ -78,11 +78,8 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
           return createdDept;
         } else {
           //Warning, Failure response from server
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
@@ -123,11 +120,8 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
           return recievedProjectList;
         } else {
           //Warning, Failure response from server
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
@@ -163,11 +157,8 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
           return DeleteProjectSuccessModel.fromJson(recieved);
         } else {
           //Warning, Failure response from server
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
@@ -206,11 +197,8 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
           return recievedProject;
         } else {
           //Warning, Failure response from server
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
@@ -269,11 +257,8 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
           return updatedProject;
         } else {
           //Warning, Failure response from server
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 

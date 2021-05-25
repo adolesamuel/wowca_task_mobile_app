@@ -81,11 +81,8 @@ class ModuleRemoteDataSourceImpl implements ModuleRemoteDataSource {
           return createdModule;
         } else {
           //Warning, Failure response from server
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
@@ -121,11 +118,8 @@ class ModuleRemoteDataSourceImpl implements ModuleRemoteDataSource {
           return DeleteModuleSuccessModel.fromJson(recieved);
         } else {
           //Warning, Failure response from server
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
@@ -164,11 +158,8 @@ class ModuleRemoteDataSourceImpl implements ModuleRemoteDataSource {
           return recievedModuleList;
         } else {
           //Warning, Failure response from server, provide default if unknown
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
@@ -205,11 +196,8 @@ class ModuleRemoteDataSourceImpl implements ModuleRemoteDataSource {
           return receivedModule;
         } else {
           //Warning, Failure response from server
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 
@@ -268,11 +256,8 @@ class ModuleRemoteDataSourceImpl implements ModuleRemoteDataSource {
           return updatedModule;
         } else {
           //Warning, Failure response from server
-          final title =
-                  data['message'] == null ? 'Unknown Error' : data['message'],
-              message = data['errorDetails'] == null
-                  ? 'Unknown Error Message'
-                  : data['errorDetails'];
+          final title = data['message'] ?? 'Unknown Error',
+              message = data['errorDetails'] ?? 'Unknown Error Message';
 
           CommonFailure error = CommonFailure(message, title);
 

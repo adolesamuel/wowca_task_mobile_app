@@ -23,6 +23,7 @@ import 'package:wowca_task/features/departments/domain/repository/dept_repositor
 import 'package:wowca_task/features/departments/domain/usecases/create_dept.dart';
 import 'package:wowca_task/features/departments/domain/usecases/get_dept.dart';
 import 'package:wowca_task/features/module/data/repository/module_repository_impl.dart';
+import 'package:wowca_task/features/module/data/sources/module_remote_data_source.dart';
 import 'package:wowca_task/features/module/domain/repository/module_repository.dart';
 import 'package:wowca_task/features/module/domain/usecases/create_module.dart';
 import 'package:wowca_task/features/module/domain/usecases/get_modules.dart';
@@ -35,7 +36,7 @@ import 'package:wowca_task/features/task/data/repository/task_repository_impl.da
 import 'package:wowca_task/features/task/data/sources/task_remote_data_source.dart';
 import 'package:wowca_task/features/task/domain/repository/task_repository.dart';
 import 'package:wowca_task/features/task/domain/usecases/create_task.dart';
-import 'package:wowca_task/features/task/domain/usecases/get_task.dart';
+import 'package:wowca_task/features/task/domain/usecases/get_tasks.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/data/repository/registration_repository.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
@@ -94,7 +95,7 @@ Future<void> init() async {
 
   //Task Usecases
   sl.registerLazySingleton(() => CreateTask(sl()));
-  sl.registerLazySingleton(() => GetTask(sl()));
+  sl.registerLazySingleton(() => GetTasks(sl()));
 
   //Project usecases
   sl.registerLazySingleton(() => CreateProject(sl()));
@@ -118,11 +119,7 @@ Future<void> init() async {
   //Registration Repository
   //
   sl.registerLazySingleton<RegistrationRepository>(
-    () => RegistrationRepositoryImpl(
-      sl(),
-      sl(),
-      sl(),
-    ),
+    () => RegistrationRepositoryImpl(sl(), sl(), sl()),
   );
 
   //Department Repository
@@ -167,6 +164,8 @@ Future<void> init() async {
   //task local data source
 
   //Module Data Source
+  sl.registerLazySingleton<ModuleRemoteDataSource>(
+      () => ModuleRemoteDataSourceImpl(sl(), sl()));
 
   //Project Data Source
   sl.registerLazySingleton<ProjectRemoteDataSource>(
