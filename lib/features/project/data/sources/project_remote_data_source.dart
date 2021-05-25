@@ -17,7 +17,7 @@ abstract class ProjectRemoteDataSource {
     List<String> listOfModules,
   });
 
-  Future<List<ProjectModel>> getProject();
+  Future<List<ProjectModel>> getProjects();
   Future<ProjectModel> getOneProject({String projectId});
   Future<DeleteProjectSuccessModel> deleteProject({String projectId});
   Future<ProjectModel> updateProject({
@@ -99,7 +99,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   }
 
   @override
-  Future<List<ProjectModel>> getProject() async {
+  Future<List<ProjectModel>> getProjects() async {
     final url = AppStrings.base + AppStrings.getProjects;
 
     final response = await client.get(Uri.parse(url));
@@ -263,10 +263,10 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
         ///Verify that the [data] received is [OK] or [error]
         if (data['status'] == 'OK') {
           //       //
-          final updatedDept =
+          final updatedProject =
               ProjectModel.fromJson(data['response'][0]['data']);
 
-          return updatedDept;
+          return updatedProject;
         } else {
           //Warning, Failure response from server
           final title =

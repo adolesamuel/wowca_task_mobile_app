@@ -7,4 +7,12 @@ class DeleteModuleSuccessModel extends DeleteModuleSuccessEntity {
   final String status;
 
   DeleteModuleSuccessModel(this.status) : super(status);
+
+  factory DeleteModuleSuccessModel.fromJson(Map<String, dynamic> data) {
+    if (data == null)
+      return null;
+    else {
+      return DeleteModuleSuccessModel(data['status']);
+    }
+  }
 }

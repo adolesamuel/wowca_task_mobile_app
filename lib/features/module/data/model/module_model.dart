@@ -43,6 +43,7 @@ class ModuleModel extends ModuleEntity {
       '_id': moduleId,
       'module_title': moduleName,
       'module_desc': moduleDescription,
+      'percent_completion': percentCompletion,
       'tasks': listOfTasks,
       'project': projectId,
     };

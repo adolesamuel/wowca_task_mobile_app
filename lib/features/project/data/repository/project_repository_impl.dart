@@ -53,7 +53,7 @@ class ProjectRepositoryImpl implements ProjectRepository {
     try {
       if (await networkInfo.isConnected) {
         try {
-          return Right(await remoteDataSource.getProject());
+          return Right(await remoteDataSource.getProjects());
         } catch (e) {
           return Left(CommonFailure(e.title, e.message));
         }

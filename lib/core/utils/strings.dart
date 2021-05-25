@@ -115,7 +115,8 @@ class AppStrings {
   static final String createModule = '/create-module',
       getModules = '/list-modules',
       getOneModule = '/list-modules',
-      deleteModule = '/delete-module';
+      deleteModule = '/delete-module',
+      updateModule = '/update-module';
 
   //Task Endpoints
   static final String createTask = '/create-task',
