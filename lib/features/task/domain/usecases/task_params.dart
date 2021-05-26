@@ -8,8 +8,14 @@ class TaskParams extends Equatable {
   final String taskDescription;
   final List<String> listOfMediaFileUrls;
 
-  TaskParams(this.taskId, this.started, this.completed, this.taskName,
-      this.taskDescription, this.listOfMediaFileUrls);
+  TaskParams({
+    this.taskId,
+    this.started,
+    this.completed,
+    this.taskName,
+    this.taskDescription,
+    this.listOfMediaFileUrls,
+  });
 
   @override
   List<Object> get props => [

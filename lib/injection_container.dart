@@ -39,6 +39,7 @@ import 'package:wowca_task/features/task/domain/repository/task_repository.dart'
 import 'package:wowca_task/features/task/domain/usecases/create_task.dart';
 import 'package:wowca_task/features/task/domain/usecases/delete_task.dart';
 import 'package:wowca_task/features/task/domain/usecases/finish_task.dart';
+import 'package:wowca_task/features/task/domain/usecases/get_one_task.dart';
 import 'package:wowca_task/features/task/domain/usecases/get_tasks.dart';
 import 'package:wowca_task/features/task/domain/usecases/reset_task.dart';
 import 'package:wowca_task/features/task/domain/usecases/start_task.dart';
@@ -80,6 +81,7 @@ Future<void> init() async {
         startTask: sl(),
         updateTask: sl(),
         suspendTask: sl(),
+        getOneTask: sl(),
       ));
 
   //Module Bloc
@@ -114,6 +116,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DeleteTask(sl()));
   sl.registerLazySingleton(() => FinishTask(sl()));
   sl.registerLazySingleton(() => GetTasks(sl()));
+  sl.registerLazySingleton(() => GetOneTask(sl()));
   sl.registerLazySingleton(() => ResetTask(sl()));
   sl.registerLazySingleton(() => StartTask(sl()));
   sl.registerLazySingleton(() => SuspendTask(sl()));
