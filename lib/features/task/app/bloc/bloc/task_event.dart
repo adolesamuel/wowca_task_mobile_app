@@ -10,7 +10,7 @@ abstract class TaskEvent extends Equatable {
 class CreateTaskEvent extends TaskEvent {
   final String taskId, taskName, taskDescription;
   final bool started, completed;
-  final List<String> listOfMediaFileUrls;
+  final List<File> listOfMediaFileUrls;
   CreateTaskEvent({
     this.taskId,
     this.taskName,
@@ -62,7 +62,7 @@ class SuspendTaskEvent extends TaskEvent {
 class UpdateTaskEvent extends TaskEvent {
   final String taskId, taskName, taskDescription;
   final bool started, completed;
-  final List<String> listOfMediaFileUrls;
+  final List<File> listOfMediaFileUrls;
 
   UpdateTaskEvent({
     this.taskId,

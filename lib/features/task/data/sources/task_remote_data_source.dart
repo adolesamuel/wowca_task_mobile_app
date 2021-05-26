@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart';
 import 'package:wowca_task/core/errors/exception.dart';
@@ -15,7 +16,7 @@ abstract class TaskRemoteDataSource {
     bool completed,
     String taskName,
     String taskDescription,
-    List<String> listOfMediaFileUrls,
+    List<File> listOfMediaFileUrls,
   });
 
   Future<List<TaskModel>> getTasks();
@@ -31,7 +32,7 @@ abstract class TaskRemoteDataSource {
     bool completed,
     String taskName,
     String taskDescription,
-    List<String> listOfMediaFileUrls,
+    List<File> listOfMediaFileUrls,
   });
 }
 
@@ -48,7 +49,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
     final bool completed,
     final String taskName,
     final String taskDescription,
-    final List<String> listOfMediaFileUrls,
+    final List<File> listOfMediaFileUrls,
   }) async {
     String url = AppStrings.base + AppStrings.createTask;
 
@@ -366,7 +367,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
       bool completed,
       String taskName,
       String taskDescription,
-      List<String> listOfMediaFileUrls}) async {
+      List<File> listOfMediaFileUrls}) async {
     String url = AppStrings.base + AppStrings.updateTask + '/:$taskId';
 
     ///Headers [Object] specifying [JSON] as return tyme from api

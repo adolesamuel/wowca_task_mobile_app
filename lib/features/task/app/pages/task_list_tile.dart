@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wowca_task/features/task/app/pages/create_task.dart';
-import 'package:wowca_task/features/task/app/widgets/task_model.dart';
+import 'package:wowca_task/features/task/domain/entities/task_entity.dart';
 
 class TaskListItem extends StatefulWidget {
-  final TaskModel task;
+  final TaskEntity task;
 
   const TaskListItem({
     Key key,
@@ -14,7 +14,7 @@ class TaskListItem extends StatefulWidget {
 }
 
 class _TaskListItemState extends State<TaskListItem> {
-  TaskModel task = TaskModel(
+  TaskEntity task = TaskEntity(
     taskName: 'Text Task 1',
     started: true,
     completed: true,

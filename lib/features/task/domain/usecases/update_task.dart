@@ -11,6 +11,13 @@ class UpdateTask extends Usecase<TaskEntity, TaskParams> {
   UpdateTask(this.taskRepository);
   @override
   Future<Either<Failure, TaskEntity>> call(TaskParams params) async {
-    return await taskRepository.updateTask(taskId: params.taskId);
+    return await taskRepository.updateTask(
+      taskId: params.taskId,
+      started: params.started,
+      completed: params.completed,
+      taskName: params.taskName,
+      taskDescription: params.taskDescription,
+      listOfMediaFileUrls: params.listOfMediaFileUrls,
+    );
   }
 }

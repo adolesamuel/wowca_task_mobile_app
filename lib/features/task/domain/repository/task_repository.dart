@@ -12,7 +12,7 @@ abstract class TaskRepository {
     bool completed,
     String taskName,
     String taskDescription,
-    List<String> listOfMediaFileUrls,
+    List<File> listOfMediaFileUrls,
   });
   Future<Either<Failure, TaskEntity>> updateTask({
     String taskId,
@@ -20,7 +20,7 @@ abstract class TaskRepository {
     bool completed,
     String taskName,
     String taskDescription,
-    List<String> listOfMediaFileUrls,
+    List<File> listOfMediaFileUrls,
   });
 
   Future<Either<Failure, List<TaskEntity>>> getTasks();

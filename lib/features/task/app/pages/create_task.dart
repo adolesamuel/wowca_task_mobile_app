@@ -4,10 +4,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/core/utils/strings.dart';
-import 'package:wowca_task/features/task/app/widgets/task_model.dart';
+import 'package:wowca_task/features/task/domain/entities/task_entity.dart';
 
 class CreateTaskPage extends StatefulWidget {
-  final TaskModel task;
+  final TaskEntity task;
 
   const CreateTaskPage({Key key, this.task}) : super(key: key);
   @override

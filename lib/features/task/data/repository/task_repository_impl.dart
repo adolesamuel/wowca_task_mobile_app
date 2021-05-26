@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:wowca_task/core/errors/exception.dart';
 import 'package:wowca_task/core/failures/failure.dart';
@@ -25,7 +27,7 @@ class TaskRepositoryImpl implements TaskRepository {
     bool completed,
     String taskName,
     String taskDescription,
-    List<String> listOfMediaFileUrls,
+    List<File> listOfMediaFileUrls,
   }) async {
     try {
       if (await networkInfo.isConnected) {
@@ -208,7 +210,7 @@ class TaskRepositoryImpl implements TaskRepository {
     bool completed,
     String taskName,
     String taskDescription,
-    List<String> listOfMediaFileUrls,
+    List<File> listOfMediaFileUrls,
   }) async {
     try {
       if (await networkInfo.isConnected) {
