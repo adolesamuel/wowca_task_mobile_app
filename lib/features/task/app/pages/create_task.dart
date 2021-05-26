@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
+import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/task/app/widgets/task_model.dart';
 
 class CreateTaskPage extends StatefulWidget {
@@ -48,7 +49,9 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        title: widget.task == null ? Text('Create Task') : Text('Edit Task'),
+        title: widget.task == null
+            ? Text(AppStrings.createTask)
+            : Text(AppStrings.editTaskString),
         centerTitle: true,
         elevation: 10.0,
       ),
@@ -64,7 +67,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 height: Quantity.mediumSpace,
               ),
               Text(
-                'Task Title',
+                AppStrings.taskTitleString,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Container(
@@ -107,7 +110,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 height: Quantity.mediumSpace,
               ),
               Text(
-                'Description',
+                AppStrings.descriptionText,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Container(
@@ -153,7 +156,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 height: Quantity.largeSpace,
               ),
               Text(
-                'Attachments(optional)',
+                AppStrings.attachmentString,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Row(
@@ -164,25 +167,25 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                       listOfPickedFiles.addAll(file);
                       setState(() {});
                     },
-                    child: Text('Add Attachments'),
+                    child: Text(AppStrings.addAttachmentString),
                   ),
                   TextButton(
                       onPressed: () {
                         listOfPickedFiles = [];
                         setState(() {});
                       },
-                      child: Text('remove all')),
+                      child: Text(AppStrings.removeAllString)),
                 ],
               ),
               Column(children: [
                 for (File item in listOfPickedFiles)
-                  Text('File: ${item.path.toString()}'),
+                  Text(AppStrings.fileString + '${item.path.toString()}'),
               ]),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Start',
+                    AppStrings.startString,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Checkbox(
@@ -197,7 +200,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                     width: 20.0,
                   ),
                   Text(
-                    'Completed',
+                    AppStrings.completeString,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Checkbox(
@@ -224,8 +227,9 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                       print('Create mother effing task');
                       Navigator.pop(context);
                     },
-                    child: Text(
-                        widget.task == null ? 'Create Task' : 'Update Task'),
+                    child: Text(widget.task == null
+                        ? AppStrings.createTask
+                        : AppStrings.updateTaskString),
                   )),
             ],
           ),

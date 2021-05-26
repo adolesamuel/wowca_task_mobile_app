@@ -29,10 +29,10 @@ class CreatedTaskState extends TaskState {
   CreatedTaskState(this.task);
 }
 
-class GetOneTaskState extends TaskState {
+class ReceivedOneTaskState extends TaskState {
   final TaskEntity task;
 
-  GetOneTaskState(this.task);
+  ReceivedOneTaskState(this.task);
 }
 
 class DeleteTaskSuccessState extends TaskState {
