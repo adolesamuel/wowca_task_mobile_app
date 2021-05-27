@@ -63,13 +63,22 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
       'task_desc': taskDescription,
     };
 
+    print('before request');
+
     final response = await client.post(
       Uri.parse(url),
-      body: body,
+      body: {
+        '_id': taskId,
+        'task_title': taskName,
+        'task_desc': taskDescription,
+      },
     );
+
+    print('after request');
 
     ///Verify if the response is successfull response from server
     if (response.statusCode == 200) {
+      print(response.body);
       //Check to verify response data format is json
       if (await jsonChecker.isJson(response.body)) {
         final data = await json.decode(response.body);

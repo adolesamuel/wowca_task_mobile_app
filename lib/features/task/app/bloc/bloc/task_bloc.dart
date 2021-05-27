@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/features/task/domain/entities/delete_task_success_entity.dart';
 import 'package:wowca_task/features/task/domain/entities/task_entity.dart';

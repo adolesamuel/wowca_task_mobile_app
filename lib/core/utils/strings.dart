@@ -82,6 +82,8 @@ class AppStrings {
   //TaskPage Strings
   static final String createTaskString = 'Create Task',
       updateTaskString = 'Update Task',
+      taskCreated = 'Task Created Successfully',
+      taskUpdated = 'Task Updated Successfully',
       editTaskString = 'Edit Task',
       taskTitleString = 'Task Title',
       attachmentString = 'Attachments(optional)',
@@ -90,6 +92,7 @@ class AppStrings {
       fileString = 'File: ',
       startString = 'Start',
       completeString = 'Completed';
+
   //////////////////////////////////////////////////////////////////////
 
   //UsersPage Strings

@@ -153,7 +153,7 @@ Future<void> init() async {
 
   //Task repository
   sl.registerLazySingleton<TaskRepository>(
-      () => TaskRepositoryImpl(sl(), sl(), sl()));
+      () => TaskRepositoryImpl(sl(), sl()));
 
   //Project repository
   sl.registerLazySingleton<ProjectRepository>(

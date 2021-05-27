@@ -2,9 +2,13 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/core/utils/style.dart';
+import 'package:wowca_task/features/task/app/bloc/bloc/task_bloc.dart';
 import 'package:wowca_task/features/task/domain/entities/task_entity.dart';
+import 'package:wowca_task/injection_container.dart';
 
 class CreateTaskPage extends StatefulWidget {
   final TaskEntity task;
@@ -15,6 +19,8 @@ class CreateTaskPage extends StatefulWidget {
 }
 
 class _CreateTaskPageState extends State<CreateTaskPage> {
+  final taskBloc = sl<TaskBloc>();
+
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   List<File> listOfPickedFiles = [];
@@ -50,7 +56,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: widget.task == null
-            ? Text(AppStrings.createTask)
+            ? Text(AppStrings.createTaskString)
             : Text(AppStrings.editTaskString),
         centerTitle: true,
         elevation: 10.0,
@@ -215,22 +221,85 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
               SizedBox(
                 height: Quantity.largeSpace,
               ),
-              Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      elevation: MaterialStateProperty.all(20.0),
-                    ),
-                    onPressed: () {
-                      print('Create mother effing task');
-                      Navigator.pop(context);
-                    },
-                    child: Text(widget.task == null
-                        ? AppStrings.createTask
-                        : AppStrings.updateTaskString),
-                  )),
+              BlocProvider(
+                create: (context) => taskBloc,
+                child: BlocConsumer<TaskBloc, TaskState>(
+                  listener: (context, state) {
+                    if (state is CreatedTaskState) {
+                      //wait 2 seconds for Task creation to show on U.i then pop it
+                      Future.delayed(Duration(seconds: 2), () {
+                        Navigator.pop(context);
+                      });
+                    }
+                  },
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 5.0),
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                elevation: MaterialStateProperty.all(20.0),
+                              ),
+                              onPressed: () {
+                                print('Create mother effing task');
+                                if (widget.task == null) {
+                                  //on pressed event to create task.
+                                  taskBloc.add(CreateTaskEvent(
+                                    taskName: titleController.text,
+                                    taskDescription: descriptionController.text,
+                                    listOfMediaFileUrls: listOfPickedFiles,
+                                    started: isStarted,
+                                    completed: isCompleted,
+                                  ));
+                                } else {
+                                  print('Update Task');
+                                  //on pressed event to update task
+                                  taskBloc.add(UpdateTaskEvent(
+                                    taskId: widget.task.taskId,
+                                    taskName: titleController.text,
+                                    taskDescription: descriptionController.text,
+                                    listOfMediaFileUrls: listOfPickedFiles,
+                                    started: isStarted,
+                                    completed: isCompleted,
+                                  ));
+                                }
+                              },
+                              child: Text(widget.task == null
+                                  ? AppStrings.createTaskString
+                                  : AppStrings.updateTaskString),
+                            )),
+
+                        SizedBox(height: Quantity.mediumSpace),
+
+                        // returns text with error or Task Updated or Task Created Message
+                        state is TaskLoadingState
+                            ? LinearProgressIndicator()
+                            : state is ErrorTaskState
+                                ? Text(
+                                    state.failure.message,
+                                    style: AppStyles.registrationPageTextStyle,
+                                  )
+                                : state is CreatedTaskState
+                                    ? Text(
+                                        AppStrings.taskCreated,
+                                        style:
+                                            AppStyles.registrationPageTextStyle,
+                                      )
+                                    : state is UpdatedTaskState
+                                        ? Text(
+                                            AppStrings.taskUpdated,
+                                            style: AppStyles
+                                                .registrationPageTextStyle,
+                                          )
+                                        : Text(''),
+                      ],
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),

@@ -13,8 +13,8 @@ class CreateTaskEvent extends TaskEvent {
   final List<File> listOfMediaFileUrls;
   CreateTaskEvent({
     this.taskId,
-    this.taskName,
-    this.taskDescription,
+    @required this.taskName,
+    @required this.taskDescription,
     this.started,
     this.completed,
     this.listOfMediaFileUrls,
