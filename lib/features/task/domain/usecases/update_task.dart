@@ -15,6 +15,7 @@ class UpdateTask extends Usecase<TaskEntity, TaskParams> {
       taskId: params.taskId,
       started: params.started,
       completed: params.completed,
+      deadline: params.deadline,
       taskName: params.taskName,
       taskDescription: params.taskDescription,
       listOfMediaFileUrls: params.listOfMediaFileUrls,

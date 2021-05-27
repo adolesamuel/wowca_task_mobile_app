@@ -8,6 +8,7 @@ class TaskEntity extends Equatable {
   final bool completed;
   final String taskName;
   final String taskDescription;
+  final String deadline;
   final List<File> listOfMediaFileUrls;
 
   TaskEntity({
@@ -15,6 +16,7 @@ class TaskEntity extends Equatable {
     this.started,
     this.completed,
     this.taskName,
+    this.deadline,
     this.taskDescription,
     this.listOfMediaFileUrls,
   });
@@ -27,5 +29,6 @@ class TaskEntity extends Equatable {
         taskName,
         taskDescription,
         listOfMediaFileUrls,
+        deadline,
       ];
 }

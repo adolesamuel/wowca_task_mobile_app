@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/core/utils/style.dart';
-import 'package:wowca_task/features/task/app/bloc/bloc/task_bloc.dart';
+import 'package:wowca_task/features/task/app/bloc/task_bloc.dart';
 import 'package:wowca_task/features/task/domain/entities/task_entity.dart';
 import 'package:wowca_task/injection_container.dart';
 
@@ -26,6 +27,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   List<File> listOfPickedFiles = [];
   bool isStarted = false;
   bool isCompleted = false;
+  DateTime selectedDate;
 
   @override
   void initState() {
@@ -36,6 +38,10 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     widget.task?.taskDescription != null
         ? descriptionController.text = widget.task.taskDescription
         : descriptionController.text = null;
+    //get the date from string
+    widget.task?.deadline != null
+        ? selectedDate = DateTime.parse(widget.task.deadline)
+        : selectedDate = null;
     listOfPickedFiles = widget.task?.listOfMediaFileUrls != null
         ? widget.task.listOfMediaFileUrls
         : [];
@@ -72,6 +78,9 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
               SizedBox(
                 height: Quantity.mediumSpace,
               ),
+
+              //Task Name TextField
+
               Text(
                 AppStrings.taskTitleString,
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -115,10 +124,14 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
               SizedBox(
                 height: Quantity.mediumSpace,
               ),
+
+              //Description TextField
+
               Text(
                 AppStrings.descriptionText,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
+
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                 child: TextField(
@@ -158,9 +171,23 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                           ))),
                 ),
               ),
-              SizedBox(
-                height: Quantity.largeSpace,
+              SizedBox(height: Quantity.smallSpace),
+              //Date Selector
+              Row(
+                children: [
+                  OutlinedButton(
+                      onPressed: () => _selectDate(context),
+                      child: Text('Select Deadline:')),
+                  SizedBox(
+                    width: Quantity.smallSpace,
+                  ),
+                  selectedDate == null
+                      ? Text('Choose Deadline')
+                      : Text(
+                          '${DateFormat('dd-MMM-yyyy').format(selectedDate)}'),
+                ],
               ),
+              SizedBox(height: Quantity.smallSpace),
               Text(
                 AppStrings.attachmentString,
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -245,11 +272,14 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                               ),
                               onPressed: () {
                                 print('Create mother effing task');
+                                //  print('selectedDate$selectedDateString');
                                 if (widget.task == null) {
                                   //on pressed event to create task.
                                   taskBloc.add(CreateTaskEvent(
                                     taskName: titleController.text,
                                     taskDescription: descriptionController.text,
+                                    deadline: DateFormat('yyyy-MM-dd')
+                                        .format(selectedDate),
                                     listOfMediaFileUrls: listOfPickedFiles,
                                     started: isStarted,
                                     completed: isCompleted,
@@ -261,6 +291,8 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                                     taskId: widget.task.taskId,
                                     taskName: titleController.text,
                                     taskDescription: descriptionController.text,
+                                    deadline: DateFormat('dd-MM-yyyy')
+                                        .format(selectedDate),
                                     listOfMediaFileUrls: listOfPickedFiles,
                                     started: isStarted,
                                     completed: isCompleted,
@@ -305,6 +337,19 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         ),
       ),
     );
+  }
+
+  _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2030),
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
   }
 
   Future<List<File>> pickFile() async {

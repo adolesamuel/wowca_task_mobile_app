@@ -26,6 +26,7 @@ class TaskRepositoryImpl implements TaskRepository {
     bool started,
     bool completed,
     String taskName,
+    String deadline,
     String taskDescription,
     List<File> listOfMediaFileUrls,
   }) async {
@@ -213,6 +214,7 @@ class TaskRepositoryImpl implements TaskRepository {
     bool started,
     bool completed,
     String taskName,
+    String deadline,
     String taskDescription,
     List<File> listOfMediaFileUrls,
   }) async {
@@ -223,6 +225,7 @@ class TaskRepositoryImpl implements TaskRepository {
             taskId: taskId,
             started: started,
             completed: completed,
+            deadline: deadline,
             taskName: taskName,
             taskDescription: taskDescription,
             listOfMediaFileUrls: listOfMediaFileUrls,

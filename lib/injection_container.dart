@@ -32,7 +32,7 @@ import 'package:wowca_task/features/project/data/sources/project_remote_data_sou
 import 'package:wowca_task/features/project/domain/repository/project_respository.dart';
 import 'package:wowca_task/features/project/domain/usecase/create_project.dart';
 import 'package:wowca_task/features/project/domain/usecase/get_projects.dart';
-import 'package:wowca_task/features/task/app/bloc/bloc/task_bloc.dart';
+import 'package:wowca_task/features/task/app/bloc/task_bloc.dart';
 import 'package:wowca_task/features/task/data/repository/task_repository_impl.dart';
 import 'package:wowca_task/features/task/data/sources/task_remote_data_source.dart';
 import 'package:wowca_task/features/task/domain/repository/task_repository.dart';
