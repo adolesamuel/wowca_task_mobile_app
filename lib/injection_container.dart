@@ -32,11 +32,19 @@ import 'package:wowca_task/features/project/data/sources/project_remote_data_sou
 import 'package:wowca_task/features/project/domain/repository/project_respository.dart';
 import 'package:wowca_task/features/project/domain/usecase/create_project.dart';
 import 'package:wowca_task/features/project/domain/usecase/get_projects.dart';
+import 'package:wowca_task/features/task/app/bloc/bloc/task_bloc.dart';
 import 'package:wowca_task/features/task/data/repository/task_repository_impl.dart';
 import 'package:wowca_task/features/task/data/sources/task_remote_data_source.dart';
 import 'package:wowca_task/features/task/domain/repository/task_repository.dart';
 import 'package:wowca_task/features/task/domain/usecases/create_task.dart';
+import 'package:wowca_task/features/task/domain/usecases/delete_task.dart';
+import 'package:wowca_task/features/task/domain/usecases/finish_task.dart';
+import 'package:wowca_task/features/task/domain/usecases/get_one_task.dart';
 import 'package:wowca_task/features/task/domain/usecases/get_tasks.dart';
+import 'package:wowca_task/features/task/domain/usecases/reset_task.dart';
+import 'package:wowca_task/features/task/domain/usecases/start_task.dart';
+import 'package:wowca_task/features/task/domain/usecases/suspend_task.dart';
+import 'package:wowca_task/features/task/domain/usecases/update_task.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
 import 'package:wowca_task/features/user_registration/data/repository/registration_repository.dart';
 import 'package:wowca_task/features/user_registration/data/sources/registration_local_data_source.dart';
@@ -64,7 +72,17 @@ Future<void> init() async {
   sl.registerFactory(() => DepartmentBloc(sl(), sl()));
 
   //Task Bloc
-  //
+  sl.registerFactory(() => TaskBloc(
+        createTask: sl(),
+        deleteTask: sl(),
+        finishTask: sl(),
+        getTasks: sl(),
+        resetTask: sl(),
+        startTask: sl(),
+        updateTask: sl(),
+        suspendTask: sl(),
+        getOneTask: sl(),
+      ));
 
   //Module Bloc
 
@@ -95,7 +113,14 @@ Future<void> init() async {
 
   //Task Usecases
   sl.registerLazySingleton(() => CreateTask(sl()));
+  sl.registerLazySingleton(() => DeleteTask(sl()));
+  sl.registerLazySingleton(() => FinishTask(sl()));
   sl.registerLazySingleton(() => GetTasks(sl()));
+  sl.registerLazySingleton(() => GetOneTask(sl()));
+  sl.registerLazySingleton(() => ResetTask(sl()));
+  sl.registerLazySingleton(() => StartTask(sl()));
+  sl.registerLazySingleton(() => SuspendTask(sl()));
+  sl.registerLazySingleton(() => UpdateTask(sl()));
 
   //Project usecases
   sl.registerLazySingleton(() => CreateProject(sl()));
@@ -128,7 +153,7 @@ Future<void> init() async {
 
   //Task repository
   sl.registerLazySingleton<TaskRepository>(
-      () => TaskRepositoryImpl(sl(), sl(), sl()));
+      () => TaskRepositoryImpl(sl(), sl()));
 
   //Project repository
   sl.registerLazySingleton<ProjectRepository>(

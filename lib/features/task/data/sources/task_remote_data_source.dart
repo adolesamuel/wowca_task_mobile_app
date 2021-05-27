@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart';
 import 'package:wowca_task/core/errors/exception.dart';
@@ -15,7 +16,7 @@ abstract class TaskRemoteDataSource {
     bool completed,
     String taskName,
     String taskDescription,
-    List<String> listOfMediaFileUrls,
+    List<File> listOfMediaFileUrls,
   });
 
   Future<List<TaskModel>> getTasks();
@@ -31,7 +32,7 @@ abstract class TaskRemoteDataSource {
     bool completed,
     String taskName,
     String taskDescription,
-    List<String> listOfMediaFileUrls,
+    List<File> listOfMediaFileUrls,
   });
 }
 
@@ -48,7 +49,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
     final bool completed,
     final String taskName,
     final String taskDescription,
-    final List<String> listOfMediaFileUrls,
+    final List<File> listOfMediaFileUrls,
   }) async {
     String url = AppStrings.base + AppStrings.createTask;
 
@@ -62,13 +63,22 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
       'task_desc': taskDescription,
     };
 
+    print('before request');
+
     final response = await client.post(
       Uri.parse(url),
-      body: body,
+      body: {
+        '_id': taskId,
+        'task_title': taskName,
+        'task_desc': taskDescription,
+      },
     );
+
+    print('after request');
 
     ///Verify if the response is successfull response from server
     if (response.statusCode == 200) {
+      print(response.body);
       //Check to verify response data format is json
       if (await jsonChecker.isJson(response.body)) {
         final data = await json.decode(response.body);
@@ -366,7 +376,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
       bool completed,
       String taskName,
       String taskDescription,
-      List<String> listOfMediaFileUrls}) async {
+      List<File> listOfMediaFileUrls}) async {
     String url = AppStrings.base + AppStrings.updateTask + '/:$taskId';
 
     ///Headers [Object] specifying [JSON] as return tyme from api

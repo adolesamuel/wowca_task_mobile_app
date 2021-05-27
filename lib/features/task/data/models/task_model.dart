@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:wowca_task/features/task/domain/entities/task_entity.dart';
 
 class TaskModel extends TaskEntity {
@@ -6,7 +8,7 @@ class TaskModel extends TaskEntity {
   final bool completed;
   final String taskName;
   final String taskDescription;
-  final List<String> listOfMediaFileUrls;
+  final List<File> listOfMediaFileUrls;
 
   TaskModel({
     this.taskId,

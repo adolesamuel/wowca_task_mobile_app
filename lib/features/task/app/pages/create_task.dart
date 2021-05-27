@@ -2,11 +2,16 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
-import 'package:wowca_task/features/task/app/widgets/task_model.dart';
+import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/core/utils/style.dart';
+import 'package:wowca_task/features/task/app/bloc/bloc/task_bloc.dart';
+import 'package:wowca_task/features/task/domain/entities/task_entity.dart';
+import 'package:wowca_task/injection_container.dart';
 
 class CreateTaskPage extends StatefulWidget {
-  final TaskModel task;
+  final TaskEntity task;
 
   const CreateTaskPage({Key key, this.task}) : super(key: key);
   @override
@@ -14,6 +19,8 @@ class CreateTaskPage extends StatefulWidget {
 }
 
 class _CreateTaskPageState extends State<CreateTaskPage> {
+  final taskBloc = sl<TaskBloc>();
+
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   List<File> listOfPickedFiles = [];
@@ -48,7 +55,9 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        title: widget.task == null ? Text('Create Task') : Text('Edit Task'),
+        title: widget.task == null
+            ? Text(AppStrings.createTaskString)
+            : Text(AppStrings.editTaskString),
         centerTitle: true,
         elevation: 10.0,
       ),
@@ -64,7 +73,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 height: Quantity.mediumSpace,
               ),
               Text(
-                'Task Title',
+                AppStrings.taskTitleString,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Container(
@@ -107,7 +116,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 height: Quantity.mediumSpace,
               ),
               Text(
-                'Description',
+                AppStrings.descriptionText,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Container(
@@ -153,7 +162,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 height: Quantity.largeSpace,
               ),
               Text(
-                'Attachments(optional)',
+                AppStrings.attachmentString,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Row(
@@ -164,25 +173,25 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                       listOfPickedFiles.addAll(file);
                       setState(() {});
                     },
-                    child: Text('Add Attachments'),
+                    child: Text(AppStrings.addAttachmentString),
                   ),
                   TextButton(
                       onPressed: () {
                         listOfPickedFiles = [];
                         setState(() {});
                       },
-                      child: Text('remove all')),
+                      child: Text(AppStrings.removeAllString)),
                 ],
               ),
               Column(children: [
                 for (File item in listOfPickedFiles)
-                  Text('File: ${item.path.toString()}'),
+                  Text(AppStrings.fileString + '${item.path.toString()}'),
               ]),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Start',
+                    AppStrings.startString,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Checkbox(
@@ -197,7 +206,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                     width: 20.0,
                   ),
                   Text(
-                    'Completed',
+                    AppStrings.completeString,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Checkbox(
@@ -212,21 +221,85 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
               SizedBox(
                 height: Quantity.largeSpace,
               ),
-              Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      elevation: MaterialStateProperty.all(20.0),
-                    ),
-                    onPressed: () {
-                      print('Create mother effing task');
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                        widget.task == null ? 'Create Task' : 'Update Task'),
-                  )),
+              BlocProvider(
+                create: (context) => taskBloc,
+                child: BlocConsumer<TaskBloc, TaskState>(
+                  listener: (context, state) {
+                    if (state is CreatedTaskState) {
+                      //wait 2 seconds for Task creation to show on U.i then pop it
+                      Future.delayed(Duration(seconds: 2), () {
+                        Navigator.pop(context);
+                      });
+                    }
+                  },
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 5.0),
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                elevation: MaterialStateProperty.all(20.0),
+                              ),
+                              onPressed: () {
+                                print('Create mother effing task');
+                                if (widget.task == null) {
+                                  //on pressed event to create task.
+                                  taskBloc.add(CreateTaskEvent(
+                                    taskName: titleController.text,
+                                    taskDescription: descriptionController.text,
+                                    listOfMediaFileUrls: listOfPickedFiles,
+                                    started: isStarted,
+                                    completed: isCompleted,
+                                  ));
+                                } else {
+                                  print('Update Task');
+                                  //on pressed event to update task
+                                  taskBloc.add(UpdateTaskEvent(
+                                    taskId: widget.task.taskId,
+                                    taskName: titleController.text,
+                                    taskDescription: descriptionController.text,
+                                    listOfMediaFileUrls: listOfPickedFiles,
+                                    started: isStarted,
+                                    completed: isCompleted,
+                                  ));
+                                }
+                              },
+                              child: Text(widget.task == null
+                                  ? AppStrings.createTaskString
+                                  : AppStrings.updateTaskString),
+                            )),
+
+                        SizedBox(height: Quantity.mediumSpace),
+
+                        // returns text with error or Task Updated or Task Created Message
+                        state is TaskLoadingState
+                            ? LinearProgressIndicator()
+                            : state is ErrorTaskState
+                                ? Text(
+                                    state.failure.message,
+                                    style: AppStyles.registrationPageTextStyle,
+                                  )
+                                : state is CreatedTaskState
+                                    ? Text(
+                                        AppStrings.taskCreated,
+                                        style:
+                                            AppStyles.registrationPageTextStyle,
+                                      )
+                                    : state is UpdatedTaskState
+                                        ? Text(
+                                            AppStrings.taskUpdated,
+                                            style: AppStyles
+                                                .registrationPageTextStyle,
+                                          )
+                                        : Text(''),
+                      ],
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),

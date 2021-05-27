@@ -34,8 +34,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     if (event is RegisterUserEvent) {
       yield RegisterUserLoadingState();
 
-      //expect an error from here
-
       final registerOrError = await registerUser(
         RegistrationParams(
           name: event.name,

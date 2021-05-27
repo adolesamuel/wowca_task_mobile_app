@@ -4,6 +4,7 @@ class AppStrings {
   static final String appName = 'WOCA Task Man';
   static final String logoText = '!Give this app a Logo',
       firstPageText = 'Complete Projects The Right Way...',
+      descriptionText = 'Description',
       statusText = 'Status';
 
   //Dashboard Strings
@@ -42,7 +43,6 @@ class AppStrings {
       addDepartmentText = 'Add Department',
       createADepartmentText = 'Create a Department',
       departmentNameText = 'Department Name',
-      descriptionText = 'Description',
       validatorEnterDescriptionText = 'Enter a Description',
       createDeptText = 'Create Department',
       searchForDeptText = 'Search for department';
@@ -78,6 +78,21 @@ class AppStrings {
       logoCompanyText = 'Logo for the Company',
       pickImageText = 'Pick Image',
       removeText = 'remove';
+  //////////////////////////////////////////////////////////////////////
+  //TaskPage Strings
+  static final String createTaskString = 'Create Task',
+      updateTaskString = 'Update Task',
+      taskCreated = 'Task Created Successfully',
+      taskUpdated = 'Task Updated Successfully',
+      editTaskString = 'Edit Task',
+      taskTitleString = 'Task Title',
+      attachmentString = 'Attachments(optional)',
+      addAttachmentString = 'Add Attachments',
+      removeAllString = 'remove all',
+      fileString = 'File: ',
+      startString = 'Start',
+      completeString = 'Completed';
+
   //////////////////////////////////////////////////////////////////////
 
   //UsersPage Strings

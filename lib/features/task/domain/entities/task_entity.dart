@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 
 class TaskEntity extends Equatable {
@@ -6,7 +8,7 @@ class TaskEntity extends Equatable {
   final bool completed;
   final String taskName;
   final String taskDescription;
-  final List<String> listOfMediaFileUrls;
+  final List<File> listOfMediaFileUrls;
 
   TaskEntity({
     this.taskId,
