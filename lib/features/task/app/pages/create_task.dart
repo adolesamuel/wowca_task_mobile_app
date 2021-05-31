@@ -11,6 +11,9 @@ import 'package:wowca_task/features/task/app/bloc/task_bloc.dart';
 import 'package:wowca_task/features/task/domain/entities/task_entity.dart';
 import 'package:wowca_task/injection_container.dart';
 
+/// This page is a [CreateTaskPage] when [TaskEntity task] is null
+/// and an [UpdateTaskPage] when [TaskEntity task] is not null
+
 class CreateTaskPage extends StatefulWidget {
   final TaskEntity task;
 
@@ -172,17 +175,19 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 ),
               ),
               SizedBox(height: Quantity.smallSpace),
+
               //Date Selector
+
               Row(
                 children: [
                   OutlinedButton(
                       onPressed: () => _selectDate(context),
-                      child: Text('Select Deadline:')),
+                      child: Text(AppStrings.selectDeadline)),
                   SizedBox(
                     width: Quantity.smallSpace,
                   ),
                   selectedDate == null
-                      ? Text('Choose Deadline')
+                      ? Text(AppStrings.chooseDeadline)
                       : Text(
                           '${DateFormat('dd-MMM-yyyy').format(selectedDate)}'),
                 ],

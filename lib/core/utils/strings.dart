@@ -91,7 +91,9 @@ class AppStrings {
       removeAllString = 'remove all',
       fileString = 'File: ',
       startString = 'Start',
-      completeString = 'Completed';
+      completeString = 'Completed',
+      selectDeadline = 'Select Deadline:',
+      chooseDeadline = 'Choose Deadline';
 
   //////////////////////////////////////////////////////////////////////
 
