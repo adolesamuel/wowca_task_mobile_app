@@ -30,10 +30,13 @@ import 'package:wowca_task/features/module/domain/usecases/create_module.dart';
 import 'package:wowca_task/features/module/domain/usecases/delete_module.dart';
 import 'package:wowca_task/features/module/domain/usecases/get_modules.dart';
 import 'package:wowca_task/features/module/domain/usecases/get_one_module.dart';
+import 'package:wowca_task/features/project/app/bloc/project_bloc.dart';
 import 'package:wowca_task/features/project/data/repository/project_repository_impl.dart';
 import 'package:wowca_task/features/project/data/sources/project_remote_data_source.dart';
 import 'package:wowca_task/features/project/domain/repository/project_respository.dart';
 import 'package:wowca_task/features/project/domain/usecase/create_project.dart';
+import 'package:wowca_task/features/project/domain/usecase/delete_project.dart';
+import 'package:wowca_task/features/project/domain/usecase/get_one_project.dart';
 import 'package:wowca_task/features/project/domain/usecase/get_projects.dart';
 import 'package:wowca_task/features/task/app/bloc/task_bloc.dart';
 import 'package:wowca_task/features/task/data/repository/task_repository_impl.dart';
@@ -96,6 +99,12 @@ Future<void> init() async {
       ));
 
   //Project Bloc
+  sl.registerFactory(() => ProjectBloc(
+        createProject: sl(),
+        deleteProject: sl(),
+        getProjects: sl(),
+        getOneProject: sl(),
+      ));
 
   //Company Bloc
   sl.registerFactory(() => CompanyBloc(
@@ -133,7 +142,9 @@ Future<void> init() async {
 
   //Project usecases
   sl.registerLazySingleton(() => CreateProject(sl()));
-  sl.registerLazySingleton(() => GetProject(sl()));
+  sl.registerLazySingleton(() => GetProjects(sl()));
+  sl.registerLazySingleton(() => GetOneProject(sl()));
+  sl.registerLazySingleton(() => DeleteProject(sl()));
 
   //Module usecases
   sl.registerLazySingleton(() => CreateModule(sl()));

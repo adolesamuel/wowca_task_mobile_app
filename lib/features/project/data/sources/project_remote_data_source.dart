@@ -10,11 +10,9 @@ import 'package:wowca_task/features/project/data/model/project_model.dart';
 
 abstract class ProjectRemoteDataSource {
   Future<ProjectModel> createProject({
-    String projectId,
     String projectName,
     String department,
     String projectDescription,
-    List<String> listOfModules,
   });
 
   Future<List<ProjectModel>> getProjects();
@@ -37,11 +35,9 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
 
   @override
   Future<ProjectModel> createProject({
-    String projectId,
     String projectName,
     String department,
     String projectDescription,
-    List<String> listOfModules,
   }) async {
     String url = AppStrings.base + AppStrings.createProject;
 
@@ -50,10 +46,8 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
 
     ///Body of the [POST] request
     Map<String, dynamic> body = {
-      '_id': projectId,
       'project_title': projectName,
-      'department': department,
-      'modules': listOfModules,
+      // 'department': department,
       'project_desc': projectDescription,
     };
 

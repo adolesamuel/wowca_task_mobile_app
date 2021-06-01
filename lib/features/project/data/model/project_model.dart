@@ -6,6 +6,9 @@ class ProjectModel extends ProjectEntity {
   final String department;
   final String description;
   final List<String> listOfModules;
+  final String createdAt;
+  final String updatedAt;
+  final List<String> members;
 
   ProjectModel({
     this.projectId,
@@ -13,12 +16,18 @@ class ProjectModel extends ProjectEntity {
     this.department,
     this.description,
     this.listOfModules,
+    this.createdAt,
+    this.updatedAt,
+    this.members,
   }) : super(
           department: department,
           listOfModules: listOfModules,
           projectId: projectId,
           description: description,
           projectName: projectName,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
+          members: members,
         );
 
   factory ProjectModel.fromJson(Map<String, dynamic> data) {
@@ -31,6 +40,9 @@ class ProjectModel extends ProjectEntity {
         department: data['department'],
         listOfModules: data['modules'],
         description: data['project_desc'],
+        createdAt: data['createdAt'],
+        updatedAt: data['updatedAt'],
+        members: data['members'],
       );
     }
   }
@@ -42,6 +54,9 @@ class ProjectModel extends ProjectEntity {
       'department': department,
       'modules': listOfModules,
       'project_desc': description,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
+      'members': members,
     };
   }
 }
