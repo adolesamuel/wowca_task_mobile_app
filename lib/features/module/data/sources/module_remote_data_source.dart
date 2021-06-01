@@ -41,7 +41,6 @@ class ModuleRemoteDataSourceImpl implements ModuleRemoteDataSource {
 
     ///Body of the [POST] request
     Map<String, dynamic> body = {
-      '_id': moduleId,
       'module_title': moduleName,
       'module_desc': moduleDescription,
     };
