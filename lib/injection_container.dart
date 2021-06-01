@@ -22,11 +22,14 @@ import 'package:wowca_task/features/departments/data/sources/department_remote_d
 import 'package:wowca_task/features/departments/domain/repository/dept_repository.dart';
 import 'package:wowca_task/features/departments/domain/usecases/create_dept.dart';
 import 'package:wowca_task/features/departments/domain/usecases/get_dept.dart';
+import 'package:wowca_task/features/module/app/bloc/module_bloc.dart';
 import 'package:wowca_task/features/module/data/repository/module_repository_impl.dart';
 import 'package:wowca_task/features/module/data/sources/module_remote_data_source.dart';
 import 'package:wowca_task/features/module/domain/repository/module_repository.dart';
 import 'package:wowca_task/features/module/domain/usecases/create_module.dart';
+import 'package:wowca_task/features/module/domain/usecases/delete_module.dart';
 import 'package:wowca_task/features/module/domain/usecases/get_modules.dart';
+import 'package:wowca_task/features/module/domain/usecases/get_one_module.dart';
 import 'package:wowca_task/features/project/data/repository/project_repository_impl.dart';
 import 'package:wowca_task/features/project/data/sources/project_remote_data_source.dart';
 import 'package:wowca_task/features/project/domain/repository/project_respository.dart';
@@ -85,6 +88,12 @@ Future<void> init() async {
       ));
 
   //Module Bloc
+  sl.registerFactory(() => ModuleBloc(
+        createModule: sl(),
+        deleteModule: sl(),
+        getModules: sl(),
+        getOneModule: sl(),
+      ));
 
   //Project Bloc
 
@@ -129,6 +138,8 @@ Future<void> init() async {
   //Module usecases
   sl.registerLazySingleton(() => CreateModule(sl()));
   sl.registerLazySingleton(() => GetModules(sl()));
+  sl.registerLazySingleton(() => GetOneModule(sl()));
+  sl.registerLazySingleton(() => DeleteModule(sl()));
 
   //Company usecases
   sl.registerLazySingleton(() => CreateCompany(sl()));

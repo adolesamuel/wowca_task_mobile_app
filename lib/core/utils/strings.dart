@@ -79,6 +79,18 @@ class AppStrings {
       pickImageText = 'Pick Image',
       removeText = 'remove';
   //////////////////////////////////////////////////////////////////////
+
+  //ModulePage Strings
+  static final String createModuleString = 'Create Module',
+      createAModuleString = 'Create a Module',
+      updateModuleString = 'Update Module',
+      moduleNameString = 'Module Name',
+      moduleNameValidatorString = 'Enter a name',
+      addExistingTasksString = 'Add Existing Tasks',
+      tasksString = 'Tasks',
+      moduleCreated = 'Module Created';
+
+  //////////////////////////////////////////////////////////////////////
   //TaskPage Strings
   static final String createTaskString = 'Create Task',
       updateTaskString = 'Update Task',

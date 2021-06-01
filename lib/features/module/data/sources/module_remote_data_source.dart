@@ -12,23 +12,13 @@ abstract class ModuleRemoteDataSource {
   Future<ModuleModel> createModule({
     String moduleId,
     String moduleName,
-    double percentCompletion,
-    List<String> listOfTasks,
-    String projectId,
     String moduleDescription,
+    String projectId,
   });
 
   Future<List<ModuleModel>> getModules();
   Future<ModuleModel> getOneModule({String moduleId});
   Future<DeleteModuleSuccessModel> deleteModule({String moduleId});
-  Future<ModuleModel> updateModule({
-    String moduleId,
-    String moduleName,
-    double percentCompletion,
-    List<String> listOfTasks,
-    String projectId,
-    String moduleDescription,
-  });
 }
 
 class ModuleRemoteDataSourceImpl implements ModuleRemoteDataSource {
@@ -41,10 +31,8 @@ class ModuleRemoteDataSourceImpl implements ModuleRemoteDataSource {
   Future<ModuleModel> createModule({
     String moduleId,
     String moduleName,
-    double percentCompletion,
-    List<String> listOfTasks,
-    String projectId,
     String moduleDescription,
+    String projectId,
   }) async {
     String url = AppStrings.base + AppStrings.createModule;
 
@@ -53,10 +41,8 @@ class ModuleRemoteDataSourceImpl implements ModuleRemoteDataSource {
 
     ///Body of the [POST] request
     Map<String, dynamic> body = {
-      '_id': projectId,
+      '_id': moduleId,
       'module_title': moduleName,
-      'project': projectId,
-      'tasks': listOfTasks,
       'module_desc': moduleDescription,
     };
 

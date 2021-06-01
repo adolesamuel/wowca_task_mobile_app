@@ -12,11 +12,8 @@ class CreateModule extends Usecase<ModuleEntity, CreateModuleParams> {
   @override
   Future<Either<Failure, ModuleEntity>> call(CreateModuleParams params) async {
     return await moduleRepository.createModule(
-      moduleId: params.moduleId,
       moduleName: params.moduleName,
-      percentCompletion: params.percentCompletion,
-      listOfTasks: params.listOfTasks,
-      projectId: params.projectId,
+      moduleDescription: params.moduleDescription,
     );
   }
 }
@@ -24,24 +21,18 @@ class CreateModule extends Usecase<ModuleEntity, CreateModuleParams> {
 class CreateModuleParams extends Equatable {
   final String moduleId;
   final String moduleName;
-  final double percentCompletion;
-  final List<String> listOfTasks;
-  final String projectId;
+  final String moduleDescription;
 
   CreateModuleParams({
     this.moduleId,
     this.moduleName,
-    this.percentCompletion,
-    this.listOfTasks,
-    this.projectId,
+    this.moduleDescription,
   });
 
   @override
   List<Object> get props => [
         moduleId,
         moduleName,
-        percentCompletion,
-        listOfTasks,
-        projectId,
+        moduleDescription,
       ];
 }

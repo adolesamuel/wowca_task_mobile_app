@@ -7,20 +7,26 @@ class ModuleModel extends ModuleEntity {
   final String moduleDescription;
   final List<String> listOfTasks;
   final String projectId;
+  final String createdDate;
+  final String updatedDate;
 
-  ModuleModel(
-      {this.moduleId,
-      this.moduleName,
-      this.percentCompletion,
-      this.moduleDescription,
-      this.listOfTasks,
-      this.projectId})
-      : super(
+  ModuleModel({
+    this.moduleId,
+    this.moduleName,
+    this.percentCompletion = 0,
+    this.moduleDescription,
+    this.listOfTasks,
+    this.projectId,
+    this.createdDate,
+    this.updatedDate,
+  }) : super(
           moduleId: moduleId,
           moduleName: moduleName,
           percentCompletion: percentCompletion,
           listOfTasks: listOfTasks,
           projectId: projectId,
+          createdDate: createdDate,
+          updatedDate: updatedDate,
         );
 
   factory ModuleModel.fromJson(Map<String, dynamic> data) {
@@ -34,6 +40,8 @@ class ModuleModel extends ModuleEntity {
         moduleDescription: data['module_desc'],
         listOfTasks: data['tasks'],
         projectId: data['project'],
+        createdDate: data['createdAt'],
+        updatedDate: data['updatedAt'],
       );
     }
   }
@@ -46,6 +54,8 @@ class ModuleModel extends ModuleEntity {
       'percent_completion': percentCompletion,
       'tasks': listOfTasks,
       'project': projectId,
+      'createdAt': createdDate,
+      'updatedAt': updatedDate,
     };
   }
 }
