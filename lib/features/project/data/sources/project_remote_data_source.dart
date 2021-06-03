@@ -60,16 +60,20 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
     if (response.statusCode == 200) {
       //Check to verify response data format is json
       if (await jsonChecker.isJson(response.body)) {
+        print(response.body);
+
         final data = await json.decode(response.body);
-        print(data);
 
         ///Verify that the [data] received is [OK] or [error]
         if (data['status'] == 'OK') {
           //       //
-          final createdDept =
+          print('status succesful');
+          ProjectModel createdProject =
               ProjectModel.fromJson(data['response'][0]['data']);
 
-          return createdDept;
+          print('project created');
+
+          return createdProject;
         } else {
           //Warning, Failure response from server
           final title = data['message'] ?? 'Unknown Error',
@@ -81,7 +85,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
         }
       } else {
         //throw FormatException if response is not json format
-        throw FormatException();
+        // throw FormatException();
       }
     } else {
       //throws Server Failure

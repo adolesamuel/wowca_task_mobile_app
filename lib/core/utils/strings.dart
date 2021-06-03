@@ -50,6 +50,11 @@ class AppStrings {
   //////////////////////////////////////////////////////////////////////
   //Project page Strings
   static final String projectText = 'Projects',
+      createProjectString = 'Create Project',
+      createAProjectString = 'Create a Project',
+      projectNameString = 'Project Name',
+      addExistingModuleString = 'Add Existing Modules',
+      projectCreated = 'Project Created',
       addExistingProjectsText = 'Add Existing Projects';
 
   //////////////////////////////////////////////////////////////////////
@@ -83,6 +88,7 @@ class AppStrings {
   //ModulePage Strings
   static final String createModuleString = 'Create Module',
       createAModuleString = 'Create a Module',
+      modulesString = 'Modules',
       updateModuleString = 'Update Module',
       moduleNameString = 'Module Name',
       moduleNameValidatorString = 'Enter a name',

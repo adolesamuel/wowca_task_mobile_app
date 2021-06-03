@@ -31,18 +31,21 @@ class ProjectModel extends ProjectEntity {
         );
 
   factory ProjectModel.fromJson(Map<String, dynamic> data) {
-    if (data = null)
+    if (data == null) {
       return ProjectModel();
-    else {
+    } else {
+      print('project model conversion');
       return ProjectModel(
-        projectId: data['_id'],
-        projectName: data['project_title'],
-        department: data['department'],
-        listOfModules: data['modules'],
-        description: data['project_desc'],
-        createdAt: data['createdAt'],
-        updatedAt: data['updatedAt'],
-        members: data['members'],
+        projectId: data["_id"] ?? null,
+        projectName: data["project_title"] ?? null,
+        department: data["department"] ?? null,
+        // convert json to iterable then to list
+        listOfModules: List<String>.from(data["modules"].map((x) => x)),
+
+        description: data["project_desc"] ?? null,
+        createdAt: data["createdAt"] ?? null,
+        updatedAt: data["updatedAt"] ?? null,
+        //members: data["members"] ?? null,
       );
     }
   }
