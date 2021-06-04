@@ -5,10 +5,8 @@ import 'package:wowca_task/features/project/domain/entity/project_entity.dart';
 
 abstract class ProjectRepository {
   Future<Either<Failure, ProjectEntity>> createProject({
-    String projectId,
     String projectName,
     String department,
-    List<String> listOfModules,
     String projectDescription,
   });
 

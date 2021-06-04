@@ -17,6 +17,7 @@ class CreateTask extends Usecase<TaskEntity, TaskParams> {
       started: params.started,
       completed: params.completed,
       taskName: params.taskName,
+      deadline: params.deadline,
       taskDescription: params.taskDescription,
       listOfMediaFileUrls: params.listOfMediaFileUrls,
     );

@@ -11,6 +11,7 @@ abstract class TaskRepository {
     bool started,
     bool completed,
     String taskName,
+    String deadline,
     String taskDescription,
     List<File> listOfMediaFileUrls,
   });
@@ -19,6 +20,7 @@ abstract class TaskRepository {
     bool started,
     bool completed,
     String taskName,
+    String deadline,
     String taskDescription,
     List<File> listOfMediaFileUrls,
   });

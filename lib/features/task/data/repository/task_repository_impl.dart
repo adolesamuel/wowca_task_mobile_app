@@ -26,6 +26,7 @@ class TaskRepositoryImpl implements TaskRepository {
     bool started,
     bool completed,
     String taskName,
+    String deadline,
     String taskDescription,
     List<File> listOfMediaFileUrls,
   }) async {
@@ -34,18 +35,21 @@ class TaskRepositoryImpl implements TaskRepository {
         try {
           final createTask = await remoteDataSource
               .createTask(
-                taskId: taskId,
-                started: started,
-                completed: completed,
-                taskName: taskName,
-                taskDescription: taskDescription,
-                listOfMediaFileUrls: listOfMediaFileUrls,
-              )
-              .timeout(Duration(seconds: 20));
+            taskId: taskId,
+            started: started,
+            completed: completed,
+            taskName: taskName,
+            deadline: deadline,
+            taskDescription: taskDescription,
+            listOfMediaFileUrls: listOfMediaFileUrls,
+          )
+              .timeout(Duration(seconds: 10), onTimeout: () {
+            throw CommonFailure('Timeout Error', 'request timed out');
+          });
           return Right(createTask);
         } catch (e) {
           print('Task$e');
-          return Left(CommonFailure('Error', 'Error Message'));
+          return Left(CommonFailure(e.title, e.message));
         }
       } else {
         return Left(InternetFailure(
@@ -213,6 +217,7 @@ class TaskRepositoryImpl implements TaskRepository {
     bool started,
     bool completed,
     String taskName,
+    String deadline,
     String taskDescription,
     List<File> listOfMediaFileUrls,
   }) async {
@@ -223,6 +228,7 @@ class TaskRepositoryImpl implements TaskRepository {
             taskId: taskId,
             started: started,
             completed: completed,
+            deadline: deadline,
             taskName: taskName,
             taskDescription: taskDescription,
             listOfMediaFileUrls: listOfMediaFileUrls,

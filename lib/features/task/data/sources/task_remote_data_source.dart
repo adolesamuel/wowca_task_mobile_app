@@ -15,6 +15,7 @@ abstract class TaskRemoteDataSource {
     bool started,
     bool completed,
     String taskName,
+    String deadline,
     String taskDescription,
     List<File> listOfMediaFileUrls,
   });
@@ -31,6 +32,7 @@ abstract class TaskRemoteDataSource {
     bool started,
     bool completed,
     String taskName,
+    String deadline,
     String taskDescription,
     List<File> listOfMediaFileUrls,
   });
@@ -48,6 +50,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
     final bool started,
     final bool completed,
     final String taskName,
+    final String deadline,
     final String taskDescription,
     final List<File> listOfMediaFileUrls,
   }) async {
@@ -56,22 +59,17 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
     ///Headers [Object] specifying [JSON] as return tyme from api
     // Map<String, String> headers = {'Content-Type': 'application/json'};
 
-    ///TODO: add more fields to Body of the [POST] request
+    /// TODO: add more fields to Body of the [POST] request
     Map<String, dynamic> body = {
-      '_id': taskId,
       'task_title': taskName,
-      'task_desc': taskDescription,
+      'deadline': deadline,
     };
 
     print('before request');
 
     final response = await client.post(
       Uri.parse(url),
-      body: {
-        '_id': taskId,
-        'task_title': taskName,
-        'task_desc': taskDescription,
-      },
+      body: body,
     );
 
     print('after request');
@@ -375,6 +373,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
       bool started,
       bool completed,
       String taskName,
+      String deadline,
       String taskDescription,
       List<File> listOfMediaFileUrls}) async {
     String url = AppStrings.base + AppStrings.updateTask + '/:$taskId';
@@ -384,9 +383,9 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
 
     ///Body of the [POST] request
     Map<String, dynamic> body = {
-      '_id': taskId,
       'task_title': taskName,
       'task_desc': taskDescription,
+      'deadline': deadline,
     };
 
     final response = await client.post(

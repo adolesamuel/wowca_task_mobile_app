@@ -8,6 +8,12 @@ class TaskEntity extends Equatable {
   final bool completed;
   final String taskName;
   final String taskDescription;
+  final bool pending;
+
+  final String deadline;
+  final String moduleId;
+  final String createdDate;
+  final String updatedDate;
   final List<File> listOfMediaFileUrls;
 
   TaskEntity({
@@ -15,6 +21,11 @@ class TaskEntity extends Equatable {
     this.started,
     this.completed,
     this.taskName,
+    this.deadline,
+    this.pending,
+    this.moduleId,
+    this.createdDate,
+    this.updatedDate,
     this.taskDescription,
     this.listOfMediaFileUrls,
   });
@@ -27,5 +38,10 @@ class TaskEntity extends Equatable {
         taskName,
         taskDescription,
         listOfMediaFileUrls,
+        deadline,
+        pending,
+        moduleId,
+        createdDate,
+        updatedDate,
       ];
 }

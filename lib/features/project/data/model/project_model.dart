@@ -6,6 +6,9 @@ class ProjectModel extends ProjectEntity {
   final String department;
   final String description;
   final List<String> listOfModules;
+  final String createdAt;
+  final String updatedAt;
+  final List<String> members;
 
   ProjectModel({
     this.projectId,
@@ -13,24 +16,36 @@ class ProjectModel extends ProjectEntity {
     this.department,
     this.description,
     this.listOfModules,
+    this.createdAt,
+    this.updatedAt,
+    this.members,
   }) : super(
           department: department,
           listOfModules: listOfModules,
           projectId: projectId,
           description: description,
           projectName: projectName,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
+          members: members,
         );
 
   factory ProjectModel.fromJson(Map<String, dynamic> data) {
-    if (data = null)
+    if (data == null) {
       return ProjectModel();
-    else {
+    } else {
+      print('project model conversion');
       return ProjectModel(
-        projectId: data['_id'],
-        projectName: data['project_title'],
-        department: data['department'],
-        listOfModules: data['modules'],
-        description: data['project_desc'],
+        projectId: data["_id"] ?? null,
+        projectName: data["project_title"] ?? null,
+        department: data["department"] ?? null,
+        // convert json to iterable then to list
+        listOfModules: List<String>.from(data["modules"].map((x) => x)),
+
+        description: data["project_desc"] ?? null,
+        createdAt: data["createdAt"] ?? null,
+        updatedAt: data["updatedAt"] ?? null,
+        //members: data["members"] ?? null,
       );
     }
   }
@@ -42,6 +57,9 @@ class ProjectModel extends ProjectEntity {
       'department': department,
       'modules': listOfModules,
       'project_desc': description,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
+      'members': members,
     };
   }
 }
