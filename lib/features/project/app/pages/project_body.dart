@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wowca_task/core/helpers/helpers.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
+import 'package:wowca_task/features/departments/app/bloc/department_bloc.dart';
 import 'package:wowca_task/features/project/app/bloc/project_bloc.dart';
 import 'package:wowca_task/features/project/app/widgets/show_project_bottom_sheet.dart';
 import 'package:wowca_task/features/project/domain/entity/project_entity.dart';
@@ -132,6 +133,14 @@ class ProjectContainer extends StatefulWidget {
 }
 
 class _ProjectContainerState extends State<ProjectContainer> {
+  final departmentBloc = sl<DepartmentBloc>();
+  //TODO implement getOne department here.
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -183,7 +192,7 @@ class _ProjectContainerState extends State<ProjectContainer> {
                           height: 10.0,
                         ),
                         Text(
-                          'Modules:',
+                          'Modules:' + '${widget.project.listOfModules.length}',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 15.0),
                         ),
