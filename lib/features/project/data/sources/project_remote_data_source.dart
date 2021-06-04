@@ -85,7 +85,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
         }
       } else {
         //throw FormatException if response is not json format
-        // throw FormatException();
+        throw FormatException();
       }
     } else {
       //throws Server Failure
@@ -107,11 +107,11 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
 
         ///Verify that the [data] received is [OK] or [error]
         if (data['status'] == 'OK') {
+          final jsonList = data['response'][0]['data'];
           //       //
-          final List<ProjectModel> recievedProjectList =
-              data['response'][0]['data'].map<ProjectModel>((e) {
-            return ProjectModel.fromJson(e);
-          }).toList();
+          final List<ProjectModel> recievedProjectList = jsonList
+              .map<ProjectModel>((e) => ProjectModel.fromJson(e))
+              .toList();
 
           print('receivedList : $recievedProjectList');
 
