@@ -19,6 +19,12 @@ class DeptEntity extends Equatable {
   //list of projectid in the dept
   final List<String> listofProject;
 
+  //when department was created
+  final String createdAt;
+
+  //when department was updated
+  final String updatedAt;
+
   DeptEntity({
     this.departmentDescription,
     this.departmentId,
@@ -26,6 +32,8 @@ class DeptEntity extends Equatable {
     this.listofUsers,
     this.listofProject,
     this.companyId,
+    this.createdAt,
+    this.updatedAt,
   });
 
   @override
@@ -36,5 +44,7 @@ class DeptEntity extends Equatable {
         listofUsers,
         listofProject,
         companyId,
+        createdAt,
+        updatedAt,
       ];
 }

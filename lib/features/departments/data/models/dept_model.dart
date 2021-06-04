@@ -7,6 +7,8 @@ class DeptModel extends DeptEntity {
   final String companyId;
   final List<String> listofUsers;
   final List<String> listofProject;
+  final String createdAt;
+  final String updatedAt;
 
   DeptModel({
     this.departmentDescription,
@@ -15,6 +17,8 @@ class DeptModel extends DeptEntity {
     this.companyId,
     this.listofUsers,
     this.listofProject,
+    this.createdAt,
+    this.updatedAt,
   }) : super(
           companyId: companyId,
           departmentDescription: departmentDescription,
@@ -22,6 +26,8 @@ class DeptModel extends DeptEntity {
           departmentName: departmentName,
           listofUsers: listofUsers,
           listofProject: listofProject,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
         );
 
   factory DeptModel.fromJson(Map<String, dynamic> data) {
@@ -29,12 +35,15 @@ class DeptModel extends DeptEntity {
       return DeptModel();
     } else {
       return DeptModel(
-          departmentDescription: data['description'],
-          departmentId: data['_id'],
-          departmentName: data['dept_title'],
-          listofUsers: [],
-          listofProject: [],
-          companyId: data['company']);
+        departmentDescription: data['description'] ?? null,
+        departmentId: data['_id'] ?? null,
+        departmentName: data['dept_title'] ?? null,
+        listofUsers: List<String>.from(data['members'].map((x) => x)),
+        listofProject: List<String>.from(data['projects'].map((x) => x)),
+        companyId: data['company'] ?? null,
+        createdAt: data["createdAt"] ?? null,
+        updatedAt: data["updatedAt"] ?? null,
+      );
     }
   }
 
@@ -46,6 +55,8 @@ class DeptModel extends DeptEntity {
       'listofUsers': listofUsers,
       'listofProject': listofProject,
       'company': companyId,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
     };
   }
 }
