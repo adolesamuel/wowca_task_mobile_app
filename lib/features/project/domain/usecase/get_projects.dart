@@ -5,10 +5,10 @@ import 'package:wowca_task/core/usecase/usecase.dart';
 import 'package:wowca_task/features/project/domain/entity/project_entity.dart';
 import 'package:wowca_task/features/project/domain/repository/project_respository.dart';
 
-class GetProject extends Usecase<List<ProjectEntity>, GetProjectParams> {
+class GetProjects extends Usecase<List<ProjectEntity>, GetProjectParams> {
   final ProjectRepository projectRepository;
 
-  GetProject(this.projectRepository);
+  GetProjects(this.projectRepository);
 
   @override
   Future<Either<Failure, List<ProjectEntity>>> call(

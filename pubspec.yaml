@@ -36,11 +36,13 @@ dependencies:
   flutter_greetings: ^1.0.1
   get_it: ^5.0.6
   http:
+  intl: ^0.17.0
   mockito:
   modal_bottom_sheet: ^2.0.0
   permission_handler: 5.0.1+1
   shared_preferences: ^0.5.12+4
   video_player: ^2.1.1
+
   
   
 

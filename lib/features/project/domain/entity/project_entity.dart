@@ -6,6 +6,9 @@ class ProjectEntity extends Equatable {
   final String department;
   final String description;
   final List<String> listOfModules;
+  final String createdAt;
+  final String updatedAt;
+  final List<String> members;
 
   ProjectEntity({
     this.projectId,
@@ -13,6 +16,9 @@ class ProjectEntity extends Equatable {
     this.department,
     this.listOfModules,
     this.description,
+    this.createdAt,
+    this.updatedAt,
+    this.members,
   });
 
   @override
@@ -22,5 +28,8 @@ class ProjectEntity extends Equatable {
         department,
         listOfModules,
         description,
+        createdAt,
+        updatedAt,
+        members,
       ];
 }

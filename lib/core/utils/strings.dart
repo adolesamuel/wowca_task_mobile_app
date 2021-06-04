@@ -50,6 +50,11 @@ class AppStrings {
   //////////////////////////////////////////////////////////////////////
   //Project page Strings
   static final String projectText = 'Projects',
+      createProjectString = 'Create Project',
+      createAProjectString = 'Create a Project',
+      projectNameString = 'Project Name',
+      addExistingModuleString = 'Add Existing Modules',
+      projectCreated = 'Project Created',
       addExistingProjectsText = 'Add Existing Projects';
 
   //////////////////////////////////////////////////////////////////////
@@ -79,6 +84,19 @@ class AppStrings {
       pickImageText = 'Pick Image',
       removeText = 'remove';
   //////////////////////////////////////////////////////////////////////
+
+  //ModulePage Strings
+  static final String createModuleString = 'Create Module',
+      createAModuleString = 'Create a Module',
+      modulesString = 'Modules',
+      updateModuleString = 'Update Module',
+      moduleNameString = 'Module Name',
+      moduleNameValidatorString = 'Enter a name',
+      addExistingTasksString = 'Add Existing Tasks',
+      tasksString = 'Tasks',
+      moduleCreated = 'Module Created';
+
+  //////////////////////////////////////////////////////////////////////
   //TaskPage Strings
   static final String createTaskString = 'Create Task',
       updateTaskString = 'Update Task',
@@ -91,7 +109,9 @@ class AppStrings {
       removeAllString = 'remove all',
       fileString = 'File: ',
       startString = 'Start',
-      completeString = 'Completed';
+      completeString = 'Completed',
+      selectDeadline = 'Select Deadline:',
+      chooseDeadline = 'Choose Deadline';
 
   //////////////////////////////////////////////////////////////////////
 
@@ -121,8 +141,8 @@ class AppStrings {
 
   //Project Endpoints
   static final String createProject = '/create-project',
-      getProjects = '/list-project',
-      getOneProject = '/list-project',
+      getProjects = '/list-projects',
+      getOneProject = '/list-projects',
       deleteProject = '/delete-project',
       updateProject = '/update-project';
 

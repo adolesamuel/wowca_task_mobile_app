@@ -19,9 +19,7 @@ class ModuleRepositoryImpl implements ModuleRepository {
   Future<Either<Failure, ModuleModel>> createModule({
     String moduleId,
     String moduleName,
-    double percentCompletion,
     String moduleDescription,
-    List<String> listOfTasks,
     String projectId,
   }) async {
     try {
@@ -30,9 +28,7 @@ class ModuleRepositoryImpl implements ModuleRepository {
           return Right(await remoteDataSource.createModule(
             moduleId: moduleId,
             moduleName: moduleName,
-            percentCompletion: percentCompletion,
             moduleDescription: moduleDescription,
-            listOfTasks: listOfTasks,
             projectId: projectId,
           ));
         } catch (e) {
@@ -103,42 +99,6 @@ class ModuleRepositoryImpl implements ModuleRepository {
         try {
           final remoteData =
               await remoteDataSource.getOneModule(moduleId: moduleId);
-          return Right(remoteData);
-        } catch (e) {
-          return Left(CommonFailure(e.title, e.message));
-        }
-      } else {
-        return Left(InternetFailure(
-            NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));
-      }
-    } on ServerException {
-      return Left(ServerFailure(
-        SERVER_FAILURE_TITLE,
-        SERVER_FAILURE_MESSAGE,
-      ));
-    }
-  }
-
-  @override
-  Future<Either<Failure, ModuleModel>> updateModule(
-      {String moduleId,
-      String moduleName,
-      double percentCompletion,
-      String moduleDescription,
-      List<String> listOfTasks,
-      String projectId}) async {
-    try {
-      if (await networkInfo.isConnected) {
-        try {
-          final remoteData = await remoteDataSource.updateModule(
-            moduleId: moduleId,
-            moduleName: moduleName,
-            percentCompletion: percentCompletion,
-            moduleDescription: moduleDescription,
-            listOfTasks: listOfTasks,
-            projectId: projectId,
-          );
-
           return Right(remoteData);
         } catch (e) {
           return Left(CommonFailure(e.title, e.message));

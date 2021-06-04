@@ -7,22 +7,11 @@ abstract class ModuleRepository {
   Future<Either<Failure, ModuleEntity>> createModule({
     String moduleId,
     String moduleName,
-    double percentCompletion,
     String moduleDescription,
-    List<String> listOfTasks,
     String projectId,
   });
 
   Future<Either<Failure, List<ModuleEntity>>> getModules();
-
-  Future<Either<Failure, ModuleEntity>> updateModule({
-    String moduleId,
-    String moduleName,
-    double percentCompletion,
-    String moduleDescription,
-    List<String> listOfTasks,
-    String projectId,
-  });
 
   Future<Either<Failure, ModuleEntity>> getOneModule({String moduleId});
   Future<Either<Failure, DeleteModuleSuccessEntity>> deleteModule(

@@ -7,14 +7,19 @@ class ModuleEntity extends Equatable {
   final double percentCompletion;
   final List<String> listOfTasks;
   final String projectId;
+  final String createdDate;
+  final String updatedDate;
 
-  ModuleEntity(
-      {this.moduleId,
-      this.moduleName,
-      this.percentCompletion,
-      this.moduleDescription,
-      this.listOfTasks,
-      this.projectId});
+  ModuleEntity({
+    this.moduleId,
+    this.moduleName,
+    this.percentCompletion = 0,
+    this.moduleDescription,
+    this.listOfTasks,
+    this.projectId,
+    this.createdDate,
+    this.updatedDate,
+  });
 
   @override
   List<Object> get props => [
@@ -24,5 +29,7 @@ class ModuleEntity extends Equatable {
         moduleDescription,
         listOfTasks,
         projectId,
+        updatedDate,
+        createdDate,
       ];
 }

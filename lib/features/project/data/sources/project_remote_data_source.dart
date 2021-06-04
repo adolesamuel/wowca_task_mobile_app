@@ -10,11 +10,9 @@ import 'package:wowca_task/features/project/data/model/project_model.dart';
 
 abstract class ProjectRemoteDataSource {
   Future<ProjectModel> createProject({
-    String projectId,
     String projectName,
     String department,
     String projectDescription,
-    List<String> listOfModules,
   });
 
   Future<List<ProjectModel>> getProjects();
@@ -37,11 +35,9 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
 
   @override
   Future<ProjectModel> createProject({
-    String projectId,
     String projectName,
     String department,
     String projectDescription,
-    List<String> listOfModules,
   }) async {
     String url = AppStrings.base + AppStrings.createProject;
 
@@ -50,10 +46,8 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
 
     ///Body of the [POST] request
     Map<String, dynamic> body = {
-      '_id': projectId,
       'project_title': projectName,
-      'department': department,
-      'modules': listOfModules,
+      // 'department': department,
       'project_desc': projectDescription,
     };
 
@@ -66,16 +60,20 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
     if (response.statusCode == 200) {
       //Check to verify response data format is json
       if (await jsonChecker.isJson(response.body)) {
+        print(response.body);
+
         final data = await json.decode(response.body);
-        print(data);
 
         ///Verify that the [data] received is [OK] or [error]
         if (data['status'] == 'OK') {
           //       //
-          final createdDept =
+          print('status succesful');
+          ProjectModel createdProject =
               ProjectModel.fromJson(data['response'][0]['data']);
 
-          return createdDept;
+          print('project created');
+
+          return createdProject;
         } else {
           //Warning, Failure response from server
           final title = data['message'] ?? 'Unknown Error',
@@ -109,11 +107,11 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
 
         ///Verify that the [data] received is [OK] or [error]
         if (data['status'] == 'OK') {
+          final jsonList = data['response'][0]['data'];
           //       //
-          final List<ProjectModel> recievedProjectList =
-              data['response'][0]['data'].map<ProjectModel>((e) {
-            return ProjectModel.fromJson(e);
-          }).toList();
+          final List<ProjectModel> recievedProjectList = jsonList
+              .map<ProjectModel>((e) => ProjectModel.fromJson(e))
+              .toList();
 
           print('receivedList : $recievedProjectList');
 

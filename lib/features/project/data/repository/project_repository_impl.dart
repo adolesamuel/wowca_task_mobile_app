@@ -18,21 +18,17 @@ class ProjectRepositoryImpl implements ProjectRepository {
 
   @override
   Future<Either<Failure, ProjectModel>> createProject({
-    String projectId,
     String projectName,
     String department,
-    List<String> listOfModules,
     String projectDescription,
   }) async {
     try {
       if (await networkInfo.isConnected) {
         try {
           return Right(await remoteDataSource.createProject(
-            projectId: projectId,
             projectName: projectName,
             department: department,
             projectDescription: projectDescription,
-            listOfModules: listOfModules,
           ));
         } catch (e) {
           return Left(CommonFailure(e.title, e.message));

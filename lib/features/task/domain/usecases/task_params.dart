@@ -8,6 +8,7 @@ class TaskParams extends Equatable {
   final bool completed;
   final String taskName;
   final String taskDescription;
+  final String deadline;
   final List<File> listOfMediaFileUrls;
 
   TaskParams({
@@ -15,6 +16,7 @@ class TaskParams extends Equatable {
     this.started,
     this.completed,
     this.taskName,
+    this.deadline,
     this.taskDescription,
     this.listOfMediaFileUrls,
   });
@@ -26,6 +28,7 @@ class TaskParams extends Equatable {
         completed,
         taskName,
         taskDescription,
+        deadline,
         listOfMediaFileUrls,
       ];
 }
