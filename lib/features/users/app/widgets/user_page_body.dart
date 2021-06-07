@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/helpers/helpers.dart';
 import 'package:wowca_task/features/task/domain/entities/task_entity.dart';
+import 'package:wowca_task/features/users/app/widgets/search_widget.dart';
 import 'package:wowca_task/features/users/app/widgets/user_bottom_sheet.dart';
 import 'package:wowca_task/features/users/domain/entity/user_entity.dart';
 
@@ -11,6 +12,8 @@ class UserPageBody extends StatefulWidget {
 
 class _UserPageBodyState extends State<UserPageBody> {
   TextEditingController userSearchController = TextEditingController();
+  List<UserEntity> users;
+  String query = '';
 
   List<UserEntity> listOfUsers = [
     UserEntity(
@@ -148,6 +151,12 @@ class _UserPageBodyState extends State<UserPageBody> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    users = listOfUsers;
+  }
+
+  @override
   void dispose() {
     userSearchController.dispose();
     super.dispose();
@@ -158,22 +167,16 @@ class _UserPageBodyState extends State<UserPageBody> {
     return Flex(
       direction: Axis.vertical,
       children: [
-        TextField(
-          controller: userSearchController,
-          decoration: InputDecoration(
-            labelText: 'Search for Users',
-            suffixIcon: Icon(Icons.search),
-          ),
-        ),
+        buildSearch(),
         Expanded(
           child: ListView.builder(
-              itemCount: listOfUsers.length,
+              itemCount: users.length,
               itemBuilder: (context, index) {
                 if (listOfUsers.length - 1 == index) {
                   return Column(
                     children: [
                       UserContainer(
-                        user: listOfUsers[index],
+                        user: users[index],
                       ),
                       SizedBox(
                         height: 48.0,
@@ -183,7 +186,7 @@ class _UserPageBodyState extends State<UserPageBody> {
                 } else {
                   return Column(
                     children: [
-                      UserContainer(user: listOfUsers[index]),
+                      UserContainer(user: users[index]),
                       SizedBox(
                         height: 16.0,
                       )
@@ -194,6 +197,25 @@ class _UserPageBodyState extends State<UserPageBody> {
         ),
       ],
     );
+  }
+
+  Widget buildSearch() => SearchWidget(
+        text: query,
+        hintText: 'Search with User Name',
+        onChanged: searchItems,
+      );
+
+  void searchItems(String query) {
+    final users = listOfUsers.where((user) {
+      final name = user.userName.toLowerCase();
+      final searchLower = query.toLowerCase();
+      return name.contains(searchLower);
+    }).toList();
+
+    setState(() {
+      this.query = query;
+      this.users = users;
+    });
   }
 }
 

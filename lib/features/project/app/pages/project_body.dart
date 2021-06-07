@@ -134,11 +134,11 @@ class ProjectContainer extends StatefulWidget {
 
 class _ProjectContainerState extends State<ProjectContainer> {
   final departmentBloc = sl<DepartmentBloc>();
-  //TODO implement getOne department here.
 
   @override
   void initState() {
     super.initState();
+    departmentBloc.add(GetOneDepartmentEvent(widget.project.department));
   }
 
   @override
@@ -196,11 +196,38 @@ class _ProjectContainerState extends State<ProjectContainer> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 15.0),
                         ),
-                        Text(
-                          'Department: ',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 15.0),
-                        ),
+                        //Error causing code, making too many requests at a time from server
+
+                        // BlocProvider(
+                        //   create: (context) => departmentBloc,
+                        //   child: BlocBuilder<DepartmentBloc, DepartmentState>(
+                        //     builder: (context, state) {
+                        //       if (state is DepartmentLoadingState) {
+                        //         return Text(
+                        //           'Department: ',
+                        //           style: TextStyle(
+                        //               fontWeight: FontWeight.bold,
+                        //               fontSize: 15.0),
+                        //         );
+                        //       }
+                        //       if (state is ReceivedOneDepartmentState) {
+                        //         return Text(
+                        //           'Department: ${state.dept.departmentName}',
+                        //           style: TextStyle(
+                        //               fontWeight: FontWeight.bold,
+                        //               fontSize: 15.0),
+                        //         );
+                        //       } else {
+                        //         return Text(
+                        //           'Department: Not assigned',
+                        //           style: TextStyle(
+                        //               fontWeight: FontWeight.bold,
+                        //               fontSize: 15.0),
+                        //         );
+                        //       }
+                        //     },
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

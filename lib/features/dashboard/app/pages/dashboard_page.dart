@@ -40,7 +40,12 @@ class _DashboardPageState extends State<DashboardPage> {
             //             )));
           },
           child: Container(
-            child: Text('Company Name'),
+            child: Row(
+              children: [
+                Text('Company Name'),
+                Icon(Icons.import_export),
+              ],
+            ),
           ),
         ),
         elevation: 5.0,

@@ -15,3 +15,15 @@ class CreateDepartmentEvent extends DepartmentEvent {
 
   CreateDepartmentEvent({this.deptName, this.deptDescription});
 }
+
+class GetOneDepartmentEvent extends DepartmentEvent {
+  final String departmentId;
+
+  GetOneDepartmentEvent(this.departmentId);
+}
+
+class DeleteDepartmentEvent extends DepartmentEvent {
+  final String departmentId;
+
+  DeleteDepartmentEvent(this.departmentId);
+}

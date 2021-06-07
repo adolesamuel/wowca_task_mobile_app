@@ -20,13 +20,13 @@ class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
   final DeleteCompany deleteCompany;
   final UpdateCompany updateCompany;
 
-  CompanyBloc(
-      {this.getOneCompany,
-      this.deleteCompany,
-      this.updateCompany,
-      this.createCompany,
-      this.getCompanies})
-      : super(CompanyInitial());
+  CompanyBloc({
+    this.getOneCompany,
+    this.deleteCompany,
+    this.updateCompany,
+    this.createCompany,
+    this.getCompanies,
+  }) : super(CompanyInitial());
 
   @override
   Stream<CompanyState> mapEventToState(

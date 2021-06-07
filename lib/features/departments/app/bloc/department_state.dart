@@ -28,3 +28,15 @@ class CreatedDepartmentState extends DepartmentState {
 
   CreatedDepartmentState(this.dept);
 }
+
+class ReceivedOneDepartmentState extends DepartmentState {
+  final DeptEntity dept;
+
+  ReceivedOneDepartmentState(this.dept);
+}
+
+class DeleteDeptSuccessState extends DepartmentState {
+  final DeleteDeptSuccessEntity status;
+
+  DeleteDeptSuccessState(this.status);
+}
