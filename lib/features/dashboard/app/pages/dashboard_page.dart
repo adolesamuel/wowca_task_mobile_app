@@ -32,14 +32,6 @@ class _DashboardPageState extends State<DashboardPage> {
                 builder: (context) {
                   return CustomDialogBox();
                 });
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) => CustomDialogBox(
-            //               title: 'title',
-            //               descriptions: 'descriptions',
-            //               text: 'text',
-            //             )));
           },
           child: Container(
             width: MediaQuery.of(context).size.width * 0.5,
@@ -70,6 +62,3 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 }
-
-//if dept == null
-//material page route to a create department page
