@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/company_custom_dialog.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/dashboard_body.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/dashboard_drawer.dart';
@@ -21,7 +23,7 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: GestureDetector(
+        title: InkWell(
           onTap: () {
             print('App bar tapped');
 
@@ -40,14 +42,20 @@ class _DashboardPageState extends State<DashboardPage> {
             //             )));
           },
           child: Container(
+            width: MediaQuery.of(context).size.width * 0.5,
+            padding: EdgeInsets.all(Quantity.smallBoxPadding),
             child: Row(
               children: [
                 Text('Company Name'),
-                Icon(Icons.import_export),
+                SizedBox(
+                  width: Quantity.smallBoxPadding,
+                ),
+                Icon(Icons.swap_horizontal_circle),
               ],
             ),
           ),
         ),
+        centerTitle: true,
         elevation: 5.0,
       ),
       body: widget.dept == null

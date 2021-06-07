@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/company/app/bloc/company_bloc.dart';
@@ -20,7 +21,7 @@ class CreateCompanyPage extends StatefulWidget {
 class _CreateCompanyPageState extends State<CreateCompanyPage> {
   // A company is created with a name
   // a logo
-  // an address
+  // an address and
   // a company description
   //
 
@@ -32,6 +33,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
   List<File> listOfPickedFiles = [];
   bool isStarted = false;
   bool isCompleted = false;
+  bool _isButtonDisabled = false;
 
 // button to add users to company
 // and button to add department to company
@@ -78,6 +80,9 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               SizedBox(
                 height: Quantity.mediumSpace,
               ),
+
+              //Company Name TextField...
+
               Text(
                 AppStrings.companyNameText,
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -121,6 +126,9 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               SizedBox(
                 height: Quantity.mediumSpace,
               ),
+
+              //Company Address Textfield
+
               Text(
                 AppStrings.companyAddressText,
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -167,6 +175,9 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               SizedBox(
                 height: Quantity.mediumSpace,
               ),
+
+              //Company Description textfield
+
               Text(
                 AppStrings.companyDescriptionText,
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -213,75 +224,112 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               SizedBox(
                 height: Quantity.largeSpace,
               ),
-              Text(
-                AppStrings.logoCompanyText,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Row(
-                children: [
-                  OutlinedButton(
-                    onPressed: () async {
-                      final file = await pickFile();
-                      listOfPickedFiles.addAll(file);
-                      setState(() {});
-                    },
-                    child: Text(AppStrings.pickImageText),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        listOfPickedFiles = [];
-                        setState(() {});
-                      },
-                      child: Text(AppStrings.removeText)),
-                ],
-              ),
-              Column(children: [
-                for (File item in listOfPickedFiles)
-                  Text('File: ${item.path.toString()}'),
-              ]),
+
+              //! [Logo] Image Selection
+              /// has been disabled awaiting api
+              /// for company logo selection
+
+              // Text(
+              //   AppStrings.logoCompanyText,
+              //   style: TextStyle(fontWeight: FontWeight.bold),
+              // ),
+              // Row(
+              //   children: [
+              //     OutlinedButton(
+              //       onPressed: () async {
+              //         final file = await pickFile();
+              //         listOfPickedFiles.addAll(file);
+              //         setState(() {});
+              //       },
+              //       child: Text(AppStrings.pickImageText),
+              //     ),
+              //     TextButton(
+              //         onPressed: () {
+              //           listOfPickedFiles = [];
+              //           setState(() {});
+              //         },
+              //         child: Text(AppStrings.removeText)),
+              //   ],
+              // ),
+              // Column(children: [
+              //   for (File item in listOfPickedFiles)
+              //     Text('File: ${item.path.toString()}'),
+              // ]),
               Divider(
-                height: 50.0,
+                //height: 50.0,
                 thickness: 2.0,
               ),
-              OutlinedButton(
-                onPressed: () async {},
-                child: Text(AppStrings.addUsersText),
-              ),
+
+              //! Add Users to this project
+              //this has been commented awaiting API implementation
+
+              // OutlinedButton(
+              //   onPressed: () async {},
+              //   child: Text(AppStrings.addUsersText),
+              // ),
+
               // Column showing users added to project
-              OutlinedButton(
-                onPressed: () async {},
-                child: Text(AppStrings.addDepartmentText),
-              ),
+
+              // OutlinedButton(
+              //   onPressed: () async {},
+              //   child: Text(AppStrings.addDepartmentText),
+              // ),
 
               SizedBox(
                 height: Quantity.largeSpace,
               ),
-              Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      elevation: MaterialStateProperty.all(20.0),
-                    ),
-                    onPressed: () {
-                      if (widget.company == null) {
-                        print('Create Company Event');
-                        companyBloc.add(CreateCompanyEvent(
-                          companyName: companyNameController.text,
-                          companyDescription: companyDescriptionController.text,
-                          companyAddress: companyAddressController.text,
-                        ));
-                        companyBloc.add(GetCompaniesEvent());
+              BlocProvider(
+                create: (context) => companyBloc,
+                child: BlocConsumer<CompanyBloc, CompanyState>(
+                  listener: (context, state) {
+                    if (state is CompanyCreatedState) {
+                      //wait 2 seconds for  Company creation success to show on U.i then pop it
+                      Future.delayed(Duration(seconds: 2), () {
                         Navigator.pop(context);
-                      } else {
-                        print('Update company');
-                      }
-                    },
-                    child: Text(widget.company == null
-                        ? AppStrings.createCompanyText
-                        : AppStrings.updateCompanyText),
-                  )),
+                      });
+                    } else if (state is CompanyErrorState) {
+                      setState(() {
+                        _isButtonDisabled = false;
+                      });
+                    }
+                  },
+                  builder: (context, state) {
+                    return Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 5.0),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            elevation: MaterialStateProperty.all(20.0),
+                          ),
+                          onPressed: _isButtonDisabled
+                              ? null
+                              : () {
+                                  if (widget.company == null) {
+                                    print('Create Company Event');
+                                    companyBloc.add(CreateCompanyEvent(
+                                      companyName: companyNameController.text,
+                                      companyDescription:
+                                          companyDescriptionController.text,
+                                      companyAddress:
+                                          companyAddressController.text,
+                                    ));
+                                    companyBloc.add(GetCompaniesEvent());
+                                    setState(() {
+                                      _isButtonDisabled = true;
+                                    });
+                                  } else {
+                                    //run update company details
+                                    print('Update company');
+                                  }
+                                },
+                          child: Text(widget.company == null
+                              ? AppStrings.createCompanyText
+                              : AppStrings.updateCompanyText),
+                        ));
+                  },
+                ),
+              ),
             ],
           ),
         ),
