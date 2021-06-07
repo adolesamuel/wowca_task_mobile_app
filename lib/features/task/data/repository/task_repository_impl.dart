@@ -44,7 +44,8 @@ class TaskRepositoryImpl implements TaskRepository {
             listOfMediaFileUrls: listOfMediaFileUrls,
           )
               .timeout(Duration(seconds: 10), onTimeout: () {
-            throw CommonFailure('Timeout Error', 'request timed out');
+            throw CommonFailure(
+                AppStrings.timeOutTitleString, AppStrings.timeOutMessageString);
           });
           return Right(createTask);
         } catch (e) {

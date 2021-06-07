@@ -39,7 +39,8 @@ class _CompanyPageState extends State<CompanyPage> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CreateCompanyPage()));
+                  MaterialPageRoute(builder: (context) => CreateCompanyPage()))
+              .then((value) => companyBloc.add(GetCompaniesEvent()));
         },
       ),
       body: Padding(

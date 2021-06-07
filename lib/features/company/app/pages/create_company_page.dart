@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/core/utils/style.dart';
 import 'package:wowca_task/features/company/app/bloc/company_bloc.dart';
 import 'package:wowca_task/features/company/domain/entity/company_entity.dart';
 import 'package:wowca_task/injection_container.dart';
@@ -25,15 +26,15 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
   // a company description
   //
 
-  final companyBloc = sl<CompanyBloc>();
+  final _companyBloc = sl<CompanyBloc>();
 
-  TextEditingController companyNameController = TextEditingController();
-  TextEditingController companyAddressController = TextEditingController();
-  TextEditingController companyDescriptionController = TextEditingController();
+  TextEditingController _companyNameController = TextEditingController();
+  TextEditingController _companyAddressController = TextEditingController();
+  TextEditingController _companyDescriptionController = TextEditingController();
   List<File> listOfPickedFiles = [];
-  bool isStarted = false;
-  bool isCompleted = false;
+
   bool _isButtonDisabled = false;
+  bool _validate = false;
 
 // button to add users to company
 // and button to add department to company
@@ -42,21 +43,21 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
   void initState() {
     super.initState();
     if (widget.company != null) {
-      companyNameController.text = widget.company.companyName;
-      companyAddressController.text = widget.company.companyAddress;
-      companyDescriptionController.text = widget.company.companyDescription;
+      _companyNameController.text = widget.company.companyName;
+      _companyAddressController.text = widget.company.companyAddress;
+      _companyDescriptionController.text = widget.company.companyDescription;
     } else {
-      companyNameController.text = '';
-      companyAddressController.text = '';
-      companyDescriptionController.text = '';
+      _companyNameController.text = '';
+      _companyAddressController.text = '';
+      _companyDescriptionController.text = '';
     }
   }
 
   @override
   void dispose() {
-    companyNameController.dispose();
-    companyAddressController.dispose();
-    companyDescriptionController.dispose();
+    _companyNameController.dispose();
+    _companyAddressController.dispose();
+    _companyDescriptionController.dispose();
     super.dispose();
   }
 
@@ -90,8 +91,10 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                 child: TextField(
-                  controller: companyNameController,
+                  controller: _companyNameController,
                   decoration: InputDecoration(
+                      errorText:
+                          _validate ? AppStrings.validatorNameText : null,
                       errorStyle:
                           TextStyle(color: Theme.of(context).primaryColor),
                       errorBorder: OutlineInputBorder(
@@ -136,11 +139,14 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                 child: TextField(
-                  controller: companyAddressController,
+                  controller: _companyAddressController,
                   //expands: true,
                   maxLines: null,
                   minLines: 3,
                   decoration: InputDecoration(
+                      errorText: _validate
+                          ? AppStrings.validatorEnterAddressText
+                          : null,
                       errorStyle:
                           TextStyle(color: Theme.of(context).primaryColor),
                       errorBorder: OutlineInputBorder(
@@ -185,11 +191,14 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                 child: TextField(
-                  controller: companyDescriptionController,
+                  controller: _companyDescriptionController,
                   //expands: true,
                   maxLines: null,
                   minLines: 3,
                   decoration: InputDecoration(
+                      errorText: _validate
+                          ? AppStrings.validatorEnterDescriptionText
+                          : null,
                       errorStyle:
                           TextStyle(color: Theme.of(context).primaryColor),
                       errorBorder: OutlineInputBorder(
@@ -279,11 +288,13 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                 height: Quantity.largeSpace,
               ),
               BlocProvider(
-                create: (context) => companyBloc,
+                create: (context) => _companyBloc,
                 child: BlocConsumer<CompanyBloc, CompanyState>(
                   listener: (context, state) {
                     if (state is CompanyCreatedState) {
-                      //wait 2 seconds for  Company creation success to show on U.i then pop it
+                      //wait 2 seconds for  Company creation success
+                      // to show on U.i then pop it
+
                       Future.delayed(Duration(seconds: 2), () {
                         Navigator.pop(context);
                       });
@@ -294,39 +305,74 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                     }
                   },
                   builder: (context, state) {
-                    return Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 5.0),
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            elevation: MaterialStateProperty.all(20.0),
+                    return Column(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              elevation: MaterialStateProperty.all(
+                                  Quantity.buttonElevation),
+                            ),
+                            onPressed: _isButtonDisabled
+                                ? null
+                                : () {
+                                    if (_companyNameController.text.isNotEmpty &
+                                        _companyAddressController
+                                            .text.isNotEmpty &
+                                        _companyDescriptionController
+                                            .text.isNotEmpty) {
+                                      _validate = false;
+                                      setState(() {
+                                        _isButtonDisabled = true;
+                                      });
+                                      if (widget.company == null) {
+                                        print('Create Company Event');
+                                        _companyBloc.add(CreateCompanyEvent(
+                                          companyName:
+                                              _companyNameController.text,
+                                          companyDescription:
+                                              _companyDescriptionController
+                                                  .text,
+                                          companyAddress:
+                                              _companyAddressController.text,
+                                        ));
+                                        _companyBloc.add(GetCompaniesEvent());
+                                        setState(() {
+                                          _isButtonDisabled = true;
+                                        });
+                                      } else {
+                                        //run update company details
+                                        print('Update company');
+                                      }
+                                    } else {
+                                      setState(() {
+                                        _validate = true;
+                                      });
+                                    }
+                                  },
+                            child: Text(widget.company == null
+                                ? AppStrings.createCompanyText
+                                : AppStrings.updateCompanyText),
                           ),
-                          onPressed: _isButtonDisabled
-                              ? null
-                              : () {
-                                  if (widget.company == null) {
-                                    print('Create Company Event');
-                                    companyBloc.add(CreateCompanyEvent(
-                                      companyName: companyNameController.text,
-                                      companyDescription:
-                                          companyDescriptionController.text,
-                                      companyAddress:
-                                          companyAddressController.text,
-                                    ));
-                                    companyBloc.add(GetCompaniesEvent());
-                                    setState(() {
-                                      _isButtonDisabled = true;
-                                    });
-                                  } else {
-                                    //run update company details
-                                    print('Update company');
-                                  }
-                                },
-                          child: Text(widget.company == null
-                              ? AppStrings.createCompanyText
-                              : AppStrings.updateCompanyText),
-                        ));
+                        ),
+                        SizedBox(height: Quantity.mediumSpace),
+                        state is CompanyLoadingState
+                            ? LinearProgressIndicator()
+                            : state is CompanyErrorState
+                                ? Text(
+                                    state.failure.message,
+                                    style: AppStyles.registrationPageTextStyle,
+                                  )
+                                : state is CompanyCreatedState
+                                    ? Text(
+                                        AppStrings.projectCreated,
+                                        style:
+                                            AppStyles.registrationPageTextStyle,
+                                      )
+                                    : Text(''),
+                      ],
+                    );
                   },
                 ),
               ),

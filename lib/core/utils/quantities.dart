@@ -10,6 +10,7 @@ class Quantity {
   static final buttonMinWidth = 100.0;
   static final buttonHeight = 45.0;
   static final addButtonSquareSide = 30.0;
+  static final buttonElevation = 20.0;
 
   //////////////////////////////////////////////////////////////////
   ///                        Medium Objects                     ////

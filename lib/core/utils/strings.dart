@@ -44,6 +44,7 @@ class AppStrings {
       createADepartmentText = 'Create a Department',
       departmentNameText = 'Department Name',
       validatorEnterDescriptionText = 'Enter a Description',
+      validatorEnterAddressText = 'Enter Company Address',
       createDeptText = 'Create Department',
       searchForDeptText = 'Search for department';
 
@@ -168,6 +169,12 @@ class AppStrings {
 
   //AssetStrings
   static final String loginImage = 'lib/core/assets/testone.jpg';
+
+/////////////////////////////////////////////////////////////////////
+
+//ErrorStrings
+  static final String timeOutTitleString = 'TimeOut Error',
+      timeOutMessageString = 'request timed out';
 }
 
 //Error Messages

@@ -8,11 +8,7 @@ import 'package:wowca_task/features/company/domain/entity/delete_success_entity.
 
 abstract class CompanyRepository {
   Future<Either<Failure, CompanyEntity>> createCompany({
-    String companyId,
     String companyName,
-    File companyLogo,
-    List companyUsers,
-    List department,
     String companyDescription,
     String companyAddress,
   });
