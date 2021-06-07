@@ -167,7 +167,7 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
 
   @override
   Future<DeptModel> getOneDept({String deptId}) async {
-    final url = AppStrings.base + AppStrings.getOneDepartment + '/:$deptId';
+    final url = AppStrings.base + AppStrings.getOneDepartment + '/$deptId';
 
     final response = await client.get(Uri.parse(url));
 

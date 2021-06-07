@@ -84,18 +84,16 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
             ],
           ),
         ),
+        // to be shown only if company is null.
         Positioned(
-          left: Constants.padding,
-          right: Constants.padding,
-          child: CircleAvatar(
-            backgroundColor: Colors.transparent,
-            radius: Constants.avatarRadius,
-            child: ClipRRect(
-                borderRadius:
-                    BorderRadius.all(Radius.circular(Constants.avatarRadius)),
-                child: Image.asset("lib/assets/company_placeholder.png")),
-          ),
-        ),
+            left: Constants.padding,
+            right: Constants.padding,
+            child: CircleAvatar(
+                radius: (25.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.asset("lib/core/assets/company_placeholder.png"),
+                ))),
       ],
     );
   }

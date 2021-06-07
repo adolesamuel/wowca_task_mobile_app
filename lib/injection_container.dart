@@ -21,7 +21,10 @@ import 'package:wowca_task/features/departments/data/sources/department_local_da
 import 'package:wowca_task/features/departments/data/sources/department_remote_data_source.dart';
 import 'package:wowca_task/features/departments/domain/repository/dept_repository.dart';
 import 'package:wowca_task/features/departments/domain/usecases/create_dept.dart';
+import 'package:wowca_task/features/departments/domain/usecases/delete_dept.dart';
 import 'package:wowca_task/features/departments/domain/usecases/get_dept.dart';
+import 'package:wowca_task/features/departments/domain/usecases/get_one_department.dart';
+import 'package:wowca_task/features/departments/domain/usecases/update_dept.dart';
 import 'package:wowca_task/features/module/app/bloc/module_bloc.dart';
 import 'package:wowca_task/features/module/data/repository/module_repository_impl.dart';
 import 'package:wowca_task/features/module/data/sources/module_remote_data_source.dart';
@@ -75,7 +78,13 @@ Future<void> init() async {
       ));
 
   //Department Bloc
-  sl.registerFactory(() => DepartmentBloc(sl(), sl()));
+  sl.registerFactory(() => DepartmentBloc(
+        getDept: sl(),
+        createDept: sl(),
+        getOneDept: sl(),
+        deleteDept: sl(),
+        updateDept: sl(),
+      ));
 
   //Task Bloc
   sl.registerFactory(() => TaskBloc(
@@ -128,6 +137,9 @@ Future<void> init() async {
   //Department Usecases
   sl.registerLazySingleton(() => CreateDept(sl()));
   sl.registerLazySingleton(() => GetDept(sl()));
+  sl.registerLazySingleton(() => GetOneDept(sl()));
+  sl.registerLazySingleton(() => DeleteDept(sl()));
+  sl.registerLazySingleton(() => UpdateDept(sl()));
 
   //Task Usecases
   sl.registerLazySingleton(() => CreateTask(sl()));
