@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/company/app/widget/company_modal_bottom_sheet.dart';
@@ -7,10 +5,8 @@ import 'package:wowca_task/features/company/domain/entity/company_entity.dart';
 
 class CompanyBoxItem extends StatefulWidget {
   final CompanyEntity company;
-  final File companyLogo;
 
-  const CompanyBoxItem({Key key, this.companyLogo, this.company})
-      : super(key: key);
+  const CompanyBoxItem({Key key, this.company}) : super(key: key);
   @override
   _CompanyBoxItemState createState() => _CompanyBoxItemState();
 }
@@ -38,11 +34,11 @@ class _CompanyBoxItemState extends State<CompanyBoxItem> {
               Container(
                 height: 30.0,
                 width: 30.0,
-                child: widget.companyLogo == null
+                child: widget.company.companyLogo == null
                     ? Image(
                         image: AssetImage(
                             'lib/core/assets/company_placeholder.png'))
-                    : Image.file(widget.companyLogo),
+                    : Image.file(widget.company.companyLogo),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

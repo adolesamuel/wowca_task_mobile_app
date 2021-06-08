@@ -295,7 +295,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                       //wait 2 seconds for  Company creation success
                       // to show on U.i then pop it
 
-                      Future.delayed(Duration(seconds: 2), () {
+                      Future.delayed(Duration(seconds: 3), () {
                         Navigator.pop(context);
                       });
                     } else if (state is CompanyErrorState) {
@@ -337,7 +337,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                                           companyAddress:
                                               _companyAddressController.text,
                                         ));
-                                        _companyBloc.add(GetCompaniesEvent());
+
                                         setState(() {
                                           _isButtonDisabled = true;
                                         });
@@ -357,16 +357,14 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                           ),
                         ),
                         SizedBox(height: Quantity.mediumSpace),
+                        //should show company created stuff when closed
                         state is CompanyLoadingState
                             ? LinearProgressIndicator()
-                            : state is CompanyErrorState
-                                ? Text(
-                                    state.failure.message,
-                                    style: AppStyles.registrationPageTextStyle,
-                                  )
-                                : state is CompanyCreatedState
+                            : state is CompanyCreatedState
+                                ? Text(AppStrings.companyCreatedText)
+                                : state is CompanyErrorState
                                     ? Text(
-                                        AppStrings.projectCreated,
+                                        state.failure.message,
                                         style:
                                             AppStyles.registrationPageTextStyle,
                                       )

@@ -83,6 +83,7 @@ class AppStrings {
       updateCompanyText = 'Update Company',
       logoCompanyText = 'Logo for the Company',
       pickImageText = 'Pick Image',
+      companyCreatedText = 'Company Created',
       removeText = 'remove';
   //////////////////////////////////////////////////////////////////////
 

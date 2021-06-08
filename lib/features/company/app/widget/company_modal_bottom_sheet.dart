@@ -9,6 +9,7 @@ Future<dynamic> showCompanyBottomSheet({
   @required BuildContext context,
   CompanyEntity company,
 }) {
+  print('Company:${company.companyId}');
   return showBarModalBottomSheet(
       elevation: 5.0,
       expand: true,
@@ -29,7 +30,6 @@ Future<dynamic> showCompanyBottomSheet({
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //TODO: give this page an Image widget
                       // Container(
                       //   clipBehavior: Clip.hardEdge,
                       //   child: company == null
@@ -43,8 +43,8 @@ Future<dynamic> showCompanyBottomSheet({
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       SelectableText(company == null
-                          ? 'No Company Address'
-                          : company.companyAddress),
+                          ? AppStrings.noCompanyAddressText
+                          : company?.companyAddress),
                       SizedBox(
                         height: 8.0,
                       ),
@@ -56,14 +56,16 @@ Future<dynamic> showCompanyBottomSheet({
                       //Selectable widget to show the task description
                       SelectableText(company == null
                           ? AppStrings.noCompanyDescriptionText
-                          : company.companyDescription),
+                          : company?.companyDescription),
                       SizedBox(
                         height: 8.0,
                       ),
                       //Departments
                       Text(
-                        AppStrings.departmentText +
-                            ': ${company.department.length}',
+                        company.department == null
+                            ? AppStrings.departmentText + ': 0'
+                            : AppStrings.departmentText +
+                                ': ${company.department?.length}',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
@@ -71,12 +73,19 @@ Future<dynamic> showCompanyBottomSheet({
                       ),
                       //Users
                       Text(
-                        AppStrings.usersText +
-                            ': ${company.companyUsers.length}',
+                        company.companyUsers == null
+                            ? AppStrings.usersText + ': 0'
+                            : AppStrings.usersText +
+                                ': ${company.companyUsers?.length}',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
 
-                      //Update task elevated button
+                      Divider(
+                        thickness: 2,
+                        height: 50,
+                      ),
+
+                      //Update Company elevated button
                       Container(
                         width: MediaQuery.of(context).size.width,
                         child: ElevatedButton(
@@ -92,8 +101,22 @@ Future<dynamic> showCompanyBottomSheet({
                                 AppStrings.updateCompanyDetailsButtonText)),
                       ),
                       SizedBox(
-                        height: 8.0,
+                        height: 16.0,
                       ),
+
+                      //Delete Company elevated Button
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Colors.red.shade900)),
+                          onPressed: () {
+                            print('Delete Company');
+                          },
+                          child: Text('Delete Company'),
+                        ),
+                      )
                     ],
                   ),
                 ),

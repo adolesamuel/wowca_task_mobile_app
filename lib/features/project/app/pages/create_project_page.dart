@@ -250,7 +250,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                               ? LinearProgressIndicator()
                               : state is ErrorProjectState
                                   ? Text(
-                                      state.failure.message,
+                                      state.failure.title,
                                       style:
                                           AppStyles.registrationPageTextStyle,
                                     )
