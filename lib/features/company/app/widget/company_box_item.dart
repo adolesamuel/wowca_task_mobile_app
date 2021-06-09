@@ -18,9 +18,9 @@ class _CompanyBoxItemState extends State<CompanyBoxItem> {
     //wrap with a gesture detector that creates a dialog of company data
     //and gives the user an option of joining or not
     //join company not implemented yet
+
     return InkWell(
       onTap: () {
-        print('company Icon pressed');
         showCompanyBottomSheet(
           context: context,
           company: widget.company,

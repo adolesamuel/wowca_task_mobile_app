@@ -5,7 +5,6 @@ import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/company/app/bloc/company_bloc.dart';
 import 'package:wowca_task/features/company/app/pages/create_company_page.dart';
 import 'package:wowca_task/features/company/app/widget/company_box_item.dart';
-import 'package:wowca_task/features/company/app/widget/company_search_bar.dart';
 import 'package:wowca_task/features/company/domain/entity/company_entity.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
@@ -26,9 +25,13 @@ class CompanyPage extends StatefulWidget {
 class _CompanyPageState extends State<CompanyPage> {
   final companyBloc = sl<CompanyBloc>();
   List<CompanyEntity> companyList;
+
+  //Entered Search string
   String query = '';
-  bool isSearching = false;
-  //!search not working
+  //!search works but
+  //! doesn't refresh while deleting
+  //! query look at this later
+  // implement a buildwhen in blocbuilder
   @override
   void initState() {
     super.initState();
@@ -47,108 +50,118 @@ class _CompanyPageState extends State<CompanyPage> {
               .then((value) => companyBloc.add(GetCompaniesEvent()));
         },
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: Container(
         child: Flex(
           direction: Axis.vertical,
           children: [
             _buildSearch(),
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(AppStrings.companieString,
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+            ),
             Expanded(
-              child: ListView(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(AppStrings.companieString,
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                  BlocProvider(
-                    create: (context) => companyBloc,
-                    child: BlocBuilder<CompanyBloc, CompanyState>(
-                      builder: (context, state) {
-                        if (state is CompanyLoadingState) {
-                          if (companyList == null || companyList.isEmpty) {
-                            return Center(child: CircularProgressIndicator());
+              child: Center(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    BlocProvider(
+                      create: (context) => companyBloc,
+                      child: BlocBuilder<CompanyBloc, CompanyState>(
+                        buildWhen: (previousState, currentState) {
+                          return previousState != currentState;
+                        },
+                        builder: (context, state) {
+                          if (state is CompanyLoadingState) {
+                            if (companyList == null || companyList.isEmpty) {
+                              return Center(child: CircularProgressIndicator());
+                            } else {
+                              return Column(
+                                children: [
+                                  Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 5),
+                                    height: MediaQuery.of(context).size.height *
+                                        0.8,
+                                    child: GridView.builder(
+                                        gridDelegate:
+                                            SliverGridDelegateWithMaxCrossAxisExtent(
+                                                maxCrossAxisExtent: 150,
+                                                childAspectRatio: 3 / 2,
+                                                crossAxisSpacing: 10,
+                                                mainAxisSpacing: 10),
+                                        itemCount: companyList.length,
+                                        itemBuilder: (context, index) {
+                                          return CompanyBoxItem(
+                                            company: companyList[index],
+                                          );
+                                        }),
+                                  ),
+                                ],
+                              );
+                            }
+                          } else if (state is CompaniesRecievedState) {
+                            // determine which to load if
+                            // query is not empty or if query
+                            // is empty
+                            if (query.isEmpty) {
+                              companyList = state.companies;
+                              return Column(
+                                children: [
+                                  Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 5),
+                                    height: MediaQuery.of(context).size.height *
+                                        0.8,
+                                    child: GridView.builder(
+                                        gridDelegate:
+                                            SliverGridDelegateWithMaxCrossAxisExtent(
+                                                maxCrossAxisExtent: 150,
+                                                childAspectRatio: 3 / 2,
+                                                crossAxisSpacing: 10,
+                                                mainAxisSpacing: 10),
+                                        itemCount: companyList.length,
+                                        itemBuilder: (context, index) {
+                                          return CompanyBoxItem(
+                                            company: companyList[index],
+                                          );
+                                        }),
+                                  ),
+                                ],
+                              );
+                            } else {
+                              return Column(
+                                children: [
+                                  Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 5),
+                                    height: MediaQuery.of(context).size.height *
+                                        0.8,
+                                    child: GridView.builder(
+                                        gridDelegate:
+                                            SliverGridDelegateWithMaxCrossAxisExtent(
+                                                maxCrossAxisExtent: 150,
+                                                childAspectRatio: 3 / 2,
+                                                crossAxisSpacing: 10,
+                                                mainAxisSpacing: 10),
+                                        itemCount: companyList.length,
+                                        itemBuilder: (context, index) {
+                                          return CompanyBoxItem(
+                                            company: companyList[index],
+                                          );
+                                        }),
+                                  ),
+                                ],
+                              );
+                            }
                           } else {
-                            return Column(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.8,
-                                  child: GridView.builder(
-                                      gridDelegate:
-                                          SliverGridDelegateWithMaxCrossAxisExtent(
-                                              maxCrossAxisExtent: 150,
-                                              childAspectRatio: 3 / 2,
-                                              crossAxisSpacing: 10,
-                                              mainAxisSpacing: 10),
-                                      itemCount: companyList.length,
-                                      itemBuilder: (context, index) {
-                                        return CompanyBoxItem(
-                                          company: companyList[index],
-                                        );
-                                      }),
-                                ),
-                              ],
-                            );
+                            return Center(child: Text('Company Loading Error'));
                           }
-                        } else if (state is CompaniesRecievedState) {
-                          if (!isSearching) {
-                            companyList = state.companies;
-                            return Column(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.8,
-                                  child: GridView.builder(
-                                      gridDelegate:
-                                          SliverGridDelegateWithMaxCrossAxisExtent(
-                                              maxCrossAxisExtent: 150,
-                                              childAspectRatio: 3 / 2,
-                                              crossAxisSpacing: 10,
-                                              mainAxisSpacing: 10),
-                                      itemCount: companyList.length,
-                                      itemBuilder: (context, index) {
-                                        return CompanyBoxItem(
-                                          company: companyList[index],
-                                        );
-                                      }),
-                                ),
-                              ],
-                            );
-                          } else {
-                            isSearching = false;
-                            return Column(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.8,
-                                  child: GridView.builder(
-                                      gridDelegate:
-                                          SliverGridDelegateWithMaxCrossAxisExtent(
-                                              maxCrossAxisExtent: 150,
-                                              childAspectRatio: 3 / 2,
-                                              crossAxisSpacing: 10,
-                                              mainAxisSpacing: 10),
-                                      itemCount: companyList.length,
-                                      itemBuilder: (context, index) {
-                                        return CompanyBoxItem(
-                                          company: companyList[index],
-                                        );
-                                      }),
-                                ),
-                              ],
-                            );
-                          }
-                        } else {
-                          return Center(child: Text('Company Loading Error'));
-                        }
-                      },
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
@@ -156,10 +169,6 @@ class _CompanyPageState extends State<CompanyPage> {
       ),
     );
   }
-
-  ///TODO: search not working completely
-  /// companyList doesn't return to initial
-  /// list after performing a search
 
   Widget _buildSearch() => SearchWidget(
         text: query,
@@ -178,7 +187,6 @@ class _CompanyPageState extends State<CompanyPage> {
     setState(() {
       this.query = query;
       this.companyList = companyListThings;
-      this.isSearching = true;
     });
   }
 }

@@ -5,7 +5,12 @@ class AppStrings {
   static final String logoText = '!Give this app a Logo',
       firstPageText = 'Complete Projects The Right Way...',
       descriptionText = 'Description',
-      statusText = 'Status';
+      confirmDeleteText = 'Confirm Delete',
+      deleteText = 'Delete',
+      sureToDeleteText = 'Are you sure you want to delete?',
+      statusText = 'Status',
+      noText = 'No',
+      yesText = 'Yes';
 
   //Dashboard Strings
 
