@@ -67,9 +67,7 @@ class _CompanyPageState extends State<CompanyPage> {
                       builder: (context, state) {
                         if (state is CompanyLoadingState) {
                           if (companyList == null || companyList.isEmpty) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
+                            return Center(child: CircularProgressIndicator());
                           } else {
                             return Column(
                               children: [
@@ -120,6 +118,7 @@ class _CompanyPageState extends State<CompanyPage> {
                               ],
                             );
                           } else {
+                            isSearching = false;
                             return Column(
                               children: [
                                 Container(
@@ -158,6 +157,10 @@ class _CompanyPageState extends State<CompanyPage> {
     );
   }
 
+  ///TODO: search not working completely
+  /// companyList doesn't return to initial
+  /// list after performing a search
+
   Widget _buildSearch() => SearchWidget(
         text: query,
         hintText: 'Search with Company Name',
@@ -165,7 +168,7 @@ class _CompanyPageState extends State<CompanyPage> {
       );
 
   void _searchItems(String query) {
-    print('CompanyList:$companyList');
+    print('CompanyList: $companyList');
     final companyListThings = companyList.where((company) {
       final name = company.companyName.toLowerCase();
       final searchLower = query.toLowerCase();

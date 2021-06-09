@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/features/company/app/bloc/company_bloc.dart';
 import 'package:wowca_task/features/company/app/pages/create_company_page.dart';
 import 'package:wowca_task/features/company/domain/entity/company_entity.dart';
+import 'package:wowca_task/injection_container.dart';
 
 //Useful
 Future<dynamic> showCompanyBottomSheet({
   @required BuildContext context,
   CompanyEntity company,
 }) {
+  final companyBloc = sl<CompanyBloc>();
   print('Company:${company.companyId}');
   return showBarModalBottomSheet(
       elevation: 5.0,
@@ -113,10 +116,17 @@ Future<dynamic> showCompanyBottomSheet({
                                   Colors.red.shade900)),
                           onPressed: () {
                             print('Delete Company');
+                            companyBloc
+                                .add(DeleteCompanyEvent(company.companyId));
+                            Navigator.pop(context);
                           },
                           child: Text('Delete Company'),
                         ),
-                      )
+                      ),
+
+                      SizedBox(
+                        height: 16.0,
+                      ),
                     ],
                   ),
                 ),

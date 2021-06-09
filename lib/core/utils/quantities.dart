@@ -5,6 +5,7 @@ class Quantity {
 
   static final inputBorderRadius = 24.0;
   static final smallBorderRadius = 8.0;
+  static final minuteBorderRadius = 5.0;
   static final smallBoxPadding = 8.0;
   static final smallSpace = 10.0;
   static final buttonMinWidth = 100.0;
