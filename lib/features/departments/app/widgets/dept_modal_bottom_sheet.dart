@@ -80,7 +80,7 @@ Future<dynamic> showDeptBottomSheet({
                         height: 16.0,
                       ),
 
-                      //Delete Deptartment elevated Button
+                      //Delete Department elevated Button
                       Container(
                         width: MediaQuery.of(context).size.width,
                         child: ElevatedButton(
@@ -119,7 +119,7 @@ Future<dynamic> showDeptBottomSheet({
                                       ],
                                     ));
                           },
-                          child: Text('Delete Company'),
+                          child: Text('Delete Department'),
                         ),
                       ),
                     ],

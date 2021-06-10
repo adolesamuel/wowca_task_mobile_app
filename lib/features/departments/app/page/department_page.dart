@@ -158,7 +158,6 @@ class _DepartmentPageState extends State<DepartmentPage> {
       );
 
   void _searchItems(String query) {
-    print('CompanyList: $deptList');
     final deptListThings = deptList.where((dept) {
       final name = dept.departmentName.toLowerCase();
       final searchLower = query.toLowerCase();

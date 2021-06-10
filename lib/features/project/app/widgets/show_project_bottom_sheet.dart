@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/features/project/app/bloc/project_bloc.dart';
 import 'package:wowca_task/features/project/app/pages/create_project_page.dart';
 import 'package:wowca_task/features/project/domain/entity/project_entity.dart';
 
@@ -8,6 +11,7 @@ Future<dynamic> showProjectBottomSheet({
   @required BuildContext context,
   ProjectEntity project,
 }) {
+  final projectBloc = BlocProvider.of<ProjectBloc>(context);
   return showBarModalBottomSheet(
       elevation: 5.0,
       expand: true,
@@ -42,11 +46,11 @@ Future<dynamic> showProjectBottomSheet({
                         height: 8.0,
                       ),
                       Text(
-                        'list of Modules',
+                        'No of Modules:',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
 
-                      //Update task elevated button
+                      //Update project elevated button
                       Container(
                         width: MediaQuery.of(context).size.width,
                         child: ElevatedButton(
@@ -54,13 +58,57 @@ Future<dynamic> showProjectBottomSheet({
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          CreateProjectPage()));
+                                      builder: (context) => CreateProjectPage(
+                                            project: project,
+                                          )));
                             },
                             child: Text('Update Project Details')),
                       ),
                       SizedBox(
                         height: 8.0,
+                      ),
+
+                      //Delete Project elevated Button
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Colors.red.shade900)),
+                          onPressed: () {
+                            return showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      title: Text(AppStrings.confirmDeleteText),
+                                      content:
+                                          Text(AppStrings.sureToDeleteText),
+                                      actions: [
+                                        //Delete confirmation dialog button
+                                        OutlinedButton(
+                                            style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Colors.red.shade900),
+                                                foregroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Colors.white)),
+                                            onPressed: () {
+                                              projectBloc.add(
+                                                  DeleteProjectEvent(
+                                                      project.projectId));
+                                              projectBloc
+                                                  .add(GetProjectsEvent());
+                                              // to close dialog
+                                              Navigator.pop(context);
+                                              // to close modal bottom sheet
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text(AppStrings.deleteText)),
+                                      ],
+                                    ));
+                          },
+                          child: Text('Delete Project'),
+                        ),
                       ),
                     ],
                   ),
