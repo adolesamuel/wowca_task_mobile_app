@@ -77,7 +77,50 @@ Future<dynamic> showDeptBottomSheet({
                             child: Text('Update Department Details')),
                       ),
                       SizedBox(
-                        height: 8.0,
+                        height: 16.0,
+                      ),
+
+                      //Delete Deptartment elevated Button
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Colors.red.shade900)),
+                          onPressed: () {
+                            return showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      title: Text(AppStrings.confirmDeleteText),
+                                      content:
+                                          Text(AppStrings.sureToDeleteText),
+                                      actions: [
+                                        //Delete confirmation dialog button
+                                        OutlinedButton(
+                                            style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Colors.red.shade900),
+                                                foregroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Colors.white)),
+                                            onPressed: () {
+                                              departmentBloc.add(
+                                                  DeleteDepartmentEvent(
+                                                      dept.departmentId));
+                                              departmentBloc
+                                                  .add(GetDepartmentsEvent());
+                                              // to close dialog
+                                              Navigator.pop(context);
+                                              // to close modal bottom sheet
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text(AppStrings.deleteText)),
+                                      ],
+                                    ));
+                          },
+                          child: Text('Delete Company'),
+                        ),
                       ),
                     ],
                   ),

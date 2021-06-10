@@ -12,9 +12,8 @@ import 'package:wowca_task/injection_container.dart';
 class CompanyPage extends StatefulWidget {
   //TODO: implement Update company
   final SignedInUserEntity user;
-  final CompanyEntity company;
 
-  const CompanyPage({Key key, this.user, this.company}) : super(key: key);
+  const CompanyPage({Key key, this.user}) : super(key: key);
 
   @override
   _CompanyPageState createState() => _CompanyPageState();

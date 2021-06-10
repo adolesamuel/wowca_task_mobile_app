@@ -11,9 +11,8 @@ import 'package:wowca_task/injection_container.dart';
 
 class DepartmentPage extends StatefulWidget {
   final SignedInUserEntity user;
-  final DeptEntity dept;
 
-  const DepartmentPage({Key key, this.user, this.dept}) : super(key: key);
+  const DepartmentPage({Key key, this.user}) : super(key: key);
 
   @override
   _DepartmentPageState createState() => _DepartmentPageState();
@@ -66,6 +65,9 @@ class _DepartmentPageState extends State<DepartmentPage> {
                     BlocProvider(
                       create: (context) => departmentBloc,
                       child: BlocBuilder<DepartmentBloc, DepartmentState>(
+                        buildWhen: (previousState, currentState) {
+                          return previousState != currentState;
+                        },
                         builder: (context, state) {
                           if (state is DepartmentLoadingState) {
                             if (deptList == null || deptList.isEmpty) {
@@ -90,17 +92,23 @@ class _DepartmentPageState extends State<DepartmentPage> {
                             if (query.isEmpty) {
                               deptList = state.listOfDept;
 
-                              return Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.8,
-                                  child: ListView.builder(
-                                      itemCount: deptList.length,
-                                      itemBuilder: (context, index) {
-                                        return DeptListItem(
-                                          dept: deptList[index],
-                                        );
-                                      }));
+                              if (deptList.isNotEmpty) {
+                                return Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 5),
+                                    height: MediaQuery.of(context).size.height *
+                                        0.8,
+                                    child: ListView.builder(
+                                        itemCount: deptList.length,
+                                        itemBuilder: (context, index) {
+                                          return DeptListItem(
+                                            dept: deptList[index],
+                                          );
+                                        }));
+                              } else {
+                                return Center(
+                                    child: Text(AppStrings.emptyItemText));
+                              }
                             } else {
                               return Container(
                                 padding: EdgeInsets.symmetric(horizontal: 5),

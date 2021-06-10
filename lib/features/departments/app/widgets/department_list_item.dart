@@ -28,19 +28,28 @@ class _DeptListItemState extends State<DeptListItem> {
         ),
         height: 50.0,
         decoration: BoxDecoration(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(5.0),
+          color: Colors.yellow[900],
+          borderRadius: BorderRadius.circular(10.0),
         ),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('${widget.dept.departmentName}'),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('No of Projects : ${widget.dept.listofProject.length}'),
-              Text('No of Users : ${widget.dept.listofUsers.length}'),
-            ],
-          )
-        ]),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(widget.dept.departmentName == null
+                ? 'Department Name'
+                : '${widget.dept.departmentName}'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(widget.dept.listofProject.isEmpty
+                    ? 'No of Projects : 0'
+                    : 'No of Projects : ${widget.dept.listofProject.length}'),
+                Text(widget.dept.listofUsers.isEmpty
+                    ? 'No of Users : 0'
+                    : 'No of Users : ${widget.dept.listofUsers.length}'),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

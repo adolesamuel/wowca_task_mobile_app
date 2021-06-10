@@ -4,7 +4,6 @@ import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/company_custom_dialog.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/dashboard_body.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/dashboard_drawer.dart';
-import 'package:wowca_task/features/departments/app/page/add_dept.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 
@@ -50,11 +49,9 @@ class _DashboardPageState extends State<DashboardPage> {
         centerTitle: true,
         elevation: 5.0,
       ),
-      body: widget.dept == null
-          ? AddDeptPage(user: widget.user, dept: widget.dept)
-          : DashBoardBody(
-              user: widget.user,
-            ),
+      body: DashBoardBody(
+        user: widget.user,
+      ),
       endDrawer: DashBoardDrawer(
         user: widget.user,
         dept: widget.dept,

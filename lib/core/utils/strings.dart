@@ -9,6 +9,7 @@ class AppStrings {
       deleteText = 'Delete',
       sureToDeleteText = 'Are you sure you want to delete?',
       statusText = 'Status',
+      emptyItemText = 'Empty, Create One',
       noText = 'No',
       yesText = 'Yes';
 
