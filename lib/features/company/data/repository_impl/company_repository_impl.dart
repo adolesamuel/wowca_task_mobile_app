@@ -20,25 +20,26 @@ class CompanyRepositoryImpl implements CompanyRepository {
 
   @override
   Future<Either<Failure, CompanyEntity>> createCompany({
-    String companyId,
     String companyName,
     String companyAddress,
     String companyDescription,
-    File companyLogo,
-    List companyUsers,
-    List department,
   }) async {
     try {
       if (await networkInfo.isConnected) {
-        return Right(await remoteDataSource.createCompany(
-          companyId: companyId,
-          companyName: companyName,
-          companyAddress: companyAddress,
-          companyDescription: companyDescription,
-          companyLogo: companyLogo,
-          companyUsers: companyUsers,
-          department: department,
-        ));
+        try {
+          return Right(await remoteDataSource
+              .createCompany(
+            companyName: companyName,
+            companyAddress: companyAddress,
+            companyDescription: companyDescription,
+          )
+              .timeout(Duration(seconds: 10), onTimeout: () {
+            throw CommonFailure(
+                AppStrings.timeOutTitleString, AppStrings.timeOutMessageString);
+          }));
+        } catch (e) {
+          return Left(CommonFailure(e.title, e.message));
+        }
       } else {
         return Left(InternetFailure(
             NO_INTERNET_ERROR_TITLE, NO_INTERNET_ERROR_MESSAGE));

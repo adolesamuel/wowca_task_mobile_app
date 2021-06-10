@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/helpers/helpers.dart';
 import 'package:wowca_task/features/task/domain/entities/task_entity.dart';
-import 'package:wowca_task/features/users/app/widgets/search_widget.dart';
+import 'package:wowca_task/core/helpers/search_widget.dart';
 import 'package:wowca_task/features/users/app/widgets/user_bottom_sheet.dart';
 import 'package:wowca_task/features/users/domain/entity/user_entity.dart';
 
@@ -11,7 +11,6 @@ class UserPageBody extends StatefulWidget {
 }
 
 class _UserPageBodyState extends State<UserPageBody> {
-  TextEditingController userSearchController = TextEditingController();
   List<UserEntity> users;
   String query = '';
 
@@ -158,7 +157,6 @@ class _UserPageBodyState extends State<UserPageBody> {
 
   @override
   void dispose() {
-    userSearchController.dispose();
     super.dispose();
   }
 
@@ -167,7 +165,7 @@ class _UserPageBodyState extends State<UserPageBody> {
     return Flex(
       direction: Axis.vertical,
       children: [
-        buildSearch(),
+        _buildSearch(),
         Expanded(
           child: ListView.builder(
               itemCount: users.length,
@@ -199,7 +197,7 @@ class _UserPageBodyState extends State<UserPageBody> {
     );
   }
 
-  Widget buildSearch() => SearchWidget(
+  Widget _buildSearch() => SearchWidget(
         text: query,
         hintText: 'Search with User Name',
         onChanged: searchItems,

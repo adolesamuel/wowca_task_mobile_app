@@ -75,8 +75,6 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => CompanyPage(
-                            company: widget.company,
-                            dept: widget.dept,
                             user: widget.user,
                           )));
             },
@@ -92,7 +90,6 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => DepartmentPage(
-                      dept: widget.dept,
                       user: widget.user,
                     ),
                   ));

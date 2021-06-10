@@ -5,7 +5,13 @@ class AppStrings {
   static final String logoText = '!Give this app a Logo',
       firstPageText = 'Complete Projects The Right Way...',
       descriptionText = 'Description',
-      statusText = 'Status';
+      confirmDeleteText = 'Confirm Delete',
+      deleteText = 'Delete',
+      sureToDeleteText = 'Are you sure you want to delete?',
+      statusText = 'Status',
+      emptyItemText = 'Empty, Create One',
+      noText = 'No',
+      yesText = 'Yes';
 
   //Dashboard Strings
 
@@ -44,7 +50,9 @@ class AppStrings {
       createADepartmentText = 'Create a Department',
       departmentNameText = 'Department Name',
       validatorEnterDescriptionText = 'Enter a Description',
-      createDeptText = 'Create Department',
+      validatorEnterAddressText = 'Enter Company Address',
+      createDepartmentText = 'Create Department',
+      updateDepartmentText = 'Update Department',
       searchForDeptText = 'Search for department';
 
   //////////////////////////////////////////////////////////////////////
@@ -82,6 +90,7 @@ class AppStrings {
       updateCompanyText = 'Update Company',
       logoCompanyText = 'Logo for the Company',
       pickImageText = 'Pick Image',
+      companyCreatedText = 'Company Created',
       removeText = 'remove';
   //////////////////////////////////////////////////////////////////////
 
@@ -168,6 +177,12 @@ class AppStrings {
 
   //AssetStrings
   static final String loginImage = 'lib/core/assets/testone.jpg';
+
+/////////////////////////////////////////////////////////////////////
+
+//ErrorStrings
+  static final String timeOutTitleString = 'TimeOut Error',
+      timeOutMessageString = 'request timed out';
 }
 
 //Error Messages

@@ -40,9 +40,7 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
 
       yield deptOrError.fold((failure) => DepartmentErrorState(failure),
           (listOfDept) => ListOfDepartmentState(listOfDept));
-    }
-
-    if (event is CreateDepartmentEvent) {
+    } else if (event is CreateDepartmentEvent) {
       yield DepartmentLoadingState();
 
       final createOrError = await createDept(CreateDeptParams(
@@ -52,8 +50,7 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
 
       yield createOrError.fold((failure) => DepartmentErrorState(failure),
           (dept) => CreatedDepartmentState(dept));
-    }
-    if (event is GetOneDepartmentEvent) {
+    } else if (event is GetOneDepartmentEvent) {
       yield DepartmentLoadingState();
 
       final getOneDeptOrError =
@@ -61,8 +58,7 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
 
       yield getOneDeptOrError.fold((failure) => DepartmentErrorState(failure),
           (dept) => ReceivedOneDepartmentState(dept));
-    }
-    if (event is DeleteDepartmentEvent) {
+    } else if (event is DeleteDepartmentEvent) {
       yield DepartmentLoadingState();
 
       final deleteDeptOrError =

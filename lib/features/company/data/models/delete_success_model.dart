@@ -9,7 +9,7 @@ class DeleteSuccessModel extends DeleteCompSuccessEntity {
     if (data == null) {
       return DeleteSuccessModel(null);
     } else {
-      return DeleteSuccessModel(data['status']);
+      return DeleteSuccessModel(data['message']);
     }
   }
 

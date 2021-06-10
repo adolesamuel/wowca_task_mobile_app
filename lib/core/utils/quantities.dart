@@ -5,11 +5,13 @@ class Quantity {
 
   static final inputBorderRadius = 24.0;
   static final smallBorderRadius = 8.0;
+  static final minuteBorderRadius = 5.0;
   static final smallBoxPadding = 8.0;
   static final smallSpace = 10.0;
   static final buttonMinWidth = 100.0;
   static final buttonHeight = 45.0;
   static final addButtonSquareSide = 30.0;
+  static final buttonElevation = 20.0;
 
   //////////////////////////////////////////////////////////////////
   ///                        Medium Objects                     ////

@@ -251,7 +251,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
 
   @override
   Future<DeleteSuccessModel> deleteCompany(String id) async {
-    String endpoint = AppStrings.base + AppStrings.deleteCompany + '/:$id';
+    String endpoint = AppStrings.base + AppStrings.deleteCompany + '/$id';
     final response = await client.get(Uri.parse(endpoint));
     // verify it the response is successful from server
     if (response.statusCode == 200) {
@@ -265,10 +265,10 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
           // call back function to give you the [response.body]
           // so you can return it as your choice object type
 
-          final jsonList = data['response'][0]['data'];
+          final jsonList = data['response'][0];
 
-          DeleteSuccessModel company = DeleteSuccessModel.fromJson(jsonList);
-          return company;
+          DeleteSuccessModel status = DeleteSuccessModel.fromJson(jsonList);
+          return status;
         } else {
           final title = data['message'] ?? 'Unknown Error',
               message = data['errorDetails'] ?? 'Unknown Error Message';

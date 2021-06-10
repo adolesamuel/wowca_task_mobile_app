@@ -36,7 +36,7 @@ class CompanyReceivedState extends CompanyState {
 }
 
 class DeleteCompanySuccessState extends CompanyState {
-  final String status;
+  final DeleteCompSuccessEntity status;
 
   DeleteCompanySuccessState(this.status);
 }

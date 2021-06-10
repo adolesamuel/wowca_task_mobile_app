@@ -26,14 +26,9 @@ class UpdateCompany extends Usecase<CompanyEntity, UpdateCompanyParams> {
 }
 
 class UpdateCompanyParams extends Equatable {
-  final String companyId,
-      companyName,
-      companyLogo,
-      companyUsers,
-      department,
-      companyAddress,
-      companyDescription,
-      owner;
+  final String companyId, companyName, companyLogo;
+  final List companyUsers, department;
+  final String companyAddress, companyDescription, owner;
 
   UpdateCompanyParams(
       this.companyId,

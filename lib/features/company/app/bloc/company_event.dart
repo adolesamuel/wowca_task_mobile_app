@@ -49,6 +49,7 @@ class UpdateCompanyEvent extends CompanyEvent {
   final List department;
   final String companyDescription;
   final String companyAddress;
+  final String owner;
 
   UpdateCompanyEvent({
     this.companyId,
@@ -58,5 +59,6 @@ class UpdateCompanyEvent extends CompanyEvent {
     this.department,
     this.companyDescription,
     this.companyAddress,
+    this.owner,
   });
 }
