@@ -108,29 +108,36 @@ class _CompanyPageState extends State<CompanyPage> {
                             // is empty
                             if (query.isEmpty) {
                               companyList = state.companies;
-                              return Column(
-                                children: [
-                                  Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 5),
-                                    height: MediaQuery.of(context).size.height *
-                                        0.8,
-                                    child: GridView.builder(
-                                        gridDelegate:
-                                            SliverGridDelegateWithMaxCrossAxisExtent(
-                                                maxCrossAxisExtent: 150,
-                                                childAspectRatio: 3 / 2,
-                                                crossAxisSpacing: 10,
-                                                mainAxisSpacing: 10),
-                                        itemCount: companyList.length,
-                                        itemBuilder: (context, index) {
-                                          return CompanyBoxItem(
-                                            company: companyList[index],
-                                          );
-                                        }),
-                                  ),
-                                ],
-                              );
+                              if (companyList.isNotEmpty) {
+                                return Column(
+                                  children: [
+                                    Container(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.8,
+                                      child: GridView.builder(
+                                          gridDelegate:
+                                              SliverGridDelegateWithMaxCrossAxisExtent(
+                                                  maxCrossAxisExtent: 150,
+                                                  childAspectRatio: 3 / 2,
+                                                  crossAxisSpacing: 10,
+                                                  mainAxisSpacing: 10),
+                                          itemCount: companyList.length,
+                                          itemBuilder: (context, index) {
+                                            return CompanyBoxItem(
+                                              company: companyList[index],
+                                            );
+                                          }),
+                                    ),
+                                  ],
+                                );
+                              } else {
+                                return Center(
+                                  child: Text(AppStrings.emptyItemText),
+                                );
+                              }
                             } else {
                               return Column(
                                 children: [

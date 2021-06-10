@@ -41,7 +41,6 @@ dependencies:
   modal_bottom_sheet: ^2.0.0
   permission_handler: 5.0.1+1
   shared_preferences: ^0.5.12+4
-  video_player: ^2.1.1
 
   
   

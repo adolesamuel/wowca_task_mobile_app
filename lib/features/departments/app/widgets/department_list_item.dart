@@ -5,7 +5,7 @@ import 'package:wowca_task/features/departments/domain/entity/department_entity.
 class DeptListItem extends StatefulWidget {
   final DeptEntity dept;
 
-  const DeptListItem({Key key, this.dept}) : super(key: key);
+  const DeptListItem({Key key, @required this.dept}) : super(key: key);
   @override
   _DeptListItemState createState() => _DeptListItemState();
 }
