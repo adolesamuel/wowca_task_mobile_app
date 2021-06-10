@@ -76,7 +76,6 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
                   MaterialPageRoute(
                       builder: (context) => CompanyPage(
                             company: widget.company,
-                            dept: widget.dept,
                             user: widget.user,
                           )));
             },

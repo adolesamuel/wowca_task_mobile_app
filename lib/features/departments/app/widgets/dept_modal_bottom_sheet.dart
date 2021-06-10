@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/features/departments/app/bloc/department_bloc.dart';
 import 'package:wowca_task/features/departments/app/page/create_dept_page.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 
@@ -8,6 +11,8 @@ Future<dynamic> showDeptBottomSheet({
   @required BuildContext context,
   DeptEntity dept,
 }) {
+  final departmentBloc = BlocProvider.of<DepartmentBloc>(context);
+  print('Department: ${dept.departmentId}');
   return showBarModalBottomSheet(
       elevation: 5.0,
       expand: true,
@@ -17,7 +22,7 @@ Future<dynamic> showDeptBottomSheet({
                 Scaffold(
               appBar: AppBar(
                 title: dept == null
-                    ? Text('Department Name')
+                    ? Text(AppStrings.departmentNameText)
                     : Text(dept.departmentName),
               ),
               body: SingleChildScrollView(
@@ -27,15 +32,6 @@ Future<dynamic> showDeptBottomSheet({
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Container(
-                      //   clipBehavior: Clip.hardEdge,
-                      //   child: company == null
-                      //       ? CircleAvatar(
-                      //           child: Text('No Image'),
-                      //         )
-                      //       : Image.file(company.companyLogo),
-                      // ),
-
                       Text(
                         'Department Description',
                         style: TextStyle(fontWeight: FontWeight.bold),
@@ -74,7 +70,9 @@ Future<dynamic> showDeptBottomSheet({
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          CreateDepartmentPage()));
+                                          CreateDepartmentPage(
+                                            dept: dept,
+                                          )));
                             },
                             child: Text('Update Department Details')),
                       ),

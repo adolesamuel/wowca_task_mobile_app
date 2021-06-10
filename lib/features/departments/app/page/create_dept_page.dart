@@ -8,46 +8,57 @@ import 'package:wowca_task/features/departments/domain/entity/department_entity.
 import 'package:wowca_task/injection_container.dart';
 
 class CreateDepartmentPage extends StatefulWidget {
+  final DeptEntity dept;
+
+  const CreateDepartmentPage({Key key, this.dept}) : super(key: key);
+
   @override
   _CreateDepartmentPageState createState() => _CreateDepartmentPageState();
 }
 
 class _CreateDepartmentPageState extends State<CreateDepartmentPage> {
-  TextEditingController deptNameTextController;
-  TextEditingController descriptionController;
+  final _departmentBloc = sl<DepartmentBloc>();
+  TextEditingController _deptNameTextController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
   List deptUsers = [];
   List deptProjects = [];
 
   DeptEntity dept;
 
-  final deptBloc = sl<DepartmentBloc>();
-
-  bool validate = false;
+  bool _isButtonDisabled = false;
+  bool _validateError = false;
 
   @override
   void initState() {
-    deptNameTextController = TextEditingController();
-    descriptionController = TextEditingController();
     super.initState();
+    if (widget.dept != null) {
+      _deptNameTextController.text = widget.dept.departmentName;
+      _descriptionController.text = widget.dept.departmentDescription;
+    } else {
+      _deptNameTextController.text = '';
+      _descriptionController.text = '';
+    }
   }
 
   @override
   void dispose() {
-    deptNameTextController.dispose();
-    descriptionController.dispose();
+    _deptNameTextController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
   bool validateTextFields() {
-    return deptNameTextController.text.isEmpty &&
-        descriptionController.text.isEmpty;
+    return _deptNameTextController.text.isNotEmpty &&
+        _descriptionController.text.isNotEmpty;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(AppStrings.createADepartmentText),
+          title: widget.dept == null
+              ? Text(AppStrings.createDepartmentText)
+              : Text(AppStrings.updateDepartmentText),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -60,74 +71,37 @@ class _CreateDepartmentPageState extends State<CreateDepartmentPage> {
                 SizedBox(
                   height: Quantity.mediumSpace,
                 ),
+
+                //create a department text
                 Text(
-                  AppStrings.createADepartmentText,
+                  widget.dept == null
+                      ? AppStrings.createADepartmentText
+                      : AppStrings.updateDepartmentText,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: Quantity.mediumSpace,
                 ),
+
+                //Departmentent Name Text
                 Text(
                   AppStrings.departmentNameText,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
+
+                //Department Text Field
                 Container(
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: TextField(
-                    controller: deptNameTextController,
+                    onChanged: (value) => setState(() {
+                      _validateError = false;
+                    }),
+                    controller: _deptNameTextController,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                        errorText:
-                            validate ? AppStrings.validatorNameText : null,
-                        errorStyle:
-                            TextStyle(color: Theme.of(context).primaryColor),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(
-                              style: BorderStyle.solid,
-                              color: Theme.of(context).primaryColor,
-                              width: 0.5),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(
-                              style: BorderStyle.solid,
-                              color: Theme.of(context).primaryColor,
-                              width: 0.5),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(
-                              style: BorderStyle.solid,
-                              color: Theme.of(context).primaryColor,
-                              width: 0.5),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(
-                              color: Theme.of(context).primaryColor,
-                              width: 0.5,
-                            ))),
-                  ),
-                ),
-                SizedBox(
-                  height: Quantity.mediumSpace,
-                ),
-                Text(
-                  AppStrings.descriptionText,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                  child: TextField(
-                    controller: descriptionController,
-                    maxLines: null,
-                    minLines: 3,
-                    decoration: InputDecoration(
-                        errorText: validate
-                            ? AppStrings.validatorEnterDescriptionText
+                        errorText: _validateError
+                            ? AppStrings.validatorNameText
                             : null,
                         errorStyle:
                             TextStyle(color: Theme.of(context).primaryColor),
@@ -163,85 +137,176 @@ class _CreateDepartmentPageState extends State<CreateDepartmentPage> {
                 SizedBox(
                   height: Quantity.mediumSpace,
                 ),
-                OutlinedButton(
-                  onPressed: () {},
-                  child: Text(AppStrings.addUsersText),
-                ),
-                SizedBox(
-                  height: Quantity.mediumSpace,
-                ),
+                //Description Text
                 Text(
-                  AppStrings.usersText,
+                  AppStrings.descriptionText,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
+
+                //Description Text Field
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                  child: TextField(
+                    onChanged: (value) => setState(() {
+                      _validateError = false;
+                    }),
+                    controller: _descriptionController,
+                    maxLines: null,
+                    minLines: 3,
+                    decoration: InputDecoration(
+                      errorText: _validateError
+                          ? AppStrings.validatorEnterDescriptionText
+                          : null,
+                      errorStyle:
+                          TextStyle(color: Theme.of(context).primaryColor),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                            style: BorderStyle.solid,
+                            color: Theme.of(context).primaryColor,
+                            width: 0.5),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                            style: BorderStyle.solid,
+                            color: Theme.of(context).primaryColor,
+                            width: 0.5),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                            style: BorderStyle.solid,
+                            color: Theme.of(context).primaryColor,
+                            width: 0.5),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColor,
+                            width: 0.5,
+                          )),
+                    ),
+                  ),
+                ),
                 SizedBox(
                   height: Quantity.mediumSpace,
                 ),
-                OutlinedButton(
-                  onPressed: () {},
-                  child: Text(AppStrings.addExistingProjectsText),
-                ),
-                SizedBox(
-                  height: Quantity.mediumSpace,
-                ),
-                Text(
-                  AppStrings.projectText,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+                //Disabled Awaiting API support
+                // OutlinedButton(
+                //   onPressed: () {},
+                //   child: Text(AppStrings.addUsersText),
+                // ),
+                // SizedBox(
+                //   height: Quantity.mediumSpace,
+                // ),
+                // Text(
+                //   AppStrings.usersText,
+                //   style: TextStyle(fontWeight: FontWeight.bold),
+                // ),
+                // SizedBox(
+                //   height: Quantity.mediumSpace,
+                // ),
+                // OutlinedButton(
+                //   onPressed: () {},
+                //   child: Text(AppStrings.addExistingProjectsText),
+                // ),
+                // SizedBox(
+                //   height: Quantity.mediumSpace,
+                // ),
+                // Text(
+                //   AppStrings.projectText,
+                //   style: TextStyle(fontWeight: FontWeight.bold),
+                // ),
                 SizedBox(
                   height: Quantity.largeSpace,
                 ),
                 BlocProvider(
-                  create: (context) => deptBloc,
+                  create: (context) => _departmentBloc,
                   child: BlocConsumer<DepartmentBloc, DepartmentState>(
                     listener: (context, state) {
                       if (state is DepartmentErrorState) {
-                        setState(() {});
+                        setState(() {
+                          _isButtonDisabled = false;
+                        });
                       }
                       if (state is CreatedDepartmentState) {
-                        Navigator.pop(context);
+                        // wait 2 seconds for Company creation success
+                        // to show on U.i then pop it
+
+                        Future.delayed(
+                            Quantity.twoSecond, () => Navigator.pop(context));
                       }
                     },
                     builder: (context, state) {
                       return Container(
-                          width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 5.0),
-                          child: Column(
-                            children: [
-                              ElevatedButton(
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 5.0),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: ElevatedButton(
                                 style: ButtonStyle(
-                                  elevation: MaterialStateProperty.all(20.0),
-                                ),
-                                onPressed: () {
-                                  if (validateTextFields()) {
-                                    setState(() {
-                                      validate = validateTextFields();
-                                    });
-                                  } else {
-                                    deptBloc.add(CreateDepartmentEvent(
-                                      deptName: deptNameTextController.text,
-                                      deptDescription:
-                                          descriptionController.text,
-                                    ));
-                                  }
-                                },
-                                child: Text(AppStrings.createDeptText),
+                                    elevation: MaterialStateProperty.all(
+                                        Quantity.buttonElevation)),
+                                onPressed: _isButtonDisabled
+                                    ? null
+                                    : () {
+                                        if (validateTextFields()) {
+                                          setState(() {
+                                            _validateError = false;
+                                            _isButtonDisabled = false;
+                                          });
+                                          if (widget.dept == null) {
+                                            print('Create Dept Event');
+                                            _departmentBloc
+                                                .add(CreateDepartmentEvent(
+                                              deptName:
+                                                  _deptNameTextController.text,
+                                              deptDescription:
+                                                  _descriptionController.text,
+                                            ));
+                                          }
+                                          //update department
+                                          else {
+                                            print(
+                                                'call update department event here');
+                                          }
+                                        } else {
+                                          setState(() {
+                                            _validateError = true;
+                                          });
+                                        }
+                                      },
+                                child: Text(widget.dept == null
+                                    ? AppStrings.createDepartmentText
+                                    : AppStrings.updateCompanyText),
                               ),
-                              SizedBox(
-                                height: Quantity.mediumSpace,
-                              ),
-                              state is DepartmentLoadingState
-                                  ? LinearProgressIndicator()
-                                  : state is DepartmentErrorState
-                                      ? Text(
-                                          state.failure.message,
-                                          style: AppStyles
-                                              .registrationPageTextStyle,
-                                        )
-                                      : Text(''),
-                            ],
-                          ));
+                            ),
+                            SizedBox(
+                              height: Quantity.mediumSpace,
+                            ),
+                            state is DepartmentLoadingState
+                                ? LinearProgressIndicator()
+                                : state is CreatedDepartmentState
+                                    ? Text(
+                                        AppStrings.companyCreatedText,
+                                        style:
+                                            AppStyles.registrationPageTextStyle,
+                                      )
+                                    : state is DepartmentErrorState
+                                        ? Text(
+                                            state.failure.message,
+                                            style: AppStyles
+                                                .registrationPageTextStyle,
+                                          )
+                                        : Text(''),
+                          ],
+                        ),
+                      );
                     },
                   ),
                 ),

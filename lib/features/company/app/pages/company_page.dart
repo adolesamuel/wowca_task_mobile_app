@@ -6,17 +6,15 @@ import 'package:wowca_task/features/company/app/bloc/company_bloc.dart';
 import 'package:wowca_task/features/company/app/pages/create_company_page.dart';
 import 'package:wowca_task/features/company/app/widget/company_box_item.dart';
 import 'package:wowca_task/features/company/domain/entity/company_entity.dart';
-import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 import 'package:wowca_task/injection_container.dart';
 
 class CompanyPage extends StatefulWidget {
+  //TODO: implement Update company
   final SignedInUserEntity user;
-  final DeptEntity dept;
   final CompanyEntity company;
 
-  const CompanyPage({Key key, this.user, this.dept, this.company})
-      : super(key: key);
+  const CompanyPage({Key key, this.user, this.company}) : super(key: key);
 
   @override
   _CompanyPageState createState() => _CompanyPageState();
@@ -41,7 +39,10 @@ class _CompanyPageState extends State<CompanyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppStrings.companieString)),
+      appBar: AppBar(
+        title: Text(AppStrings.companieString),
+        centerTitle: true,
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
@@ -76,6 +77,8 @@ class _CompanyPageState extends State<CompanyPage> {
                             if (companyList == null || companyList.isEmpty) {
                               return Center(child: CircularProgressIndicator());
                             } else {
+                              //something to keep the addition of new item
+                              // uniform
                               return Column(
                                 children: [
                                   Container(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wowca_task/core/helpers/search_widget.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/departments/app/bloc/department_bloc.dart';
 import 'package:wowca_task/features/departments/app/page/create_dept_page.dart';
@@ -19,19 +20,15 @@ class DepartmentPage extends StatefulWidget {
 }
 
 class _DepartmentPageState extends State<DepartmentPage> {
-  TextEditingController deptSearchController = TextEditingController();
   final departmentBloc = sl<DepartmentBloc>();
+  List<DeptEntity> deptList;
+
+  String query = '';
 
   @override
   void initState() {
-    departmentBloc.add(GetDepartmentsEvent());
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    deptSearchController.dispose();
-    super.dispose();
+    departmentBloc.add(GetDepartmentsEvent());
   }
 
   @override
@@ -39,54 +36,130 @@ class _DepartmentPageState extends State<DepartmentPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppStrings.departmentText),
+        centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CreateDepartmentPage()));
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CreateDepartmentPage()))
+              .then((value) => departmentBloc.add(GetDepartmentsEvent()));
         },
         child: Icon(Icons.add),
       ),
       body: Container(
-        height: MediaQuery.of(context).size.height,
         child: Flex(
           direction: Axis.vertical,
           children: [
-            TextField(
-              controller: deptSearchController,
-              decoration: InputDecoration(
-                labelText: AppStrings.searchForDeptText,
-                suffixIcon: Icon(Icons.search),
-              ),
+            _buildSearch(),
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(AppStrings.departmentText,
+                  style: TextStyle(fontWeight: FontWeight.bold)),
             ),
-            BlocProvider(
-              create: (context) => departmentBloc,
-              child: BlocConsumer<DepartmentBloc, DepartmentState>(
-                listener: (context, state) {},
-                builder: (context, state) {
-                  if (state is DepartmentLoadingState) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if (state is ListOfDepartmentState) {
-                    return Expanded(
-                      child: ListView.builder(
-                        itemCount: state.listOfDept.length,
-                        itemBuilder: (context, index) {
-                          return DeptListItem(dept: state.listOfDept[index]);
+            Expanded(
+              child: Center(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    BlocProvider(
+                      create: (context) => departmentBloc,
+                      child: BlocBuilder<DepartmentBloc, DepartmentState>(
+                        builder: (context, state) {
+                          if (state is DepartmentLoadingState) {
+                            if (deptList == null || deptList.isEmpty) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else {
+                              return Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.8,
+                                  child: ListView.builder(
+                                      itemCount: deptList.length,
+                                      itemBuilder: (context, index) {
+                                        return DeptListItem(
+                                          dept: deptList[index],
+                                        );
+                                      }));
+                            }
+                          }
+                          if (state is ListOfDepartmentState) {
+                            if (query.isEmpty) {
+                              deptList = state.listOfDept;
+
+                              return Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.8,
+                                  child: ListView.builder(
+                                      itemCount: deptList.length,
+                                      itemBuilder: (context, index) {
+                                        return DeptListItem(
+                                          dept: deptList[index],
+                                        );
+                                      }));
+                            } else {
+                              return Container(
+                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                height:
+                                    MediaQuery.of(context).size.height * 0.8,
+                                child: ListView.builder(
+                                    itemCount: deptList.length,
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.8,
+                                          child: ListView.builder(
+                                              itemCount: deptList.length,
+                                              itemBuilder: (context, index) {
+                                                return DeptListItem(
+                                                  dept: deptList[index],
+                                                );
+                                              }));
+                                    }),
+                              );
+                            }
+                          } else {
+                            return Center(
+                                child: Text('Error Loading Departments'));
+                          }
                         },
                       ),
-                    );
-                  } else {
-                    return Text('Error Loading Departments');
-                  }
-                },
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildSearch() => SearchWidget(
+        text: query,
+        hintText: 'Search with Department Name',
+        onChanged: _searchItems,
+      );
+
+  void _searchItems(String query) {
+    print('CompanyList: $deptList');
+    final deptListThings = deptList.where((dept) {
+      final name = dept.departmentName.toLowerCase();
+      final searchLower = query.toLowerCase();
+      return name.contains(searchLower);
+    }).toList();
+
+    setState(() {
+      this.query = query;
+      this.deptList = deptListThings;
+    });
   }
 }

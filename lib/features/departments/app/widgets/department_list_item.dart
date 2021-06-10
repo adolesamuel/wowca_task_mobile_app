@@ -15,9 +15,10 @@ class _DeptListItemState extends State<DeptListItem> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        //!push deptEntity here
-        print('dept tapped');
-        showDeptBottomSheet(context: context);
+        showDeptBottomSheet(
+          context: context,
+          dept: widget.dept,
+        );
       },
       child: Container(
         padding: EdgeInsets.all(5.0),

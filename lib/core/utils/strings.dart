@@ -50,7 +50,8 @@ class AppStrings {
       departmentNameText = 'Department Name',
       validatorEnterDescriptionText = 'Enter a Description',
       validatorEnterAddressText = 'Enter Company Address',
-      createDeptText = 'Create Department',
+      createDepartmentText = 'Create Department',
+      updateDepartmentText = 'Update Department',
       searchForDeptText = 'Search for department';
 
   //////////////////////////////////////////////////////////////////////

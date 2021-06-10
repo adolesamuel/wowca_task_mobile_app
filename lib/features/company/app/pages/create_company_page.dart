@@ -92,6 +92,9 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                 child: TextField(
                   controller: _companyNameController,
+                  onChanged: (value) => setState(() {
+                    _validate = false;
+                  }),
                   decoration: InputDecoration(
                       errorText:
                           _validate ? AppStrings.validatorNameText : null,
@@ -140,6 +143,9 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                 child: TextField(
                   controller: _companyAddressController,
+                  onChanged: (value) => setState(() {
+                    _validate = false;
+                  }),
                   //expands: true,
                   maxLines: null,
                   minLines: 3,
@@ -192,6 +198,9 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                 child: TextField(
                   controller: _companyDescriptionController,
+                  onChanged: (value) => setState(() {
+                    _validate = false;
+                  }),
                   //expands: true,
                   maxLines: null,
                   minLines: 3,
@@ -295,7 +304,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                       //wait 2 seconds for  Company creation success
                       // to show on U.i then pop it
 
-                      Future.delayed(Duration(seconds: 3), () {
+                      Future.delayed(Quantity.twoSecond, () {
                         Navigator.pop(context);
                       });
                     } else if (state is CompanyErrorState) {
@@ -361,7 +370,10 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                         state is CompanyLoadingState
                             ? LinearProgressIndicator()
                             : state is CompanyCreatedState
-                                ? Text(AppStrings.companyCreatedText)
+                                ? Text(
+                                    AppStrings.companyCreatedText,
+                                    style: AppStyles.registrationPageTextStyle,
+                                  )
                                 : state is CompanyErrorState
                                     ? Text(
                                         state.failure.message,
