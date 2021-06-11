@@ -7,6 +7,7 @@ import 'package:wowca_task/features/dashboard/app/widgets/dashboard_drawer_head.
 import 'package:wowca_task/features/departments/app/page/department_page.dart';
 import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
 import 'package:wowca_task/features/module/app/pages/module_page.dart';
+import 'package:wowca_task/features/privacy_policy/app/page/privacy_policy_page.dart';
 import 'package:wowca_task/features/project/app/pages/project_page.dart';
 import 'package:wowca_task/features/task/app/pages/task_page.dart';
 import 'package:wowca_task/features/user_registration/app/bloc/signup_bloc.dart';
@@ -105,7 +106,9 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProjectPage(),
+                    builder: (context) => ProjectPage(
+                      user: widget.user,
+                    ),
                   ));
             },
           ),
@@ -119,7 +122,9 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ModulePage(),
+                    builder: (context) => ModulePage(
+                      user: widget.user,
+                    ),
                   ));
             },
           ),
@@ -158,6 +163,21 @@ class _DashBoardDrawerState extends State<DashBoardDrawer> {
           ),
           Divider(
             thickness: 2.0,
+          ),
+          ListTile(
+            leading: Icon(Icons.people),
+            title: Text('Privacy Policy'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PrivacyPolicyPage(
+                    user: widget.user,
+                  ),
+                ),
+              );
+            },
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
