@@ -71,7 +71,7 @@ class TaskRepositoryImpl implements TaskRepository {
         try {
           return Right(await remoteDataSource.getTasks());
         } catch (e) {
-          return Left(CommonFailure(e.title, e.message));
+          throw Left(CommonFailure(e.title, e.message));
         }
       } else {
         return Left(InternetFailure(

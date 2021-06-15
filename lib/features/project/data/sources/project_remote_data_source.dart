@@ -113,7 +113,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
               .map<ProjectModel>((e) => ProjectModel.fromJson(e))
               .toList();
 
-          print('receivedList : $recievedProjectList');
+          print('receivedProjectList : $recievedProjectList');
 
           return recievedProjectList;
         } else {

@@ -34,7 +34,7 @@ class _ProjectPageState extends State<ProjectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Project'),
+          title: Text(AppStrings.projectText),
           centerTitle: true,
         ),
         floatingActionButton: FloatingActionButton(

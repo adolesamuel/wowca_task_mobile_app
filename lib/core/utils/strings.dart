@@ -109,6 +109,7 @@ class AppStrings {
   //TaskPage Strings
   static final String createTaskString = 'Create Task',
       updateTaskString = 'Update Task',
+      tasksText = 'Tasks',
       taskCreated = 'Task Created Successfully',
       taskUpdated = 'Task Updated Successfully',
       editTaskString = 'Edit Task',
