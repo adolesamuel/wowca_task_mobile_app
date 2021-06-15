@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 import 'package:wowca_task/core/errors/exception.dart';
 import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/core/helpers/json_checker.dart';
-import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/core/utils/endpoints.dart';
 import 'package:wowca_task/features/company/data/models/company_model.dart';
 import 'package:wowca_task/features/company/data/models/delete_success_model.dart';
 
@@ -52,7 +52,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
     @required String url,
     @required Function(Map<String, dynamic>) run,
   }) async {
-    String endpoint = AppStrings.base + url;
+    String endpoint = Endpoint.base + url;
 
     final response = await client.get(
       Uri.parse(endpoint),
@@ -99,7 +99,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
     List companyUsers,
     List department,
   }) async {
-    String endpoint = AppStrings.base + AppStrings.createCompany;
+    String endpoint = Endpoint.base + Endpoint.createCompany;
 
     final response = await client.post(Uri.parse(endpoint), body: {
       'company_name': companyName,
@@ -145,7 +145,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
   @override
   Future<List<CompanyModel>> getCompanies() async {
     // return await sender(
-    //   url: AppStrings.getCompanies,
+    //   url: Endpoint.getCompanies,
     //   run: (data) {
     //     List<Map<String, dynamic>> jsonList = data['response'][0]['data'];
     //     print('json list: $jsonList');
@@ -155,7 +155,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
     //     return companies;
     //   },
     // );
-    String endpoint = AppStrings.base + AppStrings.getCompanies;
+    String endpoint = Endpoint.base + Endpoint.getCompanies;
 
     final response = await client.get(
       Uri.parse(endpoint),
@@ -198,7 +198,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
   @override
   Future<CompanyModel> getOneCompany({String companyId}) async {
     // return await sender(
-    //   url: AppStrings.getCompanies,
+    //   url: Endpoint.getCompanies,
     //   run: (data) {
     //     List<Map<String, dynamic>> jsonList = data['response'][0]['data'];
     //     print('json list: $jsonList');
@@ -208,8 +208,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
     //     return companies;
     //   },
     // );
-    String endpoint =
-        AppStrings.base + AppStrings.getOneCompany + '/:$companyId';
+    String endpoint = Endpoint.base + Endpoint.getOneCompany + '/:$companyId';
 
     final response = await client.get(
       Uri.parse(endpoint),
@@ -251,7 +250,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
 
   @override
   Future<DeleteSuccessModel> deleteCompany(String id) async {
-    String endpoint = AppStrings.base + AppStrings.deleteCompany + '/$id';
+    String endpoint = Endpoint.base + Endpoint.deleteCompany + '/$id';
     final response = await client.get(Uri.parse(endpoint));
     // verify it the response is successful from server
     if (response.statusCode == 200) {
@@ -296,8 +295,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
     List department,
     String owner,
   }) async {
-    String endpoint =
-        AppStrings.base + AppStrings.updateCompany + '/:$companyId';
+    String endpoint = Endpoint.base + Endpoint.updateCompany + '/:$companyId';
 
     final response = await client.post(Uri.parse(endpoint), body: {
       'company_name': companyName,

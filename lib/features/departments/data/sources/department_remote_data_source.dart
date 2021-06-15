@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:wowca_task/core/errors/exception.dart';
 import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/core/helpers/json_checker.dart';
-import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/core/utils/endpoints.dart';
 import 'package:wowca_task/features/departments/data/models/delete_dept_success_model.dart';
 import 'package:wowca_task/features/departments/data/models/dept_model.dart';
 
@@ -38,7 +38,7 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
     final String deptDescription,
     final String deptName,
   }) async {
-    String url = AppStrings.base + AppStrings.createDepartment;
+    String url = Endpoint.base + Endpoint.createDepartment;
 
     ///Headers [Object] specifying [JSON] as return tyme from api
     // Map<String, String> headers = {'Content-Type': 'application/json'};
@@ -88,7 +88,7 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
 
   @override
   Future<List<DeptModel>> getDept() async {
-    final url = AppStrings.base + AppStrings.getDepartments;
+    final url = Endpoint.base + Endpoint.getDepartments;
 
     final response = await client.get(Uri.parse(url));
 
@@ -130,7 +130,7 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
 
   @override
   Future<DeleteDeptSuccessModel> deleteDept({String deptId}) async {
-    final url = AppStrings.base + AppStrings.deleteDepartment + '/:$deptId';
+    final url = Endpoint.base + Endpoint.deleteDepartment + '/:$deptId';
 
     final response = await client.delete(Uri.parse(url));
 
@@ -167,7 +167,7 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
 
   @override
   Future<DeptModel> getOneDept({String deptId}) async {
-    final url = AppStrings.base + AppStrings.getOneDepartment + '/$deptId';
+    final url = Endpoint.base + Endpoint.getOneDepartment + '/$deptId';
 
     final response = await client.get(Uri.parse(url));
 
@@ -213,8 +213,7 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
       String companyId,
       List<String> listOfUsers,
       List<String> listOfProjects}) async {
-    String url =
-        AppStrings.base + AppStrings.updateDepartment + '/:$departmentId';
+    String url = Endpoint.base + Endpoint.updateDepartment + '/:$departmentId';
 
     ///Headers [Object] specifying [JSON] as return tyme from api
     // Map<String, String> headers = {'Content-Type': 'application/json'};

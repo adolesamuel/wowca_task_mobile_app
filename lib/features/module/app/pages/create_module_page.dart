@@ -63,7 +63,7 @@ class _CreateModulePageState extends State<CreateModulePage> {
               Text(
                 widget.module == null
                     ? AppStrings.createAModuleString
-                    : AppStrings.updateModule,
+                    : AppStrings.updateModuleString,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(

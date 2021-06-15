@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/features/dashboard/app/widgets/task_modal_bottom_sheet.dart';
 import 'package:wowca_task/features/task/domain/entities/task_entity.dart';
 
@@ -27,10 +28,13 @@ class _TaskDashBoardItemState extends State<TaskDashBoardItem> {
       child: Padding(
         padding: EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
         child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(Quantity.minuteBorderRadius),
+            color: Colors.grey[300],
+          ),
           padding: EdgeInsets.symmetric(
             horizontal: 4.0,
           ),
-          color: Colors.grey[300],
           height: 40.0,
           child: Row(
             children: [

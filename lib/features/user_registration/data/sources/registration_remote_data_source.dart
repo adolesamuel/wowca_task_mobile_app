@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:wowca_task/core/errors/exception.dart';
 import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/core/helpers/json_checker.dart';
-import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/core/utils/endpoints.dart';
 import 'package:wowca_task/features/user_registration/data/model/registered_user_model.dart';
 import 'package:wowca_task/features/user_registration/data/model/signed_in_user_model.dart';
 
@@ -39,7 +39,7 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
     @required Map<String, dynamic> body,
     @required Function(Map<String, dynamic>) run,
   }) async {
-    String endpoint = AppStrings.base + url;
+    String endpoint = Endpoint.base + url;
 
     final response = await client.post(
       Uri.parse(endpoint),
@@ -89,7 +89,7 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
     };
 
     return await sender(
-      url: AppStrings.registerUser,
+      url: Endpoint.registerUser,
       body: body,
       run: (data) {
         final content = data['response'][0];
@@ -109,7 +109,7 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
       'password': password,
     };
     return await sender(
-      url: AppStrings.signInUser,
+      url: Endpoint.signInUser,
       body: body,
       run: (data) {
         final content = data['response'][0]['data'];
@@ -126,7 +126,7 @@ class RegistrationRemoteDataSourceImpl implements RegistrationRemoteDataSource {
   @override
   Future<SignedInUserModel> verifyUser({String code}) async {
     return await sender(
-      url: AppStrings.verifyUser,
+      url: Endpoint.verifyUser,
       body: {'code': code},
       run: (data) {
         final signedInUserModel = SignedInUserModel.fromJson(data['data']);

@@ -12,7 +12,7 @@ import 'package:wowca_task/injection_container.dart';
 class ProjectPage extends StatefulWidget {
   final SignedInUserEntity user;
 
-  const ProjectPage({Key key, this.user}) : super(key: key);
+  const ProjectPage({Key key, @required this.user}) : super(key: key);
 
   @override
   _ProjectPageState createState() => _ProjectPageState();
@@ -34,7 +34,7 @@ class _ProjectPageState extends State<ProjectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Project'),
+          title: Text(AppStrings.projectText),
           centerTitle: true,
         ),
         floatingActionButton: FloatingActionButton(
@@ -121,20 +121,9 @@ class _ProjectPageState extends State<ProjectPage> {
                                   child: ListView.builder(
                                       itemCount: projectList.length,
                                       itemBuilder: (context, index) {
-                                        return Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 5),
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.8,
-                                            child: ListView.builder(
-                                                itemCount: projectList.length,
-                                                itemBuilder: (context, index) {
-                                                  return ProjectContainer(
-                                                    project: projectList[index],
-                                                  );
-                                                }));
+                                        return ProjectContainer(
+                                          project: projectList[index],
+                                        );
                                       }),
                                 );
                               }
@@ -161,8 +150,8 @@ class _ProjectPageState extends State<ProjectPage> {
       );
 
   void _searchItems(String query) {
-    final projectListThings = projectList.where((dept) {
-      final name = dept.projectName.toLowerCase();
+    final projectListThings = projectList.where((project) {
+      final name = project.projectName.toLowerCase();
       final searchLower = query.toLowerCase();
       return name.contains(searchLower);
     }).toList();

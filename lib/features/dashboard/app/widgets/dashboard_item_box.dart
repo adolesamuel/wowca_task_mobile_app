@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wowca_task/core/utils/quantities.dart';
 
 //useful
 class DashboardBox extends StatefulWidget {
@@ -26,7 +27,10 @@ class _DashboardBoxState extends State<DashboardBox> {
       child: Container(
         width: 100.0,
         height: 100.0,
-        color: widget.color,
+        decoration: BoxDecoration(
+          color: widget.color,
+          borderRadius: BorderRadius.circular(Quantity.smallBorderRadius),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

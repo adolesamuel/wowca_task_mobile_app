@@ -90,15 +90,23 @@ class _DashBoardBodyState extends State<DashBoardBody> {
             number: 15,
             boxName: 'Project',
             color: Colors.blue,
-            onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ProjectPage())),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ProjectPage(
+                          user: widget.user,
+                        ))),
           ),
           DashboardBox(
             number: 29,
             boxName: 'Modules',
             color: Colors.green,
             onTap: () => Navigator.push(
-                context, MaterialPageRoute(builder: (context) => ModulePage())),
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ModulePage(
+                          user: widget.user,
+                        ))),
           ),
           DashboardBox(
             number: 112,
@@ -132,13 +140,21 @@ class _DashBoardBodyState extends State<DashBoardBody> {
             number: 15,
             boxName: 'Project',
             color: Colors.blue,
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ProjectPage(user: widget.user))),
           ),
           DashboardBox(
             number: 29,
             boxName: 'Modules',
             color: Colors.green,
             onTap: () => Navigator.push(
-                context, MaterialPageRoute(builder: (context) => ModulePage())),
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ModulePage(
+                          user: widget.user,
+                        ))),
           ),
           DashboardBox(
             number: 112,

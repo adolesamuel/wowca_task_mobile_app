@@ -1,122 +1,165 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wowca_task/core/utils/quantities.dart';
-import 'package:wowca_task/features/departments/domain/entity/department_entity.dart';
+import 'package:wowca_task/core/helpers/search_widget.dart';
+import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/task/app/bloc/task_bloc.dart';
 import 'package:wowca_task/features/task/app/pages/create_task.dart';
+import 'package:wowca_task/features/task/domain/entities/task_entity.dart';
 import 'package:wowca_task/features/user_registration/domain/entity/signed_in_user.dart';
 import 'package:wowca_task/injection_container.dart';
 
 class TaskPage extends StatefulWidget {
   final SignedInUserEntity user;
-  final DeptEntity dept;
 
-  const TaskPage({Key key, this.user, this.dept}) : super(key: key);
+  const TaskPage({
+    Key key,
+    this.user,
+  }) : super(key: key);
 
   @override
   _TaskPageState createState() => _TaskPageState();
 }
 
 class _TaskPageState extends State<TaskPage> {
-  ScrollController _scrollController = ScrollController();
+  final taskBloc = sl<TaskBloc>();
+  List<TaskEntity> taskList;
+  String query = '';
 
   //TODO: work on list of task page to show tasks better
+
+  @override
+  void initState() {
+    super.initState();
+    taskBloc.add(GetTasksEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tasks'),
+        title: Text(AppStrings.tasksText),
+        centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CreateTaskPage()));
+                  MaterialPageRoute(builder: (context) => CreateTaskPage()))
+              .then((value) => taskBloc.add(GetTasksEvent()));
         },
       ),
       body: Container(
-        child: buildTaskList(context),
+        child: Flex(
+          direction: Axis.vertical,
+          children: [
+            _buildSearch(),
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(AppStrings.tasksText,
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+            ),
+            Expanded(
+              child: Center(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    BlocProvider(
+                      create: (context) => taskBloc,
+                      child: BlocBuilder<TaskBloc, TaskState>(
+                        buildWhen: (previousState, currentState) =>
+                            previousState != currentState,
+                        builder: (context, state) {
+                          if (state is TaskLoadingState) {
+                            if (taskList == null || taskList.isEmpty) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else {
+                              return Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.8,
+                                  child: ListView.builder(
+                                      itemCount: taskList.length,
+                                      itemBuilder: (context, index) {
+                                        return ListTile(
+                                            title: Text(
+                                                '${taskList[index].taskName}'));
+                                      }));
+                            }
+                          }
+                          if (state is ListOfTasksReceivedState) {
+                            if (query.isEmpty) {
+                              taskList = state.tasks;
+                              if (taskList.isNotEmpty) {
+                                return Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 5),
+                                    height: MediaQuery.of(context).size.height *
+                                        0.8,
+                                    child: ListView.builder(
+                                        itemCount: taskList.length,
+                                        itemBuilder: (context, index) {
+                                          return ListTile(
+                                            title: Text(
+                                                '${taskList[index].taskName}'),
+                                          );
+                                        }));
+                              } else {
+                                return Center(
+                                  child: Text(AppStrings.emptyItemText),
+                                );
+                              }
+                            } else {
+                              return Container(
+                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                height:
+                                    MediaQuery.of(context).size.height * 0.8,
+                                child: ListView.builder(
+                                  itemCount: taskList.length,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      title:
+                                          Text('${taskList[index].taskName}'),
+                                    );
+                                  },
+                                ),
+                              );
+                            }
+                          } else {
+                            return Center(
+                              child: Text('Error Loading Tasks'),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
-  BlocProvider<TaskBloc> buildTaskList(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<TaskBloc>()..add(GetTasksEvent()),
-      child: Container(
-        alignment: Alignment.center,
-        margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.0),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 1.0,
-              spreadRadius: 1.0,
-              color: Colors.grey.shade300,
-            )
-          ],
-          color: Colors.white,
-        ),
-        child: BlocBuilder<TaskBloc, TaskState>(
-          builder: (context, state) {
-            if (state is TaskLoadingState) {
-              //add loading state item
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state is ListOfTasksReceivedState) {
-              final taskLength = state.tasks.length;
+  _buildSearch() => SearchWidget(
+        text: query,
+        hintText: 'Search with Task Name',
+        onChanged: _searchItems,
+      );
 
-              if (taskLength > 0) {
-                return ListView.builder(
-                  //extra one adds space for last task item to show.
-                  itemCount: state.tasks.length + 1,
-                  physics: BouncingScrollPhysics(),
-                  controller: _scrollController,
-                  padding: EdgeInsets.symmetric(horizontal: 15.0),
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) {},
-                );
-              } else {
-                return Container(
-                  width: 70.0,
-                  height: 100.0,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25.0),
-                      topRight: Radius.circular(8.0),
-                      bottomLeft: Radius.circular(8.0),
-                      bottomRight: Radius.circular(8.0),
-                    ),
-                  ),
-                );
-              }
-            } else {
-              return Container(
-                width: 100.0,
-                height: 100.0,
-                padding: EdgeInsets.all(Quantity.smallSpace),
-                clipBehavior: Clip.hardEdge,
-                child: Text('No tasks, please add one'),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8.0),
-                    topRight: Radius.circular(8.0),
-                    bottomLeft: Radius.circular(8.0),
-                    bottomRight: Radius.circular(8.0),
-                  ),
-                ),
-              );
-            }
-          },
-        ),
-      ),
-    );
+  void _searchItems(String query) {
+    final taskListThings = taskList.where((task) {
+      final name = task.taskName.toLowerCase();
+      final searchLower = query.toLowerCase();
+      return name.contains(searchLower);
+    }).toList();
+
+    setState(() {
+      this.query = query;
+      this.taskList = taskListThings;
+    });
   }
 }
