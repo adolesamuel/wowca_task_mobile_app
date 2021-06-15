@@ -1,3 +1,4 @@
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/helpers/helpers.dart';
 import 'package:wowca_task/features/module/app/widgets/module_bottom_sheet.dart';
@@ -19,6 +20,7 @@ class _ModuleContainerState extends State<ModuleContainer> {
       onTap: () {
         showModuleBottomSheet(
           context: context,
+          module: widget.module,
         );
       },
       child: PhysicalModel(
@@ -49,10 +51,15 @@ class _ModuleContainerState extends State<ModuleContainer> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(toCapital(sentence: 'how i'),
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontSize: 20.0, fontWeight: FontWeight.bold)),
+                          Expanded(
+                            child: Text(
+                                toCapital(sentence: widget.module.moduleName),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold)),
+                          ),
                         ],
                       ),
                       SizedBox(
@@ -61,7 +68,9 @@ class _ModuleContainerState extends State<ModuleContainer> {
                       Row(
                         children: [
                           Text(
-                            'Module Completion: 29%',
+                            widget.module.percentCompletion != null
+                                ? 'Module Completion: ${widget.module.percentCompletion}'
+                                : 'Module Completion: N/A',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15.0),
                           ),
@@ -78,8 +87,16 @@ class _ModuleContainerState extends State<ModuleContainer> {
                     children: [
                       Container(
                         padding: EdgeInsets.all(16.0),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.green,
+                        child: AvatarGlow(
+                          glowColor: Colors.green,
+                          endRadius: 50.0,
+                          child: Material(
+                            elevation: 8.0,
+                            shape: CircleBorder(),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.green,
+                            ),
+                          ),
                         ),
                       ),
                     ],

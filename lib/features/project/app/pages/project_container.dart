@@ -1,10 +1,8 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:wowca_task/core/helpers/helpers.dart';
-import 'package:wowca_task/features/departments/app/bloc/department_bloc.dart';
 import 'package:wowca_task/features/project/app/widgets/show_project_bottom_sheet.dart';
 import 'package:wowca_task/features/project/domain/entity/project_entity.dart';
-import 'package:wowca_task/injection_container.dart';
 
 class ProjectContainer extends StatefulWidget {
   final ProjectEntity project;
@@ -16,11 +14,6 @@ class ProjectContainer extends StatefulWidget {
 }
 
 class _ProjectContainerState extends State<ProjectContainer> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(

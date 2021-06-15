@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:wowca_task/features/module/app/bloc/module_bloc.dart';
+import 'package:wowca_task/features/module/app/pages/create_module_page.dart';
+import 'package:wowca_task/features/module/domain/entity/module_entity.dart';
 import 'package:wowca_task/features/project/app/pages/create_project_page.dart';
 import 'package:wowca_task/features/project/domain/entity/project_entity.dart';
 
 //Useful
 Future<dynamic> showModuleBottomSheet({
   @required BuildContext context,
-  ProjectEntity project,
+  ModuleEntity module,
 }) {
+  final moduleBloc = BlocProvider.of<ModuleBloc>(context);
   return showBarModalBottomSheet(
       elevation: 5.0,
       expand: true,
@@ -16,9 +21,9 @@ Future<dynamic> showModuleBottomSheet({
             builder: (BuildContext context, StateSetter setModalState) =>
                 Scaffold(
               appBar: AppBar(
-                title: project == null
-                    ? Text('Project Name')
-                    : Text(project.projectName),
+                title: module == null
+                    ? Text('Module Name')
+                    : Text(module.moduleName),
               ),
               body: SingleChildScrollView(
                 controller: ModalScrollController.of(context),
@@ -28,13 +33,6 @@ Future<dynamic> showModuleBottomSheet({
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Project',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 8.0,
-                      ),
-                      Text(
                         'Users',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
@@ -42,7 +40,7 @@ Future<dynamic> showModuleBottomSheet({
                         height: 8.0,
                       ),
                       Text(
-                        'list of Modules',
+                        'Number of Tasks',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
 
@@ -55,9 +53,9 @@ Future<dynamic> showModuleBottomSheet({
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          CreateProjectPage()));
+                                          CreateModulePage()));
                             },
-                            child: Text('Update Project Details')),
+                            child: Text('Update module Details')),
                       ),
                       SizedBox(
                         height: 8.0,
