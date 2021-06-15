@@ -4,8 +4,6 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:wowca_task/features/module/app/bloc/module_bloc.dart';
 import 'package:wowca_task/features/module/app/pages/create_module_page.dart';
 import 'package:wowca_task/features/module/domain/entity/module_entity.dart';
-import 'package:wowca_task/features/project/app/pages/create_project_page.dart';
-import 'package:wowca_task/features/project/domain/entity/project_entity.dart';
 
 //Useful
 Future<dynamic> showModuleBottomSheet({

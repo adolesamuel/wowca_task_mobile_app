@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 import 'package:wowca_task/core/errors/exception.dart';
 import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/core/helpers/json_checker.dart';
-import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/core/utils/endpoints.dart';
 import 'package:wowca_task/features/task/data/models/delete_task_success_model.dart';
 import 'package:wowca_task/features/task/data/models/task_model.dart';
 
@@ -54,7 +54,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
     final String taskDescription,
     final List<File> listOfMediaFileUrls,
   }) async {
-    String url = AppStrings.base + AppStrings.createTask;
+    String url = Endpoint.base + Endpoint.createTask;
 
     ///Headers [Object] specifying [JSON] as return tyme from api
     // Map<String, String> headers = {'Content-Type': 'application/json'};
@@ -109,7 +109,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
 
   @override
   Future<List<TaskModel>> getTasks() async {
-    final url = AppStrings.base + AppStrings.getTasks;
+    final url = Endpoint.base + Endpoint.getTasks;
 
     final response = await client.get(Uri.parse(url));
 
@@ -149,7 +149,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
 
   @override
   Future<DeleteTaskSuccessModel> deleteTask({String taskId}) async {
-    final url = AppStrings.base + AppStrings.deleteTask + '/:$taskId';
+    final url = Endpoint.base + Endpoint.deleteTask + '/:$taskId';
 
     final response = await client.delete(Uri.parse(url));
 
@@ -184,7 +184,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
 
   @override
   Future<TaskModel> finishTask({String taskId}) async {
-    final url = AppStrings.base + AppStrings.finishTask + '/:$taskId';
+    final url = Endpoint.base + Endpoint.finishTask + '/:$taskId';
 
     final response = await client.get(Uri.parse(url));
 
@@ -221,7 +221,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
 
   @override
   Future<TaskModel> getOneTask({String taskId}) async {
-    final url = AppStrings.base + AppStrings.getOneTask + '/:$taskId';
+    final url = Endpoint.base + Endpoint.getOneTask + '/:$taskId';
 
     final response = await client.get(Uri.parse(url));
 
@@ -258,7 +258,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
 
   @override
   Future<TaskModel> resetTask({String taskId}) async {
-    final url = AppStrings.base + AppStrings.resetTask + '/:$taskId';
+    final url = Endpoint.base + Endpoint.resetTask + '/:$taskId';
 
     final response = await client.get(Uri.parse(url));
 
@@ -295,7 +295,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
 
   @override
   Future<TaskModel> startTask({String taskId}) async {
-    final url = AppStrings.base + AppStrings.startTask + '/:$taskId';
+    final url = Endpoint.base + Endpoint.startTask + '/:$taskId';
 
     final response = await client.get(Uri.parse(url));
 
@@ -332,7 +332,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
 
   @override
   Future<TaskModel> suspendTask({String taskId}) async {
-    final url = AppStrings.base + AppStrings.suspendTask + '/:$taskId';
+    final url = Endpoint.base + Endpoint.suspendTask + '/:$taskId';
 
     final response = await client.get(Uri.parse(url));
 
@@ -376,7 +376,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
       String deadline,
       String taskDescription,
       List<File> listOfMediaFileUrls}) async {
-    String url = AppStrings.base + AppStrings.updateTask + '/:$taskId';
+    String url = Endpoint.base + Endpoint.updateTask + '/:$taskId';
 
     ///Headers [Object] specifying [JSON] as return tyme from api
     // Map<String, String> headers = {'Content-Type': 'application/json'};

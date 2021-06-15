@@ -4,7 +4,7 @@ import 'package:http/http.dart';
 import 'package:wowca_task/core/errors/exception.dart';
 import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/core/helpers/json_checker.dart';
-import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/core/utils/endpoints.dart';
 import 'package:wowca_task/features/project/data/model/delete_project_success_model.dart';
 import 'package:wowca_task/features/project/data/model/project_model.dart';
 
@@ -39,7 +39,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
     String department,
     String projectDescription,
   }) async {
-    String url = AppStrings.base + AppStrings.createProject;
+    String url = Endpoint.base + Endpoint.createProject;
 
     ///Headers [Object] specifying [JSON] as return tyme from api
     // Map<String, String> headers = {'Content-Type': 'application/json'};
@@ -95,7 +95,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
 
   @override
   Future<List<ProjectModel>> getProjects() async {
-    final url = AppStrings.base + AppStrings.getProjects;
+    final url = Endpoint.base + Endpoint.getProjects;
 
     final response = await client.get(Uri.parse(url));
 
@@ -137,7 +137,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
 
   @override
   Future<DeleteProjectSuccessModel> deleteProject({String projectId}) async {
-    final url = AppStrings.base + AppStrings.deleteProject + '/:$projectId';
+    final url = Endpoint.base + Endpoint.deleteProject + '/:$projectId';
 
     final response = await client.delete(Uri.parse(url));
 
@@ -174,7 +174,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
 
   @override
   Future<ProjectModel> getOneProject({String projectId}) async {
-    final url = AppStrings.base + AppStrings.getOneProject + '/:$projectId';
+    final url = Endpoint.base + Endpoint.getOneProject + '/:$projectId';
 
     final response = await client.get(Uri.parse(url));
 
@@ -220,7 +220,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
     String projectDescription,
     List<String> listOfModules,
   }) async {
-    String url = AppStrings.base + AppStrings.updateProject + '/:$projectId';
+    String url = Endpoint.base + Endpoint.updateProject + '/:$projectId';
 
     ///Headers [Object] specifying [JSON] as return tyme from api
     // Map<String, String> headers = {'Content-Type': 'application/json'};

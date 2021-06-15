@@ -4,7 +4,7 @@ import 'package:http/http.dart';
 import 'package:wowca_task/core/errors/exception.dart';
 import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/core/helpers/json_checker.dart';
-import 'package:wowca_task/core/utils/strings.dart';
+import 'package:wowca_task/core/utils/endpoints.dart';
 import 'package:wowca_task/features/module/data/model/delete_module_success_model.dart';
 import 'package:wowca_task/features/module/data/model/module_model.dart';
 
@@ -34,7 +34,7 @@ class ModuleRemoteDataSourceImpl implements ModuleRemoteDataSource {
     String moduleDescription,
     String projectId,
   }) async {
-    String url = AppStrings.base + AppStrings.createModule;
+    String url = Endpoint.base + Endpoint.createModule;
 
     ///Headers [Object] specifying [JSON] as return tyme from api
     // Map<String, String> headers = {'Content-Type': 'application/json'};
@@ -85,7 +85,7 @@ class ModuleRemoteDataSourceImpl implements ModuleRemoteDataSource {
 
   @override
   Future<DeleteModuleSuccessModel> deleteModule({String moduleId}) async {
-    final url = AppStrings.base + AppStrings.deleteModule + '/:$moduleId';
+    final url = Endpoint.base + Endpoint.deleteModule + '/:$moduleId';
 
     final response = await client.delete(Uri.parse(url));
 
@@ -120,7 +120,7 @@ class ModuleRemoteDataSourceImpl implements ModuleRemoteDataSource {
 
   @override
   Future<List<ModuleModel>> getModules() async {
-    final url = AppStrings.base + AppStrings.getModules;
+    final url = Endpoint.base + Endpoint.getModules;
 
     final response = await client.get(Uri.parse(url));
 
@@ -160,7 +160,7 @@ class ModuleRemoteDataSourceImpl implements ModuleRemoteDataSource {
 
   @override
   Future<ModuleModel> getOneModule({String moduleId}) async {
-    final url = AppStrings.base + AppStrings.getOneModule + '/:$moduleId';
+    final url = Endpoint.base + Endpoint.getOneModule + '/:$moduleId';
 
     final response = await client.get(Uri.parse(url));
 
@@ -205,7 +205,7 @@ class ModuleRemoteDataSourceImpl implements ModuleRemoteDataSource {
     String projectId,
     String moduleDescription,
   }) async {
-    String url = AppStrings.base + AppStrings.updateModule + '/:$moduleId';
+    String url = Endpoint.base + Endpoint.updateModule + '/:$moduleId';
 
     ///Headers [Object] specifying [JSON] as return tyme from api
     // Map<String, String> headers = {'Content-Type': 'application/json'};

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wowca_task/core/helpers/search_widget.dart';
-import 'package:wowca_task/core/utils/quantities.dart';
 import 'package:wowca_task/core/utils/strings.dart';
 import 'package:wowca_task/features/task/app/bloc/task_bloc.dart';
 import 'package:wowca_task/features/task/app/pages/create_task.dart';
@@ -25,7 +24,6 @@ class _TaskPageState extends State<TaskPage> {
   final taskBloc = sl<TaskBloc>();
   List<TaskEntity> taskList;
   String query = '';
-  ScrollController _scrollController = ScrollController();
 
   //TODO: work on list of task page to show tasks better
 

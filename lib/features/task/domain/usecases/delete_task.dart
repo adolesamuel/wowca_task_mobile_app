@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 import 'package:wowca_task/core/failures/failure.dart';
 import 'package:wowca_task/core/usecase/usecase.dart';
 import 'package:wowca_task/features/task/domain/entities/delete_task_success_entity.dart';
