@@ -10,12 +10,17 @@ class PrivacyPolicyPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Privacy Policy'),
+        centerTitle: true,
       ),
       body: Center(
           child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Hello ${user.name}'),
-          Text('Under Construction'),
+          SizedBox(
+            height: 8.0,
+          ),
+          Text('This page is Under Construction'),
         ],
       )),
     );
